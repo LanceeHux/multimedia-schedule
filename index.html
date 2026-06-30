@@ -46,7 +46,7 @@
                         <span class="date">July 5, 2026</span>
                     </button>
 
-                    <button class="day-btn" onclick="alert('Unavailable');">
+                    <button class="day-btn" onclick="showSchedule('July 12, 2026')">
                         <span>Sunday</span>
                         <span class="date">July 12, 2026</span>
                     </button>
@@ -81,15 +81,19 @@
                             </div>
                             <span class="status-pill available" id="status-0705-AM-LED">Open</span>
                         </div>
-                        <div class="slot-row">
-                            <div class="role-wrap" onclick="checkSlot('0705-AM-SUPPORT', 'Support')">
+                        <div class="slot-row" 
+                            onclick="openModal('0705-AM-SUPPORT', 'Support')" 
+                            data-slot-id="0705-AM-LED">
+                            <div class="role-wrap">
                                 <span class="role-name">Preaching Support</span>
                                 <span class="role-sub">AM Schedule</span>
                             </div>
                             <span class="status-pill available" id="status-0705-AM-SUPPORT">Open</span>
                         </div>
-                        <div class="slot-row">
-                            <div class="role-wrap" onclick="checkSlot('0705-AM-PROMPTER', 'Prompter')">
+                        <div class="slot-row" 
+                            onclick="openModal('0705-AM-PROMPTER', 'PROMPTER')" 
+                            data-slot-id="0705-AM-LED">
+                            <div class="role-wrap">
                                 <span class="role-name">Prompter</span>
                                 <span class="role-sub">AM Schedule</span>
                             </div>
@@ -99,22 +103,28 @@
 
                     <div class="slot-list">
                         <h3>Afternoon Schedule</h3>
-                        <div class="slot-row">
-                            <div class="role-wrap" onclick="checkSlot('0705-PM-LED', 'LED')">
+                        <div class="slot-row" 
+                            onclick="openModal('0705-PM-LED', 'LED')" 
+                            data-slot-id="0705-AM-LED">
+                            <div class="role-wrap">
                                 <span class="role-name">LED</span>
                                 <span class="role-sub">PM Schedule</span>
                             </div>
                             <span class="status-pill available" id="status-0705-PM-LED">Open</span>
                         </div>
-                        <div class="slot-row">
-                            <div class="role-wrap" onclick="checkSlot('0705-PM-SUPPORT', 'Support')">
+                        <div class="slot-row" 
+                            onclick="openModal('0705-AM-SUPPORT', 'SUPPORT')" 
+                            data-slot-id="0705-PM-SUPPORT">
+                            <div class="role-wrap">
                                 <span class="role-name">Preaching Support</span>
                                 <span class="role-sub">PM Schedule</span>
                             </div>
                             <span class="status-pill available" id="status-0705-PM-SUPPORT">Open</span>
                         </div>
-                        <div class="slot-row">
-                            <div class="role-wrap" onclick="checkSlot('0705-PM-PROMPTER', 'Prompter')">
+                        <div class="slot-row" 
+                            onclick="openModal('0705-PM-PROMPTER', 'PROMPTER')" 
+                            data-slot-id="0705-PM-PROMPTER">
+                            <div class="role-wrap">
                                 <span class="role-name">Prompter</span>
                                 <span class="role-sub">PM Schedule</span>
                             </div>
