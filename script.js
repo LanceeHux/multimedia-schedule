@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 // 1. Firebase Config
 const firebaseConfig = {
@@ -56,7 +57,30 @@ function listenForUpdates() {
         });
     });
 }
-
+// Change this function name to match your call
+function loadScheduleData(datePrefix) {
+    // To get JUST that date, use a range that covers only that day
+    const q = query(
+        collection(db, "slots"), 
+        where("__name__", ">=", datePrefix),
+        where("__name__", "<=", datePrefix + "\uf8ff")
+    );
+    
+    onSnapshot(q, (snapshot) => {
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const pill = document.getElementById(`status-${doc.id}`);
+            if (pill) {
+                pill.innerText = data.name || "Open";
+                // Add styling update
+                if(data.status === "taken") {
+                    pill.classList.add("taken");
+                    pill.classList.remove("available");
+                }
+            }
+        });
+    });
+}
 // Inside script.js
 window.openModal = function(slotId, roleName) {
     document.getElementById("overlay").style.display = "flex"; // or "block"
@@ -64,10 +88,25 @@ window.openModal = function(slotId, roleName) {
     document.getElementById("activeSlotId").value = slotId;
 };
 
-window.showSchedule = function(date) {
+// Add 'dateId' as a second parameter to your function
+window.showSchedule = function(dateLabel, dateId) { 
+    // 1. Hide the list
     document.getElementById("scheduleList").style.display = "none";
     document.getElementById("scheduleSection").classList.remove("hidden");
-    document.getElementById("selectedDate").innerText = date;
+    
+    // 2. Set the title
+    document.getElementById("selectedDate").innerText = dateLabel;
+
+    // 3. Clear existing names in the UI so they don't look like they're for the wrong date
+    const pills = document.querySelectorAll('.status-pill');
+    pills.forEach(p => {
+        p.innerText = "Open";
+        p.classList.remove("taken");
+        p.classList.add("available");
+    });
+
+    // 4. Load the specific data for the selected dateId
+    loadScheduleData(dateId); 
 };
 
 window.backToList = function() {
@@ -75,4 +114,3 @@ window.backToList = function() {
     document.getElementById("scheduleSection").classList.add("hidden");
 };
 
-listenForUpdates();
