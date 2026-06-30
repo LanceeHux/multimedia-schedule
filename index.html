@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COG Trece Multimedia</title>
+    <link rel="stylesheet" href="styles.css">
+     
+</head>
+<body>
+    <div class="page">
+        <div class="topbar">
+            <div class="brand">COG Trece Multimedia</div>
+            <div class="badge-top">Duty Scheduler</div>
+        </div>
+
+        <div class="container">
+            <div class="hero">
+                <h1>Official Duty Scheduling System</h1>
+                <p>Select an available Sunday to view open slots.</p>
+            </div>
+
+            <div class="content">
+                <div class="info-box">
+                    Please ensure you are selecting the correct slot for the upcoming Sunday duty.
+                    Changes are subject to team lead approval.
+                </div>
+
+                <div class="overlay" id="overlay">
+                    <h1 id="selectedRole">Role Here</h1>
+                    <input type="hidden" id="activeSlotId" value="" />
+                    
+                    <input id="nameInput" type="text" placeholder="Input your name" />
+                    <input type="submit" value="Submit" onclick="submitToRole()" />
+                </div>
+
+                <div id="scheduleList" class="schedule-list">
+                    <div class="section-title">
+                        <span>Available Sundays</span>
+                        <span>Select one</span>
+                    </div>
+
+                    <button class="day-btn" onclick="showSchedule('July 5, 2026')">
+                        <span>Sunday</span>
+                        <span class="date">July 5, 2026</span>
+                    </button>
+
+                    <button class="day-btn" onclick="alert('Unavailable');">
+                        <span>Sunday</span>
+                        <span class="date">July 12, 2026</span>
+                    </button>
+
+                    <button class="day-btn" onclick="alert('Unavailable');">
+                        <span>Sunday</span>
+                        <span class="date">July 19, 2026</span>
+                    </button>
+
+                    <button class="day-btn" onclick="alert('Unavailable');">
+                        <span>Sunday</span>
+                        <span class="date">July 26, 2026</span>
+                    </button>
+                </div>
+
+                <div id="scheduleSection" class="schedule-section hidden">
+                    <button class="back-btn" onclick="backToList()">← Back to Sundays</button>
+
+                    <div class="section-title">
+                        <span id="selectedDate">Selected Date</span>
+                        <span>Available Slots</span>
+                    </div>
+
+                    <div class="slot-list" id="july-05">
+                        <h3>Morning Schedule</h3>
+                        <div class="slot-row" 
+                            onclick="openModal('0705-AM-LED', 'LED')" 
+                            data-slot-id="0705-AM-LED">
+                            <div class="role-wrap">
+                                <span class="role-name">LED</span>
+                                <span class="role-sub">AM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-AM-LED">Open</span>
+                        </div>
+                        <div class="slot-row">
+                            <div class="role-wrap" onclick="checkSlot('0705-AM-SUPPORT', 'Support')">
+                                <span class="role-name">Preaching Support</span>
+                                <span class="role-sub">AM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-AM-SUPPORT">Open</span>
+                        </div>
+                        <div class="slot-row">
+                            <div class="role-wrap" onclick="checkSlot('0705-AM-PROMPTER', 'Prompter')">
+                                <span class="role-name">Prompter</span>
+                                <span class="role-sub">AM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-AM-PROMPTER">Open</span>
+                        </div>
+                    </div>
+
+                    <div class="slot-list">
+                        <h3>Afternoon Schedule</h3>
+                        <div class="slot-row">
+                            <div class="role-wrap" onclick="checkSlot('0705-PM-LED', 'LED')">
+                                <span class="role-name">LED</span>
+                                <span class="role-sub">PM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-PM-LED">Open</span>
+                        </div>
+                        <div class="slot-row">
+                            <div class="role-wrap" onclick="checkSlot('0705-PM-SUPPORT', 'Support')">
+                                <span class="role-name">Preaching Support</span>
+                                <span class="role-sub">PM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-PM-SUPPORT">Open</span>
+                        </div>
+                        <div class="slot-row">
+                            <div class="role-wrap" onclick="checkSlot('0705-PM-PROMPTER', 'Prompter')">
+                                <span class="role-name">Prompter</span>
+                                <span class="role-sub">PM Schedule</span>
+                            </div>
+                            <span class="status-pill available" id="status-0705-PM-PROMPTER">Open</span>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="actions">
+                            <button class="primary-btn">Save Assignment</button>
+                            <button onclick="backToList()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scheduleEmpty" class="empty-state hidden">
+                    No available schedules at the moment.
+                </div>
+
+                <div class="footer">
+                    <div class="footer-text">
+                        © 2026 COG Trece Multimedia Team<br>
+                        Managed by Infrastructure Admin
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" type="module" charset="utf-8"></script>
+</body>
+</html>
