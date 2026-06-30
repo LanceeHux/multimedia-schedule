@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Schedule - COG Trece</title>
+    <style>
+        /* --- Unified CSS --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            --surface: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border-soft: rgba(0,0,0,0.08);
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-gradient); margin: 0; padding-top: 100px; }
+        .page { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        .header { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-soft); padding: 20px 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .brand { font-weight: 800; color: var(--text-main); }
+        
+        /* Container & Table */
+        .container { background: var(--surface); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        thead th { background: #f9fafb; padding: 16px; text-align: left; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--border-soft); }
+        tbody tr:nth-child(even) { background-color: #fcfcfc; }
+        td { padding: 18px 16px; border-bottom: 1px solid var(--border-soft); color: var(--text-main); font-size: 0.9rem; }
+        
+        .status-pill { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+        .taken { background: #eef2ff; color: #4338ca; }
+        .available { background: #f3f4f6; color: #9ca3af; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">COG Trece Multimedia</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">ADMIN DASHBOARD</div>
+        </div>
+    </header>
+
+    <div class="page">
+        <div class="container">
+            <h3>Duty Schedule Master List</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Live view of all assigned roles.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Service</th>
+                        <th>Role</th>
+                        <th>Volunteer</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="adminBody">
+                    <!-- Rows injected via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+        // ADD YOUR CONFIG HERE
+        const firebaseConfig = { /* ... */ }; 
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        onSnapshot(collection(db, "slots"), (snapshot) => {
+            const tbody = document.getElementById("adminBody");
+            tbody.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const [date, shift, role] = doc.id.split('-');
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="color:var(--text-muted)">${date}</td>
+                        <td>${shift}</td>
+                        <td>${role}</td>
+                        <td style="font-weight:600">${data.name || "—"}</td>
+                        <td><span class="status-pill ${data.status === 'taken' ? 'taken' : 'available'}">
+                            ${data.status || 'Open'}
+                        </span></td>
+                    </tr>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
