@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COG Trece - Monthly Schedule</title>
+    <style>
+        :root { --accent: #f59e0b; --border: #e5e7eb; --text: #111827; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #fafafa; padding: 20px; }
+        .page { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid var(--border); padding: 12px; text-align: center; font-size: 0.8rem; }
+        
+        .date-header { background: var(--accent); color: white; font-weight: 600; padding: 10px; }
+        .shift-header { background: #fffbeb; color: #92400e; font-size: 0.7rem; padding: 5px; }
+        .role-header { background: #fff5f5; font-weight: 700; text-align: left; }
+.open-slot { 
+    background-color: #dcfce7; 
+    color: #166534;            
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 0.7rem; 
+    font-weight: 700;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <h3>MONTH OF JULY 2026</h3>
+    <table id="scheduleTable">
+        <thead>
+            <tr id="dateRow"><th>Role</th></tr>
+            <tr id="shiftRow"><th></th></tr>
+        </thead>
+        <tbody id="gridBody"></tbody>
+    </table>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+        authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+        projectId: "multimedia-cog-trece-db",
+        storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+        messagingSenderId: "590911223632",
+        appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+    };
+
+    const db = getFirestore(initializeApp(firebaseConfig));
+
+    const dates = ["0705", "0712", "0719", "0726"];
+    const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
+
+ 
+    const dateRow = document.getElementById("dateRow");
+    const shiftRow = document.getElementById("shiftRow");
+    
+    dates.forEach(d => {
+        dateRow.innerHTML += `<th colspan="2" class="date-header">${d}</th>`;
+        shiftRow.innerHTML += `<th class="shift-header">AM</th><th class="shift-header">PM</th>`;
+    });
+
+    onSnapshot(collection(db, "slots"), (snapshot) => {
+        const gridBody = document.getElementById("gridBody");
+        gridBody.innerHTML = "";
+        
+        roles.forEach(role => {
+            let row = `<tr><td class="role-header">${role}</td>`;
+            dates.forEach(date => {
+                const amData = snapshot.docs.find(d => d.id === `${date}-AM-${role}`)?.data()?.name;
+const pmData = snapshot.docs.find(d => d.id === `${date}-PM-${role}`)?.data()?.name;
+const amDisplay = amData ? amData : '<span class="open-slot">OPEN</span>';
+const pmDisplay = pmData ? pmData : '<span class="open-slot">OPEN</span>';
+              
+                row += `<td>${amDisplay}</td><td>${pmDisplay}</td>`;
+            });
+            row += `</tr>`;
+            gridBody.innerHTML += row;
+        });
+    });
+</script>
+</body>
+</html>
