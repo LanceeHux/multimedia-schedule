@@ -89,25 +89,53 @@ window.openModal = function(slotId, roleName) {
 };
 
 // Add 'dateId' as a second parameter to your function
-window.showSchedule = function(dateLabel, dateId) { 
-    // 1. Hide the list
+window.showSchedule = function(dateLabel, dateId) {
     document.getElementById("scheduleList").style.display = "none";
     document.getElementById("scheduleSection").classList.remove("hidden");
-    
-    // 2. Set the title
     document.getElementById("selectedDate").innerText = dateLabel;
 
-    // 3. Clear existing names in the UI so they don't look like they're for the wrong date
-    const pills = document.querySelectorAll('.status-pill');
-    pills.forEach(p => {
-        p.innerText = "Open";
-        p.classList.remove("taken");
-        p.classList.add("available");
-    });
+    // 1. Generate the UI rows dynamically
+    renderSlots(dateId);
 
-    // 4. Load the specific data for the selected dateId
-    loadScheduleData(dateId); 
+    // 2. Fetch the data from Firebase to fill those rows
+    loadScheduleData(dateId);
 };
+window.renderSlots = function(dateId) {
+    const container = document.getElementById("slotContainer");
+    container.innerHTML = ""; // Clear existing
+
+    // Define the structure to match your original HTML
+    const scheduleData = [
+        { title: "Morning Schedule", time: "AM" },
+        { title: "Afternoon Schedule", time: "PM" }
+    ];
+    const roles = ["LED", "Preaching Support", "Prompter"];
+
+    scheduleData.forEach(shift => {
+        // Create the list container
+        let listDiv = document.createElement("div");
+        listDiv.className = "slot-list";
+        listDiv.innerHTML = `<h3>${shift.title}</h3>`;
+        
+        roles.forEach(role => {
+            const roleKey = role.replace(/\s+/g, '-').toUpperCase();
+            const slotId = `${dateId}-${shift.time}-${roleKey}`;
+            
+            // Build the row exactly like your original HTML
+            listDiv.innerHTML += `
+                <div class="slot-row" onclick="openModal('${slotId}', '${role}')">
+                    <div class="role-wrap">
+                        <span class="role-name">${role}</span>
+                        <span class="role-sub">${shift.time} Schedule</span>
+                    </div>
+                    <span class="status-pill available" id="status-${slotId}">Open</span>
+                </div>
+            `;
+        });
+        container.appendChild(listDiv);
+    });
+};
+
 
 window.backToList = function() {
     document.getElementById("scheduleList").style.display = "block";
