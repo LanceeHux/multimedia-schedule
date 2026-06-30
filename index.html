@@ -53,86 +53,22 @@
                 </div>
 
                 <div id="scheduleSection" class="schedule-section hidden">
-                    <button class="back-btn" onclick="backToList()">← Back to Sundays</button>
+    <button class="back-btn" onclick="backToList()">← Back to Sundays</button>
 
-                    <div class="section-title">
-                        <span id="selectedDate">Selected Date</span>
-                        <span>Available Slots</span>
-                    </div>
+    <div class="section-title">
+        <span id="selectedDate">Selected Date</span>
+        <span>Available Slots</span>
+    </div>
 
-                    <div class="slot-list" id="july-05">
-                        <h3>Morning Schedule</h3>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-AM-LED', 'LED')" 
-                            data-slot-id="0705-AM-LED">
-                            <div class="role-wrap">
-                                <span class="role-name">LED</span>
-                                <span class="role-sub">AM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-AM-LED">Open</span>
-                        </div>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-AM-SUPPORT', 'Support')" 
-                            data-slot-id="0705-AM-SUPPOTY">
-                            <div class="role-wrap">
-                                <span class="role-name">Preaching Support</span>
-                                <span class="role-sub">AM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-AM-SUPPORT">Open</span>
-                        </div>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-AM-PROMPTER', 'PROMPTER')" 
-                            data-slot-id="0705-AM-PROMPTER">
-                            <div class="role-wrap">
-                                <span class="role-name">Prompter</span>
-                                <span class="role-sub">AM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-AM-PROMPTER">Open</span>
-                        </div>
-                    </div>
+    <div id="slotContainer"></div>
 
-                    <div class="slot-list">
-                        <h3>Afternoon Schedule</h3>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-PM-LED', 'LED')" 
-                            data-slot-id="0705-AM-LED">
-                            <div class="role-wrap">
-                                <span class="role-name">LED</span>
-                                <span class="role-sub">PM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-PM-LED">Open</span>
-                        </div>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-PM-SUPPORT', 'SUPPORT')" 
-                            data-slot-id="0705-PM-SUPPORT">
-                            <div class="role-wrap">
-                                <span class="role-name">Preaching Support</span>
-                                <span class="role-sub">PM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-PM-SUPPORT">Open</span>
-                        </div>
-                        <div class="slot-row" 
-                            onclick="openModal('0705-PM-PROMPTER', 'PROMPTER')" 
-                            data-slot-id="0705-PM-PROMPTER">
-                            <div class="role-wrap">
-                                <span class="role-name">Prompter</span>
-                                <span class="role-sub">PM Schedule</span>
-                            </div>
-                            <span class="status-pill available" id="status-0705-PM-PROMPTER">Open</span>
-                        </div>
-                    </div>
-
-                    <div class="footer">
-                        <div class="actions">
-                            <button class="primary-btn">Save Assignment</button>
-                            <button onclick="backToList()">Reset</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="scheduleEmpty" class="empty-state hidden">
-                    No available schedules at the moment.
-                </div>
+    <div class="footer">
+        <div class="actions">
+            <button class="primary-btn">Save Assignment</button>
+            <button onclick="backToList()">Reset</button>
+        </div>
+    </div>
+</div>
 
                 <div class="footer">
                     <div class="footer-text">
