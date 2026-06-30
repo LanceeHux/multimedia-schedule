@@ -41,24 +41,14 @@
                         <span>Select one</span>
                     </div>
 
-                    <button class="day-btn" onclick="showSchedule('July 5, 2026')">
+                    <button class="day-btn" onclick="showSchedule('July 5, 2026', '0705')">
                         <span>Sunday</span>
                         <span class="date">July 5, 2026</span>
                     </button>
-
-                    <button class="day-btn" onclick="showSchedule('July 12, 2026')">
+                    
+                    <button class="day-btn" onclick="showSchedule('July 12, 2026', '0712')">
                         <span>Sunday</span>
                         <span class="date">July 12, 2026</span>
-                    </button>
-
-                    <button class="day-btn" onclick="alert('Unavailable');">
-                        <span>Sunday</span>
-                        <span class="date">July 19, 2026</span>
-                    </button>
-
-                    <button class="day-btn" onclick="alert('Unavailable');">
-                        <span>Sunday</span>
-                        <span class="date">July 26, 2026</span>
                     </button>
                 </div>
 
@@ -83,7 +73,7 @@
                         </div>
                         <div class="slot-row" 
                             onclick="openModal('0705-AM-SUPPORT', 'Support')" 
-                            data-slot-id="0705-AM-LED">
+                            data-slot-id="0705-AM-SUPPOTY">
                             <div class="role-wrap">
                                 <span class="role-name">Preaching Support</span>
                                 <span class="role-sub">AM Schedule</span>
@@ -92,7 +82,7 @@
                         </div>
                         <div class="slot-row" 
                             onclick="openModal('0705-AM-PROMPTER', 'PROMPTER')" 
-                            data-slot-id="0705-AM-LED">
+                            data-slot-id="0705-AM-PROMPTER">
                             <div class="role-wrap">
                                 <span class="role-name">Prompter</span>
                                 <span class="role-sub">AM Schedule</span>
@@ -113,7 +103,7 @@
                             <span class="status-pill available" id="status-0705-PM-LED">Open</span>
                         </div>
                         <div class="slot-row" 
-                            onclick="openModal('0705-AM-SUPPORT', 'SUPPORT')" 
+                            onclick="openModal('0705-PM-SUPPORT', 'SUPPORT')" 
                             data-slot-id="0705-PM-SUPPORT">
                             <div class="role-wrap">
                                 <span class="role-name">Preaching Support</span>
