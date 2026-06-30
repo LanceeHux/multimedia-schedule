@@ -69,7 +69,14 @@
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
         // ADD YOUR CONFIG HERE
-        const firebaseConfig = { /* ... */ }; 
+        const firebaseConfig = {
+  apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+  authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+  projectId: "multimedia-cog-trece-db",
+  storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+  messagingSenderId: "590911223632",
+  appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+};
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
