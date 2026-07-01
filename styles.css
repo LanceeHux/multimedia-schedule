@@ -49,7 +49,8 @@
         .hero {
             padding: 24px 24px 18px;
             border-bottom: 1px solid var(--border);
-            background: linear-gradient(to left, darkblue, gray);
+            background: gray;
+           color: white;
         }
 
         .hero h1 {
