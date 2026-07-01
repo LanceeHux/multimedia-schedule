@@ -22,10 +22,9 @@ body {
   z-index: -1;
 }
 
-/* HEADER PART */
 .header {
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.148);
+  background: rgba(255, 255, 255, 0.087);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: white;
@@ -46,7 +45,7 @@ body {
 }
 
 .menu-toggle {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -60,19 +59,29 @@ body {
 }
 
 .header-buttons {
-  display: flex;
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  flex-direction: column;
   gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+}
+
+.header-buttons.show {
+  display: flex;
 }
 
 .header-buttons a {
-  background: none;
   text-transform: uppercase;
-  border: none;
   color: white;
-  transition: all 0.6s ease;
+  text-decoration: none;
   border-radius: 5px;
   padding: 0 5px;
-  text-decoration: none;
 }
 
 .header-buttons a:hover {
@@ -84,7 +93,6 @@ a[href="about.html"] {
   border-bottom: 1px solid white;
 }
 
-/* Container */
 .container {
   color: white;
   text-align: center;
@@ -98,40 +106,73 @@ a[href="about.html"] {
   max-width: 100%;
 }
 
-.container h1 {
-  text-decoration: none;
-  font-weight: 300;
-}
 .about-container {
   color: white;
-  width: 100%;
-  padding: 10px;
+  width: calc(100% - 40px);
+  padding: 15px;
   margin: 20px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.087);
   border-radius: 6px;
 }
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
+.members {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
 
-  .header-buttons {
-    display: none;
-    position: absolute;
-    top: 70px;
-    right: 20px;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.303);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 8px;
-  }
+.member {
+  position: relative;
+  width: min(90vw, 280px);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-  .header-buttons.show {
-    display: flex;
-  }
+.member img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.member-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 0, 153, 0.45), rgba(0, 255, 255, 0.35), rgba(255, 255, 0, 0.35));
+  background-size: 300% 300%;
+  animation: gradientMove 6s ease infinite;
+  mix-blend-mode: overlay;
+}
+
+.member-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+  text-align: center;
+}
+
+.member-info h3,
+.member-info p {
+  margin: 0;
+}
+
+.member-info p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
