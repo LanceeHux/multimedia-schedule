@@ -66,7 +66,7 @@
             font-weight: 300;
         }
 
-        .content { padding: 20px 24px 24px; }
+        .content { padding: 20px 24px 24px; background: rgba(255, 255, 255, 0.087); }
 
         .info-box {
             padding: 14px 16px;
@@ -79,7 +79,7 @@
             line-height: 1.5;
         }
 
-        .schedule-list, .schedule-section { margin-top: 16px; }
+        .schedule-list, .schedule-section { margin-top: 16px; background: rgba(255, 255, 255, 0.087); }
 
         .section-title {
             display: flex;
