@@ -102,6 +102,15 @@ a[href="about.html"] {
   text-decoration: none;
   font-weight: 300;
 }
+.about-container {
+  color: white;
+  width: 100%;
+  padding: 10px;
+  margin: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.087);
+  border-radius: 6px;
+}
 
 @media (max-width: 768px) {
   .menu-toggle {
