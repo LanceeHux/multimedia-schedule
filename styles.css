@@ -42,7 +42,7 @@
             overflow: hidden;
             border: 1px solid var(--border);
             border-radius: 16px;
-            background: var(--card);
+            background: rgba(255, 255, 255, 0.087);
             box-shadow: var(--shadow);
         }
 
@@ -285,3 +285,78 @@
         }
 
         .overlay input[type="submit"]:hover { opacity: 0.95; }
+
+/* HEADER PART */
+.header {
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.087);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.header p {
+  margin: 0;
+  font-size: 180%;
+}
+
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+}
+
+.header-buttons {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+}
+
+.header-buttons.show {
+  display: flex;
+}
+
+.header-buttons a {
+  background: none;
+  text-transform: uppercase;
+  border: none;
+  color: white;
+  transition: all 0.6s ease;
+  border-radius: 5px;
+  padding: 0 5px;
+  text-decoration: none;
+}
+
+.header-buttons a:hover {
+  background: rgba(255, 255, 255, 0.35);
+  color: black;
+}
+
+a[href="about.html"] {
+  border-bottom: 1px solid white;
+}
