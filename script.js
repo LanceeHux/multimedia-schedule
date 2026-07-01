@@ -18,6 +18,7 @@ const db = getFirestore(app);
 window.submitToRole = async function() {
     const slotId = document.getElementById("activeSlotId").value;
     const userName = document.getElementById("nameInput").value;
+if (!userName) { alert("Invalid"); return; }
     const slotRef = doc(db, "slots", slotId);
 
     try {
