@@ -46,7 +46,7 @@ body {
 }
 
 .menu-toggle {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -60,21 +60,8 @@ body {
 }
 
 .header-buttons {
-  display: none;
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
-}
-
-.header-buttons.show {
   display: flex;
+  gap: 10px;
 }
 
 .header-buttons a {
@@ -116,3 +103,26 @@ a[href="index.html"] {
   font-weight: 300;
 }
 
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .header-buttons {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.303);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+  }
+
+  .header-buttons.show {
+    display: flex;
+  }
+}
