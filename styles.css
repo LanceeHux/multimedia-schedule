@@ -80,7 +80,7 @@
             line-height: 1.5;
         }
 
-        .schedule-list, .schedule-section { margin-top: 16px; background: rgba(255, 255, 255, 0.087); }
+        .schedule-list, .schedule-section { margin-top: 16px; }
 
         .section-title {
             display: flex;
