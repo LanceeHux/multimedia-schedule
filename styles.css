@@ -370,19 +370,3 @@ a[href="schedule.html"] {
   object-fit: cover;
   z-index: -1;
 }
-
-.temp {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.temp img {
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  display: block;
-}
