@@ -110,17 +110,17 @@ window.renderSlots = function(dateId) {
         
         let listDiv = document.createElement("div");
         listDiv.className = "slot-list";
-        listDiv.innerHTML = `<h3>${shift.title}</h3>`;
+        listDiv.innerHTML = `<h3 style="color:  white">${shift.title}</h3>`;
 
         roles.forEach(role => {
             const roleKey = role.replace(/\s+/g, '-').toUpperCase();
             const slotId = `${dateId}-${shift.time}-${roleKey}`;
           
             listDiv.innerHTML += `
-                <div class="slot-row" onclick="openModal('${slotId}', '${role}')">
+                <div class="slot-row">
                     <div class="role-wrap">
-                        <span class="role-name">${role}</span>
-                        <span class="role-sub">${shift.time} Schedule</span>
+                        <span class="role-name" style="color:  white">${role}</span>
+                        <span class="role-sub"style="color:  white">${shift.time} Schedule</span>
                     </div>
                     <span class="status-pill available" id="status-${slotId}">Open</span>
                 </div>
@@ -134,4 +134,3 @@ window.backToList = function() {
     document.getElementById("scheduleList").style.display = "block";
     document.getElementById("scheduleSection").classList.add("hidden");
 };
-
