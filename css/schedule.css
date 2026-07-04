@@ -152,7 +152,7 @@
 
         .status-pill.available {
             color: var(--success);
-            background: rgba(22, 101, 52, 0.08);
+            background: rgba(134, 239, 172, 0.12);
         }
 
         .day-btn {
