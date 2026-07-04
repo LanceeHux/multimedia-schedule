@@ -36,72 +36,72 @@
     <div class="page">
         <div class="topbar">
             <div class="brand" style="color: white">COG Trece Multimedia</div>
-            <div class="badge-top" style="color: white">Duty Schedules</div>
+            <div class="badge-top" style="color: white">Servants on Duty</div>
         </div>
 
         <div class="container">
             <div class="hero">
-                <h1 style="color: white">Official Duty Scheduling System</h1>
-                <p style="color: white">Select an available Sunday to view available slots.</p>
+                <h1 style="color: white">Multimedia Team Schedule</h1>
+                <p style="color: white">Live team serving rotation</p>
             </div>
 
             <div class="content">
                 <div class="info-box">
-                    Please ensure you are selecting the correct slot for the upcoming Sunday duty.
-                    Changes are subject to team approval.
+                    This dashboard displays the active multimedia team serving for our upcoming worship services.
                 </div>
 
-                <div class="overlay" id="overlay">
-                    <h1 id="selectedRole">Role Here</h1>
-                    <input type="hidden" id="activeSlotId" value="" />
-
-                    <input id="nameInput" type="text" placeholder="Input your name" />
-                    <input type="submit" value="Submit" onclick="submitToRole()" />
-<input onclick="document.getElementById('overlay').style.display='none'" value="Cancel" style="background: red; color: black" type="submit" />
+               
+                <div class="overlay" id="overlay" style="display: none;">
+                    <h1 id="selectedRole">Role Information</h1>
+                    <p style="color: white; margin-bottom: 15px;">Assigned personnel for this service slot.</p>
+                    <button onclick="document.getElementById('overlay').style.display='none'" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Close</button>
                 </div>
 
                 <div id="scheduleList" class="schedule-list">
                     <div class="section-title">
-                        <span style="color: white">Available Sundays</span>
-                        <span style="color: white">Select one</span>
+                        <span style="color: white">Service Dates</span>
+                        <span style="color: white">Select a date to view</span>
                     </div>
 
                     <button style="background:rgba(255, 255, 255, 0.148); color: white" class="day-btn" onclick="showSchedule('July 5, 2026', '0705')">
-                        <span>Sunday</span>
+                        <span>Sunday Service</span>
                         <span class="date" style="color: white">July 5, 2026</span>
                     </button>
 
                     <button style="background:rgba(255, 255, 255, 0.148);color: white;" class="day-btn" onclick="showSchedule('July 12, 2026', '0712')">
-                        <span>Sunday</span>
+                        <span>Sunday Service</span>
                         <span class="date" style="color: white">July 12, 2026</span>
                     </button>
 
                     <button style="background:rgba(255, 255, 255, 0.148);color: white" class="day-btn" onclick="showSchedule('July 19, 2026', '0719')">
-                        <span>Sunday</span>
+                        <span>Sunday Service</span>
                         <span class="date" style="color: white">July 19, 2026</span>
                     </button>
 
                     <button style="background:rgba(255, 255, 255, 0.148);color: white" class="day-btn" onclick="showSchedule('July 26, 2026', '0726')">
-                        <span>Sunday</span>
+                        <span>Sunday Service</span>
                         <span class="date" style="color: white">July 26, 2026</span>
                     </button>
                 </div>
-                <button style="width:100%;background:rgba(255, 255, 255, 0.148);color:white; border: 1px solid black" onclick="window.location.href='main.html'">Check Database</button>
+                
                 <div id="scheduleSection" class="schedule-section hidden">
-    <button class="back-btn" onclick="backToList()" style="color: black">← Back to Sundays</button>
+                    <button class="back-btn" onclick="backToList()" style="color: black">← Back to Dates</button>
 
-    <div class="section-title">
-        <span id="selectedDate" style="color:white">Selected Date</span>
-        <span style="color: white">Available Slots</span>
-    </div>
+                    <div class="section-title">
+                        <span id="selectedDate" style="color:white">Selected Date</span>
+                        <span style="color: white">Team Assignments</span>
+                    </div>
 
-    <div id="slotContainer"></div>
+                    <div id="slotContainer"></div>
 
-    <div class="footer">
-        <div class="actions">
-            <button onclick="backToList()" style="color:black">Back</button>
+                    <div class="footer">
+                        <div class="actions">
+                            <button onclick="backToList()" style="color:black">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 </div>
 
                 <div class="footer">
