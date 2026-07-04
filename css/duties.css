@@ -100,6 +100,7 @@
             overflow: hidden;
             background: ;
             margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .slot-list h3 {
@@ -108,6 +109,7 @@
             border-bottom: 1px solid var(--border);
             font-size: 0.95rem;
             font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .slot-row {
@@ -151,8 +153,8 @@
         }
 
         .status-pill.available {
-            color: var(--success);
-            background: rgba(22, 101, 52, 0.08);
+            color: lightgreen;
+            background: rgba(134, 239, 172, 0.12);
         }
 
         .day-btn {
