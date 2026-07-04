@@ -151,7 +151,7 @@
         }
 
         .status-pill.available {
-            color: var(--success);
+            color: lightgreen;
             background: rgba(134, 239, 172, 0.12);
         }
 
