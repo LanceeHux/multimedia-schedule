@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trecemulti.vercel.app/">
+    <meta property="og:title" content="COG Trece Multimedia - Duty Schedules">
+    <meta property="og:description" content="Official duty scheduling system for COG Trece Multimedia. Prototype">
+    <meta property="og:image" content="https://trecemulti.vercel.app/thumbnail.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COG Trece Multimedia</title>
+    <link rel="stylesheet" href="css/duties.css">
+
+</head>
+<body>
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="images/bg-home.mp4" type="video/mp4" />
+    </video>
+    <div class="header">
+      <div class="temp">
+        <img src="images/cog.png" alt="" />
+      <p>ARTS</p>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="header-buttons" id="headerButtons">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="schedule.html">Schedule</a>
+      </div>
+    </div>
+    <div class="page">
+        <div class="topbar">
+            <div class="brand" style="color: white">COG Trece Multimedia</div>
+            <div class="badge-top" style="color: white">Duty Schedules</div>
+        </div>
+
+        <div class="container">
+            <div class="hero">
+                <h1 style="color: white">Official Duty Scheduling System</h1>
+                <p style="color: white">Select an available Sunday to view available slots.</p>
+            </div>
+
+            <div class="content">
+                <div class="info-box">
+                    Please ensure you are selecting the correct slot for the upcoming Sunday duty.
+                    Changes are subject to team approval.
+                </div>
+
+                <div class="overlay" id="overlay">
+                    <h1 id="selectedRole">Role Here</h1>
+                    <input type="hidden" id="activeSlotId" value="" />
+
+                    <input id="nameInput" type="text" placeholder="Input your name" />
+                    <input type="submit" value="Submit" onclick="submitToRole()" />
+<input onclick="document.getElementById('overlay').style.display='none'" value="Cancel" style="background: red; color: black" type="submit" />
+                </div>
+
+                <div id="scheduleList" class="schedule-list">
+                    <div class="section-title">
+                        <span style="color: white">Available Sundays</span>
+                        <span style="color: white">Select one</span>
+                    </div>
+
+                    <button style="background:rgba(255, 255, 255, 0.148); color: white" class="day-btn" onclick="showSchedule('July 5, 2026', '0705')">
+                        <span>Sunday</span>
+                        <span class="date" style="color: white">July 5, 2026</span>
+                    </button>
+
+                    <button style="background:rgba(255, 255, 255, 0.148);color: white;" class="day-btn" onclick="showSchedule('July 12, 2026', '0712')">
+                        <span>Sunday</span>
+                        <span class="date" style="color: white">July 12, 2026</span>
+                    </button>
+
+                    <button style="background:rgba(255, 255, 255, 0.148);color: white" class="day-btn" onclick="showSchedule('July 19, 2026', '0719')">
+                        <span>Sunday</span>
+                        <span class="date" style="color: white">July 19, 2026</span>
+                    </button>
+
+                    <button style="background:rgba(255, 255, 255, 0.148);color: white" class="day-btn" onclick="showSchedule('July 26, 2026', '0726')">
+                        <span>Sunday</span>
+                        <span class="date" style="color: white">July 26, 2026</span>
+                    </button>
+                </div>
+                <button style="width:100%;background:rgba(255, 255, 255, 0.148);color:white; border: 1px solid black" onclick="window.location.href='main.html'">Check Database</button>
+                <div id="scheduleSection" class="schedule-section hidden">
+    <button class="back-btn" onclick="backToList()" style="color: black">← Back to Sundays</button>
+
+    <div class="section-title">
+        <span id="selectedDate" style="color:white">Selected Date</span>
+        <span style="color: white">Available Slots</span>
+    </div>
+
+    <div id="slotContainer"></div>
+
+    <div class="footer">
+        <div class="actions">
+            <button onclick="backToList()" style="color:black">Back</button>
+        </div>
+    </div>
+</div>
+
+                <div class="footer">
+                    <div class="footer-text">
+                        © 2026 COG Trece Multimedia Team<br>
+                        Privately for Schedule yet
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/duties.js" type="module" charset="utf-8"></script>
+    <script src="js/schedule.js" type="text/javascript"></script>
+</body>
+</html>
