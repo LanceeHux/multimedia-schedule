@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, collection, runTransaction } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
@@ -18,28 +17,37 @@ const db = getFirestore(app);
 window.submitToRole = async function() {
     const slotId = document.getElementById("activeSlotId").value;
     const userName = document.getElementById("nameInput").value;
-if (!userName) { alert("Invalid"); return; }
+    if (!userName) { alert("Invalid"); return; }
     const slotRef = doc(db, "slots", slotId);
 
     try {
-        
-        const docSnap = await getDoc(slotRef);
-        
-        if (docSnap.exists() && docSnap.data().status === "taken") {
-            alert("Sorry! Someone else just got this slot.");
-            document.getElementById("overlay").style.display = "none";
-            return;
-        }
-        await setDoc(slotRef, {
-            name: userName,
-            status: "taken"
-        }, { merge: true });
+        // runTransaction makes the "check if taken" + "claim it" step atomic.
+        // Firestore guarantees that if two people submit at the same instant,
+        // only one transaction wins; the other automatically retries, re-reads
+        // the fresh data, and sees the slot is already taken.
+        await runTransaction(db, async (transaction) => {
+            const docSnap = await transaction.get(slotRef);
+
+            if (docSnap.exists() && docSnap.data().status === "taken") {
+                // Throwing inside a transaction aborts it cleanly (no write happens)
+                throw new Error("SLOT_TAKEN");
+            }
+
+            transaction.set(slotRef, {
+                name: userName,
+                status: "taken"
+            }, { merge: true });
+        });
 
         alert("Success! Slot secured.");
         document.getElementById("overlay").style.display = "none";
     } catch (e) {
-        console.error(e);
-        alert("Failed to update.");
+        if (e.message === "SLOT_TAKEN") {
+            alert("Sorry! Someone else just got this slot.");
+        } else {
+            console.error(e);
+            alert("Failed to update.");
+        }
         document.getElementById("overlay").style.display = "none";
     }
 };
