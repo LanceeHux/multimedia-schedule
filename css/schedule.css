@@ -108,6 +108,7 @@
             border-bottom: 1px solid var(--border);
             font-size: 0.95rem;
             font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .slot-row {
