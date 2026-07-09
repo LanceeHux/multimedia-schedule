@@ -105,11 +105,6 @@ a[href="index.html"] {
   width: 100%;
 }
 
-#front-title {
-  font-family: none;
-  font-size: clamp(2rem, 8vw, 7rem);
-  width: 100%;
-}
 
 @media (max-width: 768px) {
   .menu-toggle {
@@ -132,6 +127,9 @@ a[href="index.html"] {
 
   .header-buttons.show {
     display: flex;
+  }
+  #front-title {
+    font-family: none;
   }
 }
 
