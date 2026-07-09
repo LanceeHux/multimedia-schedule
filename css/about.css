@@ -126,6 +126,8 @@ a[href="about.html"] {
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(0, 0, 0));
+  border-top: 1px solid white;
 }
 
 .member {
