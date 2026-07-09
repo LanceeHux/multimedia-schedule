@@ -128,9 +128,6 @@ a[href="index.html"] {
   .header-buttons.show {
     display: flex;
   }
-  #front-title {
-    font-family: none;
-  }
 }
 
 .temp {
@@ -150,7 +147,6 @@ a[href="index.html"] {
 }
 
 #front-title {
-  font-family: none;
   font-size: clamp(3rem, 11vw, 9rem);
   width: 100%;
   text-shadow: 2px 2px 20px rgb(232, 232, 232);
