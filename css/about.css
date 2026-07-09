@@ -267,6 +267,7 @@ footer div {
   margin-top:0;
   display: flex;
   justify-content: space-between;
+  padding: 0 50px 50px 50px;
 }
 .buttons {
   display:flex;
