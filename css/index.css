@@ -152,6 +152,7 @@ a[href="index.html"] {
   text-shadow: 2px 2px 20px rgb(232, 232, 232);
   text-transform: uppercase;
   margin-bottom: 0;
+  font-family: none;
 }
 .container button[type="submit"] {
   background:none;
