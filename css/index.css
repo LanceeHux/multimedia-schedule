@@ -101,6 +101,14 @@ a[href="index.html"] {
 .container h1 {
   text-decoration: none;
   font-weight: 300;
+  font-size: clamp(2rem, 8vw, 7rem);
+  width: 100%;
+}
+
+#front-title {
+  font-family: none;
+  font-size: clamp(2rem, 8vw, 7rem);
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -126,6 +134,7 @@ a[href="index.html"] {
     display: flex;
   }
 }
+
 .temp {
   width: 100%;
   height: auto;
@@ -140,4 +149,12 @@ a[href="index.html"] {
   height: 45px;
   object-fit: contain;
   display: block;
+}
+
+#front-title {
+  font-family: none;
+  font-size: clamp(3rem, 11vw, 9rem);
+  width: 100%;
+  text-shadow: 2px 2px 20px rgb(232, 232, 232);
+  text-transform: uppercase;
 }
