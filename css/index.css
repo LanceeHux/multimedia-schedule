@@ -154,7 +154,7 @@ a[href="index.html"] {
   margin-bottom: 0;
   font-family: none;
 }
-.container button[type="submit"] {
+.container a[type="submit"] {
   background:none;
   border:none;
   color: white;
@@ -167,8 +167,9 @@ a[href="index.html"] {
   width: 50%;
   align-self: center;
   transition: 0.6s ease;
+  text-decoration: none;
 }
-.container button[type="submit"]:hover {
+.container a[type="submit"]:hover {
   background: rgba(255, 255, 255, 0.863);
   color: black;
 }
