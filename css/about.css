@@ -255,11 +255,12 @@ footer div {
   justify-content: center;
   gap: 7px;
 }
-.connect-us button {
+.connect-us a {
   background: none;
   border: none;
   padding:5px;
   color: white;
+  text-decoration:none;
 }
 .last-footer {
   background-color: rgb(13, 13, 13);
