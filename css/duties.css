@@ -567,9 +567,7 @@ footer div {
     display: flex;
   }
 
-  .container {
-    padding-top: 140px;
-  }
+ 
   .forBottomBorder {
     display: grid;
     grid-template-columns: auto-fit, minmax(300px, 2fr);
