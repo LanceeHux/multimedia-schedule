@@ -237,7 +237,9 @@ body {
 }
 
 .footer {
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .actions {
