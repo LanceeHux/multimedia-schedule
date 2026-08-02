@@ -1,8 +1,8 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>COG Trece - Monthly Schedule</title>
+
     <style>
         :root { --accent: #f59e0b; --border: #e5e7eb; --text: #111827; }
         body { font-family: 'Inter', system-ui, sans-serif; background: #fafafa; padding: 20px; }
@@ -22,20 +22,60 @@
     font-size: 0.7rem; 
     font-weight: 700;
 }
-
+.temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #1c1c1c;
+  color: white;
+  border-bottom: 1px solid white;
+}
+.AM-slot, .PM-slot, .drytech {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 3px;
+  border-left: 1px solid white;
+  width: 100%;
+  justify-content: center;
+}
+.drytech {
+  color: #ffcd00;
+  background: #1c1c1c;
+  justify-content: center;
+}
+.AM-slot p, .PM-slot p, .drytech p {
+  font-weight: bold;
+}
     </style>
 </head>
 <body>
 
 <div class="page">
-    <h3>MONTH OF JULY 2026</h3>
+    <p>MONTH OF AUGUST 2026</h3>
     <table id="scheduleTable">
         <thead>
-            <tr id="dateRow"><th>Role</th></tr>
+            <tr id="dateRow"><th>Sunday Service Trece</th></tr>
             <tr id="shiftRow"><th></th></tr>
         </thead>
         <tbody id="gridBody"></tbody>
     </table>
+  <!-- gagawan ko ng rehearsal reminder part-->
+  <div class="rehearsals">
+    <div class="temp">
+      
+    
+    <div class="AM-slot">
+      <p>AM Rehearsal:</h3> <code>THURSDAY (5PM - 9PM)</code>
+    </div>
+    <div class="PM-slot">
+      <p>PM Rehearsal:</h3> <code>SATURDAY (7AM - 12NN)</code>
+    </div>
+  </div>
+  </div>
+  <div class="drytech">
+      <p>Drytech:</h3> <code>SATURDAY (12NN - 1PM)</code>
+    </div>
 </div>
 
 <script type="module">
