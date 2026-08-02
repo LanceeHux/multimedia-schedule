@@ -47,6 +47,28 @@
 .AM-slot p, .PM-slot p, .drytech p {
   font-weight: bold;
 }
+.call-time {
+  font-size: 80%;
+}
+.calltime-temp {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #ffcd00;
+  border-radius: 6px;
+  border: 1px solid black;
+}
+.calltime-temp div {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  border: 1px solid black;
+}
+.calltime-temp div code{
+  font-size: 120%;
+  padding: 5px;
+}
     </style>
 </head>
 <body>
@@ -75,6 +97,17 @@
   </div>
   <div class="drytech">
       <p>Drytech:</h3> <code>SATURDAY (12NN - 1PM)</code>
+    </div>
+    <div class="call-time">
+      <h4>CALL TIME:</h4>
+      <div class="calltime-temp">
+        <div>
+          <code>AM Slot: 6AM</code>
+        </div>
+        <div>
+        <code>PM Slot: 1:30PM</code>
+        </div>
+      </div>
     </div>
 </div>
 
