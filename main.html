@@ -1,113 +1,423 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>COG Trece - Monthly Schedule</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        :root { --accent: #f59e0b; --border: #e5e7eb; --text: #111827; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: #fafafa; padding: 20px; }
-        .page { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid var(--border); padding: 12px; text-align: center; font-size: 0.8rem; }
-        
-        .date-header { background: var(--accent); color: white; font-weight: 600; padding: 10px; }
-        .shift-header { background: #fffbeb; color: #92400e; font-size: 0.7rem; padding: 5px; }
-        .role-header { background: #fff5f5; font-weight: 700; text-align: left; }
-.open-slot { 
-    background-color: #dcfce7; 
-    color: #166534;            
-    padding: 2px 6px; 
-    border-radius: 4px; 
-    font-size: 0.7rem; 
-    font-weight: 700;
-}
-.temp {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background: #1c1c1c;
-  color: white;
-  border-bottom: 1px solid white;
-}
-.AM-slot, .PM-slot, .drytech {
-  display: flex;
-  gap: 5px;
-  margin: 0;
-  padding: 3px;
-  border-left: 1px solid white;
-  width: 100%;
-  justify-content: center;
-}
-.drytech {
-  color: #ffcd00;
-  background: #1c1c1c;
-  justify-content: center;
-}
-.AM-slot p, .PM-slot p, .drytech p {
-  font-weight: bold;
-}
-.call-time {
-  font-size: 80%;
-}
-.calltime-temp {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 10px;
-  background: #ffcd00;
-  border-radius: 6px;
-  border: 1px solid black;
-}
-.calltime-temp div {
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  border: 1px solid black;
-}
-.calltime-temp div code{
-  font-size: 120%;
-  padding: 5px;
-}
+        :root {
+            --stage: #121214;
+            --panel: #1b1b1e;
+            --panel-raised: #232327;
+            --hairline: #2f2f34;
+            --gold: #ffcd00;
+            --gold-dim: #7a6100;
+            --amber: #f59e0b;
+            --paper: #f6f4ee;
+            --ink: #17171a;
+            --ink-soft: #55555c;
+            --open: #4ade80;
+            --open-bg: #16351f;
+            --live: #ff3b30;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--stage); }
+
+        body {
+            font-family: var(--font-body);
+            background:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,205,0,0.06), transparent 60%),
+                radial-gradient(circle at 85% 0%, #1c1c20 0%, var(--stage) 55%);
+            color: var(--paper);
+            margin: 0;
+            padding: 32px 20px 60px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* film-grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: rise 0.5s ease-out;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .page { animation: none; }
+        }
+
+        /* ---------- Masthead ---------- */
+        .masthead {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        .masthead .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .masthead h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 4vw, 2.3rem);
+            letter-spacing: 0.01em;
+            margin: 4px 0 0;
+            text-transform: uppercase;
+            background: linear-gradient(115deg, #fff6cf 0%, var(--gold) 35%, #b8860b 55%, var(--gold) 75%, #fff6cf 100%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: foil 7s ease-in-out infinite;
+        }
+
+        @keyframes foil {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .masthead h1 { animation: none; }
+        }
+
+        .masthead .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .masthead .month {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            background: var(--panel-raised);
+            border: 1px solid var(--hairline);
+            padding: 6px 12px;
+            border-radius: 3px;
+            color: #cfcfd4;
+            white-space: nowrap;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--live);
+            border: 1px solid rgba(255,59,48,0.4);
+            background: rgba(255,59,48,0.08);
+            padding: 5px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .live-badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--live);
+            box-shadow: 0 0 0 0 rgba(255,59,48,0.6);
+            animation: pulse 1.6s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.55); }
+            70% { box-shadow: 0 0 0 7px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .live-badge .dot { animation: none; }
+        }
+
+        /* ---------- Schedule sheet ---------- */
+        .sheet-wrap {
+            position: relative;
+            padding: 0 16px;
+        }
+
+        .sheet-wrap::before,
+        .sheet-wrap::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 16px;
+            background-image: radial-gradient(circle, var(--stage) 3px, transparent 3.5px);
+            background-size: 16px 20px;
+            background-position: center;
+            z-index: 3;
+        }
+
+        .sheet-wrap::before { left: 0; }
+        .sheet-wrap::after { right: 0; }
+
+        .sheet {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 6px;
+            overflow-x: auto;
+        }
+
+        tbody tr { transition: background 0.15s ease; }
+        tbody tr:hover td:not(.role-header) { background: rgba(255,205,0,0.05); }
+
+        table { width: 100%; border-collapse: collapse; min-width: 640px; }
+
+        th, td {
+            border: 1px solid var(--hairline);
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 0.82rem;
+        }
+
+        .date-header {
+            background: var(--gold);
+            color: #1a1400;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        .shift-header {
+            background: var(--panel-raised);
+            color: var(--amber);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            padding: 6px;
+            text-transform: uppercase;
+        }
+
+        .role-header {
+            background: var(--panel-raised);
+            color: var(--paper);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-align: left;
+            padding-left: 16px;
+            text-transform: uppercase;
+            border-left: 3px solid var(--gold);
+        }
+
+        tbody td { color: #e4e4e8; }
+        tbody tr:nth-child(even) td:not(.role-header) { background: rgba(255,255,255,0.02); }
+
+        .open-slot {
+            display: inline-block;
+            background-color: var(--open-bg);
+            color: var(--open);
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(74,222,128,0.35);
+        }
+
+        /* ---------- Rehearsal / call-time placard ---------- */
+        .rehearsals { margin-top: 24px; }
+
+        .temp {
+            display: flex;
+            flex-direction: row;
+            gap: 1px;
+            background: var(--hairline);
+            border: 1px solid var(--hairline);
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+        }
+
+        .AM-slot, .PM-slot, .drytech {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0;
+            padding: 14px 10px;
+            width: 100%;
+            background: var(--panel);
+        }
+
+        .drytech {
+            color: var(--gold);
+            background: var(--panel);
+            border-radius: 0 0 10px 10px;
+            border: 1px solid var(--hairline);
+            border-top: none;
+        }
+
+        .AM-slot p, .PM-slot p, .drytech p {
+            font-weight: 700;
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+
+        .drytech p { color: var(--gold); opacity: 0.85; }
+
+        .AM-slot code, .PM-slot code, .drytech code {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--paper);
+            background: none;
+        }
+
+        .call-time { margin-top: 20px; }
+
+        .call-time h4 {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin: 0 0 8px;
+        }
+
+        .calltime-temp {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px;
+            background: linear-gradient(180deg, #ffdb33, var(--gold));
+            border-radius: 8px;
+            border: 1px solid var(--gold-dim);
+            box-shadow: 0 0 0 1px rgba(255,205,0,0.15), 0 8px 24px -8px rgba(255,205,0,0.5);
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 0 1px rgba(255,205,0,0.15), 0 8px 24px -8px rgba(255,205,0,0.5); }
+            50% { box-shadow: 0 0 0 1px rgba(255,205,0,0.2), 0 8px 30px -6px rgba(255,205,0,0.7); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .calltime-temp { animation: none; }
+        }
+
+        .calltime-temp div {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            border: 1px solid rgba(0,0,0,0.55);
+            border-radius: 5px;
+            background: rgba(255,255,255,0.18);
+        }
+
+        .calltime-temp div code {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            padding: 8px;
+            color: #1a1400;
+        }
+
+        @media (max-width: 560px) {
+            .temp { flex-direction: column; border-radius: 10px 10px 0 0; }
+            .calltime-temp { flex-direction: column; }
+            .masthead { flex-direction: column; align-items: flex-start; }
+            .status { width: 100%; justify-content: space-between; }
+            .sheet-wrap { padding: 0 10px; }
+            .sheet-wrap::before, .sheet-wrap::after { width: 10px; background-size: 10px 16px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="page">
-    <p>MONTH OF AUGUST 2026</h3>
-    <table id="scheduleTable">
-        <thead>
-            <tr id="dateRow"><th>Sunday Service Trece</th></tr>
-            <tr id="shiftRow"><th></th></tr>
-        </thead>
-        <tbody id="gridBody"></tbody>
-    </table>
-  <!-- gagawan ko ng rehearsal reminder part-->
-  <div class="rehearsals">
-    <div class="temp">
-      
-    
-    <div class="AM-slot">
-      <p>AM Rehearsal:</h3> <code>THURSDAY (5PM - 9PM)</code>
-    </div>
-    <div class="PM-slot">
-      <p>PM Rehearsal:</h3> <code>SATURDAY (7AM - 12NN)</code>
-    </div>
-  </div>
-  </div>
-  <div class="drytech">
-      <p>Drytech:</h3> <code>SATURDAY (12NN - 1PM)</code>
-    </div>
-    <div class="call-time">
-      <h4>CALL TIME:</h4>
-      <div class="calltime-temp">
+
+    <div class="masthead">
         <div>
-          <code>AM Slot: 6AM</code>
+            <div class="eyebrow">COG Trece &middot; Multimedia Ministry</div>
+            <h1>Sunday Service Rundown</h1>
         </div>
-        <div>
-        <code>PM Slot: 1:30PM</code>
+        <div class="status">
+            <span class="live-badge"><span class="dot"></span>LIVE DATABASE</span>
+            <div class="month">MONTH OF AUGUST 2026</div>
         </div>
-      </div>
+    </div>
+
+    <div class="sheet-wrap">
+        <div class="sheet">
+            <table id="scheduleTable">
+                <thead>
+                    <tr id="dateRow"><th></th></tr>
+                    <tr id="shiftRow"><th></th></tr>
+                </thead>
+                <tbody id="gridBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="rehearsals">
+        <div class="temp">
+            <div class="AM-slot">
+                <p>AM Rehearsal:</p> <code>THURSDAY (5PM &ndash; 9PM)</code>
+            </div>
+            <div class="PM-slot">
+                <p>PM Rehearsal:</p> <code>SATURDAY (7AM &ndash; 12NN)</code>
+            </div>
+        </div>
+        <div class="drytech">
+            <p>Drytech:</p> <code>SATURDAY (12NN &ndash; 1PM)</code>
+        </div>
+
+        <div class="call-time">
+            <h4>Call Time</h4>
+            <div class="calltime-temp">
+                <div><code>AM Slot: 6AM</code></div>
+                <div><code>PM Slot: 1:30PM</code></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -129,10 +439,9 @@
     const dates = ["August 2", "August 9", "August 16", "August 23", "August 30"];
     const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
 
- 
     const dateRow = document.getElementById("dateRow");
     const shiftRow = document.getElementById("shiftRow");
-    
+
     dates.forEach(d => {
         dateRow.innerHTML += `<th colspan="2" class="date-header">${d}</th>`;
         shiftRow.innerHTML += `<th class="shift-header">AM</th><th class="shift-header">PM</th>`;
@@ -141,15 +450,15 @@
     onSnapshot(collection(db, "slots"), (snapshot) => {
         const gridBody = document.getElementById("gridBody");
         gridBody.innerHTML = "";
-        
+
         roles.forEach(role => {
             let row = `<tr><td class="role-header">${role}</td>`;
             dates.forEach(date => {
                 const amData = snapshot.docs.find(d => d.id === `${date}-AM-${role}`)?.data()?.name;
-const pmData = snapshot.docs.find(d => d.id === `${date}-PM-${role}`)?.data()?.name;
-const amDisplay = amData ? amData : '<span class="open-slot">OPEN</span>';
-const pmDisplay = pmData ? pmData : '<span class="open-slot">OPEN</span>';
-              
+                const pmData = snapshot.docs.find(d => d.id === `${date}-PM-${role}`)?.data()?.name;
+                const amDisplay = amData ? amData : '<span class="open-slot">OPEN</span>';
+                const pmDisplay = pmData ? pmData : '<span class="open-slot">OPEN</span>';
+
                 row += `<td>${amDisplay}</td><td>${pmDisplay}</td>`;
             });
             row += `</tr>`;
