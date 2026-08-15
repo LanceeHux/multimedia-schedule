@@ -4,63 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /* Reset default body margins that cause overflow */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh">
-    <header style="
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    box-sizing: border-box;
-    ">
-        <h1 style="font-size: 1.5rem; margin: 0;">ARTS</h1>
-        <button style="border: none; background: none; cursor: pointer; font-size: 1.5rem;">=</button>
-    </header>
-    <div style="
-    width: 80%;
-    ">
-      <div style="
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      ">
-        <span style="
-        font-size: 90%;
-        ">COG Trece Multi</span>
-        <span style="
-        font-size: 90%;
-        ">Duty Schedules</span>
+<body class="flex min-h-screen items-center justify-center">
+
+  <video
+    src="https://trecemulti.vercel.app/images/bg-home.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    class="fixed inset-0 z-0 min-h-full min-w-full object-cover">
+  </video>
+
+  <header
+    style="border-bottom:1px solid rgba(255, 255, 255, 0.35); border-top:1px solid rgba(255, 255, 255, 0.35);"
+    class="absolute top-0 flex w-full justify-between bg-[gray]/10 p-5 text-2xl text-white shadow-xl backdrop-blur-md [letter-spacing:3px]">
+
+    <h1>ARTS</h1>
+
+    <button type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
+        <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+        <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8m-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="z-20 w-[80%] text-white">
+    <div class="flex justify-between">
+      <span class="text-sm">COG Trece Multimedia</span>
+      <span class="text-sm">Duty Schedules</span>
+    </div>
+
+    <div
+      style="border:1px solid rgba(255, 255, 255, 0.35); background:rgba(255, 255, 255, 0.08);"
+      class="relative rounded-xl p-5 shadow-xl backdrop-blur-md">
+
+      <h2 class="text-3xl [font-weight:bold]">Official Duty Scheduling System</h2>
+      <p>Select an available Sunday to view available slots.</p>
+
+      <div class="flex w-full flex-col items-center justify-center">
+        <input
+        id="nameInp"
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          class="m-3 w-[80%] bg-transparent p-3 [border-bottom:1px_solid] focus:outline-none [transition:0.6s_ease]"/>
+
+        <input
+        id="roleInp"
+          type="text"
+          name="role"
+          placeholder="Role Slot"
+          class="m-3 w-[80%] bg-transparent p-3 [border-bottom:1px_solid] focus:outline-none [transition:0.6s_ease]"/>
+
+        <button
+          type="submit"
+          style="border:1px solid rgba(255, 255, 255, 0.35); background:rgba(255, 255, 255, 0.08);"
+          class="rounded-xl p-3 [letter-spacing:3px] [transition:0.3s_ease] hover:!bg-[gray]"
+          onclick="callOverlayDate(true)">
+          Select Date
+        </button>
       </div>
-      <div style="
-      padding: 5px;
-      border: 1px solid black;
-      border-radius: 6px;
-      box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
-      ">
-        <h3>Official Duty Scheduling System</h3>
-        <p>Select an available Sunday to view available slots.</p>
+
+      <div
+        id="overlayDate"
+        class=" hidden absolute left-1/2 top-1/2 z-30 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/30 bg-[gray]/90 p-6 text-white shadow-2xl backdrop-blur-xl">
+
+        <div class="mb-5 flex items-center justify-between border-b border-white/20 pb-4">
+          <h3 class="text-sm font-semibold uppercase tracking-[3px]">
+            Select Date of Your Duty
+          </h3>
+
+          <button
+            type="button"
+            aria-label="Close date selection"
+            class="rounded-full px-2 text-2xl leading-none text-white/70 transition hover:bg-white/20 hover:text-white"
+            onclick="callOverlayDate(false)">
+            &times;
+          </button>
+        </div>
+
+        <div id="dates" class="flex flex-col gap-3">
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
+            September 6, 2026
+          </button>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
+            September 13, 2026
+          </button>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
+            September 20, 2026
+          </button>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
+            September 27, 2026
+          </button>
+        </div>
       </div>
     </div>
-    
+  </div>
+
 </body>
+<script type="text/javascript" charset="utf-8">
+  const overlayDiv = document.getElementById("overlayDate");
+  const nameInp = document.getElementById("nameInp");
+  const roleInp = document.getElementById("roleInp");
+  let overlay = false;
+  function callOverlayDate(func) {
+    if (!nameInp.value || !roleInp.value) {
+      alert("fill the required inputs first");
+      return;
+    }
+    func === true ? overlayDiv.style.display = "block" : overlayDiv.style.display = "none";
+  }
+</script>
 </html>
