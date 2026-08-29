@@ -1,189 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>COG Trece - Monthly Schedule</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --stage: #141418;
+            --panel: rgba(30, 30, 36, 0.65);
+            --panel-raised: rgba(45, 45, 54, 0.85);
+            --hairline: rgba(255, 255, 255, 0.12);
+            --gold: #ffcd00;
+            --gold-dim: #7a6100;
+            --amber: #f59e0b;
+            --paper: #fcfbf9;
+            --ink-soft: #9e9ea7;
+            --open: #4ade80;
+            --open-bg: rgba(22, 53, 31, 0.4);
+            --live: #ff3b30;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--stage); }
+
+        body {
+            font-family: var(--font-body);
+            background: 
+                radial-gradient(circle at 20% 15%, rgba(0, 140, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 80% 85%, rgba(0, 230, 180, 0.12) 0%, transparent 45%),
+                #18181d;
+            color: var(--paper);
+            margin: 0;
+            padding: 24px 20px 60px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Abstract glowing backdrop matching the screenshot style */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(ellipse at 10% 40%, rgba(30, 130, 255, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 70%, rgba(20, 210, 180, 0.15) 0%, transparent 55%);
+            z-index: 1;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: rise 0.5s ease-out;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- Navbar ---------- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-brand span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: #fff; }
+
+        .nav-links a.active {
+            color: #fff;
+            border: 1px solid var(--hairline);
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* ---------- Masthead ---------- */
+        .masthead {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .masthead .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .masthead h1 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: clamp(1.5rem, 3vw, 1.9rem);
+            letter-spacing: -0.01em;
+            margin: 0;
+            color: #fff;
+        }
+
+        .masthead .status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .masthead .month {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: var(--panel-raised);
+            border: 1px solid var(--hairline);
+            padding: 8px 14px;
+            border-radius: 20px;
+            color: #e4e4eb;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--live);
+            border: 1px solid rgba(255,59,48,0.4);
+            background: rgba(255,59,48,0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .live-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--live);
+            box-shadow: 0 0 0 0 rgba(255,59,48,0.6);
+            animation: pulse 1.6s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.55); }
+            70% { box-shadow: 0 0 0 6px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+
+        /* ---------- Schedule Sheet Card ---------- */
+        .sheet-wrap {
+            position: relative;
+            background: var(--panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--hairline);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .sheet {
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        tbody tr { transition: background 0.15s ease; }
+        tbody tr:hover td:not(.role-header) { background: rgba(255,255,255,0.05); }
+
+        table { width: 100%; border-collapse: collapse; min-width: 640px; }
+
+        th, td {
+            border: 1px solid var(--hairline);
+            padding: 14px 12px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .date-header {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            padding: 12px;
+            text-transform: uppercase;
+        }
+
+        .shift-header {
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--amber);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            padding: 8px;
+            text-transform: uppercase;
+        }
+
+        .role-header {
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--paper);
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-align: left;
+            padding-left: 16px;
+            text-transform: uppercase;
+            border-left: 3px solid var(--gold);
+        }
+
+        tbody td { color: #f0f0f4; font-family: var(--font-body); font-weight: 500; }
+        tbody tr:nth-child(even) td:not(.role-header) { background: rgba(255,255,255,0.02); }
+
+        .open-slot {
+            display: inline-block;
+            background-color: var(--open-bg);
+            color: var(--open);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(74,222,128,0.3);
+        }
+
+        /* ---------- Rehearsals & Call Times ---------- */
+        .rehearsals { margin-top: 24px; }
+
+        .temp {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .AM-slot, .PM-slot, .drytech {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0;
+            padding: 14px 18px;
+            width: 100%;
+            background: var(--panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+        }
+
+        .AM-slot p, .PM-slot p, .drytech p {
+            font-weight: 500;
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+
+        .AM-slot code, .PM-slot code, .drytech code {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: #fff;
+            background: rgba(255,255,255,0.06);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--hairline);
+        }
+
+        .call-time { margin-top: 20px; }
+
+        .call-time h4 {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin: 0 0 10px;
+        }
+
+        .calltime-temp {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .calltime-temp div {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            background: var(--panel);
+            backdrop-filter: blur(20px);
+            padding: 12px;
+        }
+
+        .calltime-temp div code {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: #fff;
+            background: none;
+        }
+
+        @media (max-width: 560px) {
+            .temp { flex-direction: column; }
+            .calltime-temp { flex-direction: column; }
+            .masthead { flex-direction: column; align-items: flex-start; }
+            .status { width: 100%; justify-content: space-between; }
+            .navbar { flex-direction: column; gap: 12px; align-items: flex-start; }
+        }
+    </style>
 </head>
-<body class="flex min-h-screen items-center justify-center">
+<body>
 
-  <video
-    src="https://trecemulti.vercel.app/images/bg-home.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    class="fixed inset-0 z-0 min-h-full min-w-full object-cover">
-  </video>
+<div class="page">
 
-  <header
-    style="border-bottom:1px solid rgba(255, 255, 255, 0.35); border-top:1px solid rgba(255, 255, 255, 0.35);"
-    class="absolute top-0 flex w-full justify-between bg-[gray]/10 p-5 text-2xl text-white shadow-xl backdrop-blur-md [letter-spacing:3px]">
-
-    <h1>ARTS</h1>
-
-    <button type="submit">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
-        <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-        <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8m-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7"/>
-      </svg>
-    </button>
-  </header>
-
-  <div class="z-20 w-[80%] text-white">
-    <div class="flex justify-between">
-      <span class="text-sm">COG Trece Multimedia</span>
-      <span class="text-sm">Duty Schedules</span>
+    <div class="navbar">
+        <a href="#" class="nav-brand">⛪ <span>ARTS</span></a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#" class="active">Schedule</a>
+        </div>
     </div>
 
-    <div
-      style="border:1px solid rgba(255, 255, 255, 0.35); background:rgba(255, 255, 255, 0.08);"
-      class="relative rounded-xl p-5 shadow-xl backdrop-blur-md">
-
-      <h2 class="text-3xl [font-weight:bold]">Official Duty Scheduling System</h2>
-      <p>Select an available Sunday to view available slots.</p>
-
-      <div class="flex w-full flex-col items-center justify-center">
-        <input
-        id="nameInp"
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          class="m-3 w-[80%] bg-transparent p-3 [border-bottom:1px_solid] focus:outline-none [transition:0.6s_ease]"/>
-
-          <button
-          type="submit"
-          style="border:1px solid rgba(255, 255, 255, 0.35); background:rgba(255, 255, 255, 0.08);"
-          class=" m-3 rounded-xl p-3 [letter-spacing:3px] [transition:0.3s_ease] hover:!bg-[gray]"
-          onclick="callOverlayRole(true)">
-          Select Role
-        </button>
-
-        <button
-          type="submit"
-          style="border:1px solid rgba(255, 255, 255, 0.35); background:rgba(255, 255, 255, 0.08);"
-          class="rounded-xl p-3 [letter-spacing:3px] [transition:0.3s_ease] hover:!bg-[gray]"
-          onclick="callOverlayDate(true)">
-          Select Date
-        </button>
-      </div>
-
-      <div
-        id="overlayDate"
-        class=" hidden absolute left-1/2 top-1/2 z-30 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/30 bg-[gray]/90 p-6 text-white shadow-2xl backdrop-blur-xl">
-
-        <div class="mb-5 flex items-center justify-between border-b border-white/20 pb-4">
-          <h3 class="text-sm font-semibold uppercase tracking-[3px]">
-            Select Date of Your Duty
-          </h3>
-
-          <button
-            type="button"
-            aria-label="Close date selection"
-            class="rounded-full px-2 text-2xl leading-none text-white/70 transition hover:bg-white/20 hover:text-white"
-            onclick="callOverlayDate(false)">
-            &times;
-          </button>
+    <div class="masthead">
+        <div>
+            <div class="eyebrow">COG Trece Multimedia</div>
+            <h1>Duty Schedules</h1>
         </div>
-
-        <div id="dates" class="flex flex-col gap-3">
-          <button
-            type="submit"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            September 6, 2026
-          </button>
-
-          <button
-            type="submit"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            September 13, 2026
-          </button>
-
-          <button
-            type="submit"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            September 20, 2026
-          </button>
-
-          <button
-            type="submit"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            September 27, 2026
-          </button>
+        <div class="status">
+            <span class="live-badge"><span class="dot"></span>LIVE DATABASE</span>
+            <div class="month">SEPTEMBER 2026</div>
         </div>
-      </div>
     </div>
-  </div>
 
- <div
-        id="overlayRole"
-        class=" hidden absolute left-1/2 top-1/2 z-30 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/30 bg-[gray]/90 p-6 text-white shadow-2xl backdrop-blur-xl">
-
-        <div class="mb-5 flex items-center justify-between border-b border-white/20 pb-4">
-          <h3 class="text-sm font-semibold uppercase tracking-[3px]">
-            Select Your Desired Role Slot
-          </h3>
-
-          <button
-            type="button"
-            aria-label="Close date selection"
-            class="rounded-full px-2 text-2xl leading-none text-white/70 transition hover:bg-white/20 hover:text-white"
-            onclick="callOverlayRole(false)">
-            &times;
-          </button>
+    <div class="sheet-wrap">
+        <div class="sheet">
+            <table id="scheduleTable">
+                <thead>
+                    <tr id="dateRow"><th></th></tr>
+                    <tr id="shiftRow"><th></th></tr>
+                </thead>
+                <tbody id="gridBody"></tbody>
+            </table>
         </div>
-
-        <div id="roles" class="flex flex-col gap-3">
-          <button
-            type="submit"
-            onclick="setRole('Prompter')"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            Prompter
-          </button>
-          <button
-            type="submit"
-            onclick="setRole('LED')"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            LED
-          </button>
-          <button
-            type="submit"
-            onclick="setRole('Preaching Support')"
-            class="w-full rounded-lg bg-white/40 border border-white/20 px-4 py-3 text-left transition duration-300 hover:border-white/50 hover:bg-white/90 hover:text-black hover:pl-6">
-            Preaching Support
-          </button>
-        </div>
-
-      </div>
-
     </div>
-  </div>
-</body>
-<script type="text/javascript" charset="utf-8">
-  const overlayDivDate = document.getElementById("overlayDate");
-  const overlayDivRole = document.getElementById("overlayRole");
-  const nameInp = document.getElementById("nameInp");
-  const roleInp = document.getElementById("roleInp");
-  const textRole = document.getElementById("textRole");
-  let overlay = false;
-  function callOverlayDate(func) {
-    if (!nameInp.value) {
-      alert("fill the required inputs first");
-      return;
-    }
-    func === true ? overlayDivDate.style.display = "block" : overlayDivDate.style.display = "none";
-  }
-  function callOverlayRole(func) {
-    if (!nameInp.value) {
-      alert("fill the required inputs first");
-      return;
-    }
-    func === true ? overlayDivRole.style.display = "block" : overlayDivRole.style.display = "none";
-  }
-  function setRole(role) {
-    userRole = role;
-    textRole.innerText = role;
-  }
+
+    <div class="rehearsals">
+        <div class="temp">
+            <div class="AM-slot">
+                <p>AM Rehearsal</p> <code>THURSDAY (5PM &ndash; 9PM)</code>
+            </div>
+            <div class="PM-slot">
+                <p>PM Rehearsal</p> <code>SATURDAY (7AM &ndash; 12NN)</code>
+            </div>
+        </div>
+        <div class="drytech">
+            <p>Drytech</p> <code>SATURDAY (12NN &ndash; 1PM)</code>
+        </div>
+
+        <div class="call-time">
+            <h4>Call Time</h4>
+            <div class="calltime-temp">
+                <div><code>AM Slot: 6AM</code></div>
+                <div><code>PM Slot: 1:30PM</code></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+        authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+        projectId: "multimedia-cog-trece-db",
+        storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+        messagingSenderId: "590911223632",
+        appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+    };
+
+    const db = getFirestore(initializeApp(firebaseConfig));
+
+    const dates = ["September 6", "September 13", "September 20", "September 27"];
+    const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
+
+    const dateRow = document.getElementById("dateRow");
+    const shiftRow = document.getElementById("shiftRow");
+
+    dates.forEach(d => {
+        dateRow.innerHTML += `<th colspan="2" class="date-header">${d}</th>`;
+        shiftRow.innerHTML += `<th class="shift-header">AM</th><th class="shift-header">PM</th>`;
+    });
+
+    onSnapshot(collection(db, "slots"), (snapshot) => {
+        const gridBody = document.getElementById("gridBody");
+        gridBody.innerHTML = "";
+
+        roles.forEach(role => {
+            let row = `<tr><td class="role-header">${role}</td>`;
+            dates.forEach(date => {
+                const amData = snapshot.docs.find(d => d.id === `${date}-AM-${role}`)?.data()?.name;
+                const pmData = snapshot.docs.find(d => d.id === `${date}-PM-${role}`)?.data()?.name;
+                const amDisplay = amData ? amData : '<span class="open-slot">OPEN</span>';
+                const pmDisplay = pmData ? pmData : '<span class="open-slot">OPEN</span>';
+
+                row += `<td>${amDisplay}</td><td>${pmDisplay}</td>`;
+            });
+            row += `</tr>`;
+            gridBody.innerHTML += row;
+        });
+    });
 </script>
+</body>
 </html>
