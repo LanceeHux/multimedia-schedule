@@ -1,46 +1,343 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <!-- Open Graph / Facebook (Social Media) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trecemulti.vercel.app/">
     <meta property="og:title" content="Arts Multimedia Ministry - COG Trece | Church of God Trece Martires City">
     <meta property="og:description" content="Arts Multimedia Ministry COG Trece (Church Of God Trece Martires City). Contains about the multimedia ministry, visual live schedules.">
-    <meta property="og:image" content="https://trecemulti.vercel.app/images/cog.png"> <!-- Recommended size: 1200x630 -->
+    <meta property="og:image" content="https://trecemulti.vercel.app/images/cog.png">
     <meta property="og:site_name" content="Arts Multimedia COG Trece">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arts Multimedia Ministry - COG Trece | Church of God Trece Martires City</title>
-    <link rel="stylesheet" href="css/index.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style type="text/css" media="all">
+      :root {
+        --stage: #141418;
+        --panel: rgba(30, 30, 36, 0.65);
+        --panel-raised: rgba(45, 45, 54, 0.85);
+        --hairline: rgba(255, 255, 255, 0.12);
+        --gold: #ffcd00;
+        --gold-dim: #7a6100;
+        --amber: #f59e0b;
+        --paper: #fcfbf9;
+        --ink-soft: #9e9ea7;
+        --font-display: 'Archivo Black', sans-serif;
+        --font-mono: 'IBM Plex Mono', monospace;
+        --font-body: Inter, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--stage);
+      }
+
+      body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px 20px 60px;
+        overflow-x: hidden;
+        color: var(--paper);
+        font-family: var(--font-body);
+        background:
+          radial-gradient(circle at 20% 15%, rgba(0, 140, 255, 0.15), transparent 45%),
+          radial-gradient(circle at 80% 85%, rgba(0, 230, 180, 0.12), transparent 45%),
+          #18181d;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 10% 40%, rgba(30, 130, 255, 0.18), transparent 55%),
+          radial-gradient(ellipse at 90% 70%, rgba(20, 210, 180, 0.15), transparent 55%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.03;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .bg-video {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.3;
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        animation: rise 0.5s ease-out;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-bottom: 24px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .temp {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .temp img {
+        display: block;
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+      }
+
+      .header p {
+        margin: 0;
+        color: #fff;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        letter-spacing: 0.15em;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        width: 28px;
+        height: 3px;
+        border-radius: 3px;
+        background: #fff;
+      }
+
+      .header-buttons {
+        display: flex;
+        gap: 24px;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .header-buttons a {
+        padding: 6px 14px;
+        border-radius: 20px;
+        color: var(--ink-soft);
+        text-decoration: none;
+        transition: 0.2s ease;
+      }
+
+      .header-buttons a:hover {
+        color: #fff;
+      }
+
+      .header-buttons a.active,
+      .header-buttons a[href="index.html"] {
+        border: 1px solid var(--hairline);
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 0;
+        color: #fff;
+        text-align: center;
+      }
+
+      #front-title {
+        position: relative;
+        width: 100%;
+        margin: 0 0 10px;
+        color: transparent;
+        font-family: "Times New Roman", Times, serif;
+        font-size: clamp(2.2rem, 6vw, 4.5rem);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background: linear-gradient(
+          115deg,
+          #fff6cf 0%,
+          var(--gold) 35%,
+          #b8860b 55%,
+          var(--gold) 75%,
+          #fff6cf 100%
+        );
+        background-size: 220% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        filter: drop-shadow(0 0 5px rgba(255, 205, 0, 0.45));
+        animation: titleGlow 3.5s ease-in-out infinite;
+      }
+
+      @keyframes titleGlow {
+        0%,
+        100% {
+          background-position: 0% 50%;
+          filter:
+            drop-shadow(0 0 4px rgba(255, 205, 0, 0.35))
+            drop-shadow(0 0 12px rgba(255, 178, 0, 0.18));
+        }
+
+        50% {
+          background-position: 100% 50%;
+          filter:
+            drop-shadow(0 0 8px rgba(255, 225, 90, 0.75))
+            drop-shadow(0 0 24px rgba(255, 174, 0, 0.42));
+        }
+      }
+
+      .container span {
+        margin-bottom: 30px;
+        color: var(--ink-soft);
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .container a[type="submit"] {
+        min-width: 200px;
+        padding: 12px 28px;
+        margin: 10px;
+        border: 1px solid var(--hairline);
+        border-radius: 25px;
+        color: #fff;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        text-transform: uppercase;
+        background: var(--panel);
+        backdrop-filter: blur(20px);
+        transition: 0.3s ease;
+      }
+
+      .container a[type="submit"]:hover {
+        border-color: var(--gold);
+        color: #1a1400;
+        background: var(--gold);
+        box-shadow: 0 0 20px rgba(255, 205, 0, 0.4);
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .header-buttons {
+          position: absolute;
+          top: 70px;
+          right: 20px;
+          display: none;
+          flex-direction: column;
+          gap: 10px;
+          padding: 16px;
+          border: 1px solid var(--hairline);
+          border-radius: 12px;
+          background: var(--panel-raised);
+          backdrop-filter: blur(12px);
+        }
+
+        .header-buttons.show {
+          display: flex;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #front-title,
+        .page {
+          animation: none;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <video autoplay muted loop playsinline class="bg-video">
-      <source src="images/bg-home.mp4" type="video/mp4" />
+      <source src="https://trecemulti.vercel.app/images/bg-home.mp4" type="video/mp4">
     </video>
+<div class="header">
+        <div class="temp">
+          <img src="https://trecemulti.vercel.app/images/cog.png" alt="">
+          <p>ARTS</p>
+        </div>
 
-    <div class="header">
-      <div class="temp">
-        <img src="images/cog.png" alt="" />
-      <p>ARTS</p>
-      </div>
-      <div class="menu-toggle" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="header-buttons" id="headerButtons">
-        <a href="https://trecemulti.vercel.app/">Home</a>
-        <a href="about">About</a>
-        <a href="duties">Schedule</a>
-      </div>
-    </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
-    <div class="container">
-      <p id="front-title">Arts - multimedia</p>
-      <span>Church of God - Trece Martires</span>
-      <a type="submit" href="https://www.facebook.com/COGTreceMartires">facebook</a>
+        <div class="header-buttons" id="headerButtons">
+          <a href="https://trecemulti.vercel.app/" class="active">Home</a>
+          <a href="about">About</a>
+          <a href="duties">Schedule</a>
+        </div>
+      </div>
+    <div class="page">
+      
+
+      <div class="container">
+        <p id="front-title">Arts &middot; Multimedia</p>
+        <span>Church of God &middot; Trece Martires</span>
+        <a type="submit" href="https://www.facebook.com/COGTreceMartires">Facebook Page</a>
+      </div>
     </div>
 
     <script src="js/variant.js"></script>
+    <script>
+      function toggleMenu() {
+        document.getElementById('headerButtons').classList.toggle('show');
+      }
+    </script>
   </body>
 </html>
