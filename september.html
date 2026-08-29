@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Open Graph / Facebook (Social Media) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trecemulti.vercel.app/schedule">
     <meta property="og:title" content="Arts Multimedia Ministry - COG Trece | Church of God Trece Martires City">
@@ -10,337 +9,427 @@
     <meta property="og:site_name" content="Arts Multimedia COG Trece">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COG Trece Multimedia | Duty Scheduling</title>
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stage: '#121214',
+                        panel: '#1b1b1e',
+                        'panel-raised': '#232327',
+                        hairline: '#2f2f34',
+                        gold: '#ffcd00',
+                        'gold-dim': '#7a6100',
+                        amber: '#f59e0b',
+                        paper: '#f6f4ee',
+                        'ink-soft': '#55555c',
+                        open: '#4ade80',
+                        'open-bg': '#16351f',
+                        live: '#ff3b30',
+                    },
+                    fontFamily: {
+                        display: ['"Archivo Black"', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Times New Roman"', 'Times', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <style>
+        html { background: #121214; }
+
+        body {
+            background:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,205,0,0.06), transparent 60%),
+                radial-gradient(circle at 85% 0%, #1c1c20 0%, #121214 55%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        @keyframes foil {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .gold-foil-text {
+            background: linear-gradient(115deg, #fff6cf 0%, #ffcd00 35%, #b8860b 55%, #ffcd00 75%, #fff6cf 100%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: foil 7s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.55); }
+            70% { box-shadow: 0 0 0 7px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+
+        .live-dot { animation: pulse-dot 1.6s ease-out infinite; }
+
+        @keyframes glow-box {
+            0%, 100% {
+                box-shadow: 0 0 0 1px rgba(255,205,0,0.15),
+                    0 8px 24px -8px rgba(255,205,0,0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 1px rgba(255,205,0,0.2),
+                    0 8px 30px -6px rgba(255,205,0,0.7);
+            }
+        }
+
+        .gold-glow-box { animation: glow-box 4s ease-in-out infinite; }
+    </style>
 </head>
 
-<body class="relative flex min-h-screen items-center justify-center bg-black font-sans text-white antialiased selection:bg-white selection:text-black">
+<body class="relative flex min-h-screen flex-col items-center justify-between bg-stage font-sans text-paper antialiased selection:bg-gold selection:text-black p-6 sm:p-8">
 
-  <!-- Background Video -->
-  <video
-    src="https://trecemulti.vercel.app/images/bg-home.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    class="fixed inset-0 z-0 h-full w-full object-cover">
-  </video>
+    <video
+        src="https://trecemulti.vercel.app/images/bg-home.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        class="fixed inset-0 z-0 h-full w-full object-cover opacity-30">
+    </video>
 
-  <!-- Header matching the image styling -->
-  <header class="absolute top-0 z-35 flex w-full items-center justify-between border-b border-t border-white/35 bg-[gray]/10 px-6 sm:px-10 py-5 shadow-2xl backdrop-blur-md">
-    <div class="flex items-center gap-3">
-      <img src="images/cog.png" alt="COG Logo" class="h-10 w-10 object-contain drop-shadow" />
-      <h1 class="text-2xl uppercase text-white tracking-[3px] font-light">ARTS</h1>
-    </div>
-
-    <!-- Mobile Menu Toggle -->
-    <button type="button" aria-label="Toggle Menu" class="flex md:hidden flex-col justify-center items-center gap-1.5 cursor-pointer p-2.5 rounded-xl border border-white/20 bg-white/5 transition hover:bg-white/10" onclick="toggleMenu()">
-      <span class="h-0.5 w-6 bg-white rounded-full"></span>
-      <span class="h-0.5 w-6 bg-white rounded-full"></span>
-      <span class="h-0.5 w-6 bg-white rounded-full"></span>
-    </button>
-
-    <!-- Desktop Navigation Links -->
-    <nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-[3px]">
-      <a href="https://trecemulti.vercel.app/" class="rounded-lg px-2.5 py-1 transition duration-300 hover:bg-white/35 hover:text-black">Home</a>
-      <a href="about" class="rounded-lg px-2.5 py-1 transition duration-300 hover:bg-white/35 hover:text-black">About</a>
-      <a href="duties" class="rounded-lg px-2.5 py-1 transition duration-300 hover:bg-white/35 hover:text-black border-b border-white">Schedule</a>
-    </nav>
-  </header>
-
-  <!-- Mobile Dropdown Menu -->
-  <div id="mobileMenu" class="hidden absolute top-24 right-5 z-40 flex-col gap-2 rounded-2xl border border-white/25 bg-gray-900/95 p-5 shadow-2xl backdrop-blur-2xl md:hidden text-xs uppercase tracking-[3px] w-48">
-    <a href="https://trecemulti.vercel.app/" class="rounded-xl px-3 py-2.5 text-center transition hover:bg-white/35 hover:text-black">Home</a>
-    <a href="about" class="rounded-xl px-3 py-2.5 text-center transition hover:bg-white/35 hover:text-black">About</a>
-    <a href="duties" class="rounded-xl px-3 py-2.5 text-center transition bg-white/25 text-white border-b border-white">Schedule</a>
-  </div>
-
-  <!-- Main Content Layout -->
-  <main class="z-20 w-[92%] max-w-lg text-white my-32">
-    <div class="mb-5 flex items-center justify-between px-2 tracking-[3px]">
-      <span class="text-xs uppercase text-white/90 font-medium">COG Trece Multimedia</span>
-      <span class="text-xs uppercase text-white/50">Duty Schedules</span>
-    </div>
-
-    <!-- Glassmorphism Card with Refined Padding and Spacing -->
-    <div class="relative rounded-2xl border border-white/35 bg-white/[0.08] p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
-
-      <div class="mb-8 text-center">
-        <h2 class="text-2xl sm:text-3xl font-light tracking-[3px] uppercase">Official Duty Scheduling System</h2>
-        <p class="mt-3 text-xs sm:text-sm tracking-widest text-white/80 leading-relaxed">Select an available Sunday to view available slots.</p>
-      </div>
-
-      <div class="flex w-full flex-col items-center justify-center tracking-[2px]">
-        <!-- Name Input with Clean Focus States -->
-        <div class="w-full mb-6 px-2">
-          <input
-            id="nameInp"
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            class="w-full bg-transparent px-2 py-3.5 text-center sm:text-left text-white placeholder-white/50 border-b border-white/50 focus:border-white focus:outline-none tracking-[2px] transition duration-300">
+    <header class="relative z-30 flex w-full items-center justify-between border-b border-hairline pb-5">
+        <div class="flex items-center gap-3">
+            <img src="images/cog.png" alt="COG Logo" class="h-10 w-10 object-contain">
+            <p class="font-serif text-2xl tracking-[0.15em] text-white">ARTS</p>
         </div>
 
-        <!-- Selection Status Readouts -->
-        <div class="grid w-full grid-cols-1 sm:grid-cols-3 gap-3 mb-8 px-1 text-xs text-white/90 tracking-widest">
-          <div class="flex sm:flex-col items-center justify-between sm:justify-center p-3 rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm gap-1">
-            <span class="text-white/50 uppercase text-[10px]">Role</span>
-            <span id="selectedRole" class="font-medium truncate max-w-[120px] sm:max-w-none">Not selected</span>
-          </div>
-          <div class="flex sm:flex-col items-center justify-between sm:justify-center p-3 rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm gap-1">
-            <span class="text-white/50 uppercase text-[10px]">Date</span>
-            <span id="selectedDate" class="font-medium truncate max-w-[120px] sm:max-w-none">Not selected</span>
-          </div>
-          <div class="flex sm:flex-col items-center justify-between sm:justify-center p-3 rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm gap-1">
-            <span class="text-white/50 uppercase text-[10px]">Slot</span>
-            <span id="selectedSlot" class="font-medium truncate max-w-[120px] sm:max-w-none">Not selected</span>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex w-full flex-col sm:flex-row justify-center gap-3 mb-6">
-          <button
-            type="button"
-            class="flex-1 rounded-xl border border-white/35 bg-white/10 px-4 py-3.5 [letter-spacing:3px] transition duration-300 hover:bg-white hover:text-black text-xs uppercase font-medium shadow-lg"
-            onclick="callOverlayRole(true)">
-            Select Role
-          </button>
-
-          <button
-            type="button"
-            class="flex-1 rounded-xl border border-white/35 bg-white/10 px-4 py-3.5 [letter-spacing:3px] transition duration-300 hover:bg-white hover:text-black text-xs uppercase font-medium shadow-lg"
-            onclick="callOverlayDate(true)">
-            Select Date
-          </button>
-        </div>
-
-        <!-- Submit Button -->
         <button
-          id="submitBtn"
-          type="button"
-          onclick="submitDutySchedule()"
-          class="w-full rounded-xl border border-white/35 bg-white/20 px-6 py-4 font-semibold tracking-[3px] uppercase transition duration-300 hover:bg-white hover:text-black text-xs shadow-xl active:scale-[0.99] disabled:opacity-50">
-          Submit Duty Schedule
+            type="button"
+            aria-label="Toggle Menu"
+            class="flex cursor-pointer flex-col items-center justify-center gap-1.5 p-2 md:hidden"
+            onclick="toggleMenu()">
+            <span class="h-0.5 w-7 rounded bg-white"></span>
+            <span class="h-0.5 w-7 rounded bg-white"></span>
+            <span class="h-0.5 w-7 rounded bg-white"></span>
         </button>
 
-        <p id="statusMessage" class="mt-4 text-center text-xs tracking-wide"></p>
-      </div>
+        <nav class="hidden items-center gap-6 font-mono text-xs uppercase tracking-[0.15em] md:flex">
+            <a href="https://trecemulti.vercel.app/" class="rounded-full px-3.5 py-1.5 text-ink-soft transition hover:text-white">Home</a>
+            <a href="about" class="rounded-full px-3.5 py-1.5 text-ink-soft transition hover:text-white">About</a>
+            <a href="duties" class="rounded-full border border-hairline bg-white/[0.06] px-3.5 py-1.5 text-white">Schedule</a>
+        </nav>
+    </header>
 
-      <!-- Date & Slot Overlay Modal -->
-      <div
-        id="overlayDate"
-        class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-2xl border border-white/35 bg-gray-950/95 p-6 sm:p-8 text-white shadow-2xl backdrop-blur-2xl tracking-[2px]">
-
-        <div class="mb-5 flex items-center justify-between border-b border-white/20 pb-4">
-          <h3 class="text-xs sm:text-sm font-semibold uppercase tracking-[3px]">Select Date and Slot</h3>
-          <button
-            type="button"
-            aria-label="Close date selection"
-            class="flex h-8 w-8 items-center justify-center rounded-full text-2xl text-white/70 transition hover:bg-white/20"
-            onclick="callOverlayDate(false)">
-            &times;
-          </button>
-        </div>
-
-        <div id="dates" class="flex flex-col gap-2.5 text-xs sm:text-sm">
-          <button type="button" onclick="setDate('September 6, 2026')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            September 6, 2026
-          </button>
-          <button type="button" onclick="setDate('September 13, 2026')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            September 13, 2026
-          </button>
-          <button type="button" onclick="setDate('September 20, 2026')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            September 20, 2026
-          </button>
-          <button type="button" onclick="setDate('September 27, 2026')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            September 27, 2026
-          </button>
-        </div>
-
-        <div class="mt-6 border-t border-white/20 pt-5">
-          <h4 class="mb-3 text-xs sm:text-sm font-semibold uppercase tracking-[3px]">Select Slot</h4>
-
-          <div class="flex gap-3 text-xs sm:text-sm">
-            <button
-              type="button"
-              onclick="setSlot('AM Slot')"
-              class="w-1/2 rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 transition hover:bg-white hover:text-black shadow-sm text-center font-medium">
-              AM Slot
-            </button>
-
-            <button
-              type="button"
-              onclick="setSlot('PM Slot')"
-              class="w-1/2 rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 transition hover:bg-white hover:text-black shadow-sm text-center font-medium">
-              PM Slot
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Role Overlay Modal -->
-      <div
-        id="overlayRole"
-        class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-2xl border border-white/35 bg-gray-950/95 p-6 sm:p-8 text-white shadow-2xl backdrop-blur-2xl tracking-[2px]">
-
-        <div class="mb-5 flex items-center justify-between border-b border-white/20 pb-4">
-          <h3 class="text-xs sm:text-sm font-semibold uppercase tracking-[3px]">Select Your Role</h3>
-          <button
-            type="button"
-            aria-label="Close role selection"
-            class="flex h-8 w-8 items-center justify-center rounded-full text-2xl text-white/70 transition hover:bg-white/20"
-            onclick="callOverlayRole(false)">
-            &times;
-          </button>
-        </div>
-
-        <div id="roles" class="flex flex-col gap-2.5 text-xs sm:text-sm">
-          <button type="button" onclick="setRole('Prompter')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            Prompter
-          </button>
-          <button type="button" onclick="setRole('LED')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            LED
-          </button>
-          <button type="button" onclick="setRole('Preaching Support')" class="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-left transition hover:bg-white hover:text-black shadow-sm">
-            Preaching Support
-          </button>
-        </div>
-      </div>
-
+    <div id="mobileMenu" class="hidden absolute right-6 top-20 z-40 w-48 flex-col gap-2 rounded-xl border border-hairline bg-panel p-4 font-mono text-xs uppercase tracking-[0.15em] shadow-2xl backdrop-blur-xl md:hidden">
+        <a href="https://trecemulti.vercel.app/" class="rounded-lg px-3 py-2 text-ink-soft transition hover:bg-white/5 hover:text-white">Home</a>
+        <a href="about" class="rounded-lg px-3 py-2 text-ink-soft transition hover:bg-white/5 hover:text-white">About</a>
+        <a href="duties" class="rounded-lg border border-hairline bg-white/10 px-3 py-2 text-white">Schedule</a>
     </div>
-  </main>
 
-  <!-- Script logic preserved -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
-      authDomain: "multimedia-cog-trece-db.firebaseapp.com",
-      projectId: "multimedia-cog-trece-db",
-      storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
-      messagingSenderId: "590911223632",
-      appId: "1:590911223632:web:ca01a50270d9565c6ade55"
-    };
+    <main class="relative z-20 my-auto w-full max-w-[1080px] py-8">
+        <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3 border-b-[3px] border-gold pb-4">
+            <div>
+                <div class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-gold">
+                    COG Trece &middot; Multimedia Ministry
+                </div>
+                <h1 class="gold-foil-text mt-1 font-display text-[clamp(1.6rem,4vw,2.3rem)] uppercase tracking-[0.01em]">
+                    Official Duty Scheduling
+                </h1>
+            </div>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+            <div class="flex items-center gap-2.5">
+                <div class="whitespace-nowrap rounded border border-hairline bg-panel-raised px-3 py-1.5 font-mono text-[0.9rem] text-paper/90">
+                    DUTY REGISTRATION
+                </div>
+            </div>
+        </div>
 
-    const overlayDivDate = document.getElementById("overlayDate");
-    const overlayDivRole = document.getElementById("overlayRole");
-    const nameInp = document.getElementById("nameInp");
-    const selectedRole = document.getElementById("selectedRole");
-    const selectedDate = document.getElementById("selectedDate");
-    const selectedSlot = document.getElementById("selectedSlot");
-    const statusMessage = document.getElementById("statusMessage");
-    const submitBtn = document.getElementById("submitBtn");
+        <div class="relative rounded-xl border border-hairline bg-panel p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+            <div class="mb-8 text-center">
+                <h2 class="font-display text-xl uppercase tracking-[0.05em] text-paper sm:text-2xl">
+                    Select Your Duty Slot
+                </h2>
+                <p class="mt-2 font-mono text-xs tracking-widest text-ink-soft">
+                    Fill in your name, select your preferred role, date, and service slot.
+                </p>
+            </div>
 
-    let userRole = "";
-    let dutyDate = "";
-    let dutySlot = "";
+            <div class="flex w-full flex-col items-center justify-center font-mono">
+                <div class="mb-6 w-full">
+                    <label class="mb-2 block text-[0.68rem] uppercase tracking-[0.12em] text-amber">
+                        Your Name
+                    </label>
+                    <input
+                        id="nameInp"
+                        type="text"
+                        name="name"
+                        placeholder="Your Name"
+                        class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-sm tracking-wider text-paper placeholder-paper/30 transition duration-300 focus:border-gold focus:outline-none">
+                </div>
 
-    function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.classList.toggle("hidden");
-      menu.classList.toggle("flex");
-    }
+                <div class="mb-6 grid w-full grid-cols-1 gap-3 text-xs sm:grid-cols-3">
+                    <div class="flex items-center justify-between gap-1 rounded-lg border border-hairline bg-panel-raised p-3.5 sm:flex-col sm:justify-center">
+                        <span class="text-[0.65rem] uppercase tracking-wider text-ink-soft">Role</span>
+                        <span id="selectedRole" class="max-w-[140px] truncate font-semibold text-paper sm:max-w-none">Not selected</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1 rounded-lg border border-hairline bg-panel-raised p-3.5 sm:flex-col sm:justify-center">
+                        <span class="text-[0.65rem] uppercase tracking-wider text-ink-soft">Date</span>
+                        <span id="selectedDate" class="max-w-[140px] truncate font-semibold text-paper sm:max-w-none">Not selected</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1 rounded-lg border border-hairline bg-panel-raised p-3.5 sm:flex-col sm:justify-center">
+                        <span class="text-[0.65rem] uppercase tracking-wider text-ink-soft">Slot</span>
+                        <span id="selectedSlot" class="max-w-[140px] truncate font-semibold text-paper sm:max-w-none">Not selected</span>
+                    </div>
+                </div>
 
-    function hasName() {
-      if (!nameInp.value.trim()) {
-        alert("Please enter your name first.");
-        nameInp.focus();
-        return false;
-      }
-      return true;
-    }
+                <div class="mb-6 flex w-full flex-col justify-center gap-3 sm:flex-row">
+                    <button
+                        type="button"
+                        class="flex-1 rounded-lg border border-hairline bg-panel-raised px-4 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-amber shadow-sm transition duration-300 hover:border-gold"
+                        onclick="callOverlayRole(true)">
+                        Select Role
+                    </button>
 
-    function callOverlayDate(show) {
-      if (show && !hasName()) return;
-      overlayDivDate.style.display = show ? "block" : "none";
-    }
+                    <button
+                        type="button"
+                        class="flex-1 rounded-lg border border-hairline bg-panel-raised px-4 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-amber shadow-sm transition duration-300 hover:border-gold"
+                        onclick="callOverlayDate(true)">
+                        Select Date &amp; Slot
+                    </button>
+                </div>
 
-    function callOverlayRole(show) {
-      if (show && !hasName()) return;
-      overlayDivRole.style.display = show ? "block" : "none";
-    }
+                <button
+                    id="submitBtn"
+                    type="button"
+                    onclick="submitDutySchedule()"
+                    class="w-full rounded-lg bg-gold px-6 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[#1a1400] shadow-lg transition duration-300 hover:bg-[#e6b800] active:scale-[0.99] disabled:opacity-50">
+                    Submit Duty Schedule
+                </button>
 
-    function setRole(role) {
-      userRole = role;
-      selectedRole.textContent = role;
-      callOverlayRole(false);
-    }
+                <p id="statusMessage" class="mt-4 text-center text-xs tracking-wide"></p>
+            </div>
 
-    function setDate(date) {
-      dutyDate = date;
-      selectedDate.textContent = date;
-    }
+            <div id="overlayDate" class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-xl border border-hairline bg-panel p-6 font-mono text-paper shadow-2xl backdrop-blur-2xl">
+                <div class="mb-5 flex items-center justify-between border-b border-hairline pb-4">
+                    <h3 class="text-xs font-bold uppercase tracking-[0.15em] text-gold">Select Date and Slot</h3>
+                    <button
+                        type="button"
+                        aria-label="Close date selection"
+                        class="flex h-7 w-7 items-center justify-center rounded border border-hairline bg-panel-raised text-lg text-paper/70 transition hover:bg-gold hover:text-black"
+                        onclick="callOverlayDate(false)">
+                        &times;
+                    </button>
+                </div>
 
-    function setSlot(slot) {
-      dutySlot = slot;
-      selectedSlot.textContent = slot;
-      callOverlayDate(false);
-    }
+                <div id="dates" class="flex flex-col gap-2 text-xs">
+                    <button type="button" id="September_6" onclick="setDate('September 6, 2026')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">September 6, 2026</button>
+                    <button type="button" id="September_13" onclick="setDate('September 13, 2026')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">September 13, 2026</button>
+                    <button type="button" id="September_20" onclick="setDate('September 20, 2026')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">September 20, 2026</button>
+                    <button type="button" id="September_27" onclick="setDate('September 27, 2026')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">September 27, 2026</button>
+                </div>
 
-    function getSlotDocumentId() {
-      const dateWithoutYear = dutyDate.replace(/,\s*\d{4}$/, "");
-      const slot = dutySlot.startsWith("AM") ? "AM" : "PM";
-      const role = userRole.replace(/\s+/g, "-").toUpperCase();
-      return `${dateWithoutYear}-${slot}-${role}`;
-    }
+                <div class="mt-6 border-t border-hairline pt-5">
+                    <h4 class="mb-3 text-xs font-bold uppercase tracking-[0.15em] text-gold">Select Slot</h4>
+                    <div class="flex gap-3 text-xs">
+                        <button type="button" onclick="setSlot('AM Slot')" class="w-1/2 rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-center font-bold shadow-sm transition hover:border-gold hover:text-gold">AM Slot</button>
+                        <button type="button" onclick="setSlot('PM Slot')" class="w-1/2 rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-center font-bold shadow-sm transition hover:border-gold hover:text-gold">PM Slot</button>
+                    </div>
+                </div>
+            </div>
 
-    async function submitDutySchedule() {
-      if (!nameInp.value.trim() || !userRole || !dutyDate || !dutySlot) {
-        statusMessage.textContent = "Please enter your name and select a role, date, and slot.";
-        statusMessage.className = "mt-4 text-center text-xs text-yellow-300 tracking-wide";
-        return;
-      }
+            <div id="overlayRole" class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-xl border border-hairline bg-panel p-6 font-mono text-paper shadow-2xl backdrop-blur-2xl">
+                <div class="mb-5 flex items-center justify-between border-b border-hairline pb-4">
+                    <h3 class="text-xs font-bold uppercase tracking-[0.15em] text-gold">Select Your Role</h3>
+                    <button
+                        type="button"
+                        aria-label="Close role selection"
+                        class="flex h-7 w-7 items-center justify-center rounded border border-hairline bg-panel-raised text-lg text-paper/70 transition hover:bg-gold hover:text-black"
+                        onclick="callOverlayRole(false)">
+                        &times;
+                    </button>
+                </div>
 
-      const slotId = getSlotDocumentId();
-      const slotRef = db.collection("slots").doc(slotId);
+                <div id="roles" class="flex flex-col gap-2 text-xs">
+                    <button type="button" onclick="setRole('Prompter')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">Prompter</button>
+                    <button type="button" onclick="setRole('LED')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">LED</button>
+                    <button type="button" onclick="setRole('Preaching Support')" class="w-full rounded-lg border border-hairline bg-panel-raised px-4 py-3 text-left shadow-sm transition hover:border-gold hover:text-gold">Preaching Support</button>
+                </div>
+            </div>
+        </div>
+    </main>
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
+    <footer class="relative z-20 mt-8 w-full max-w-[1080px] border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
+        COG Trece Multimedia Ministry &copy; 2026
+    </footer>
 
-      try {
-        await db.runTransaction(async (transaction) => {
-          const slotSnapshot = await transaction.get(slotRef);
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+            authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+            projectId: "multimedia-cog-trece-db",
+            storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+            messagingSenderId: "590911223632",
+            appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+        };
 
-          if (slotSnapshot.exists && slotSnapshot.data().status === "taken") {
-            throw new Error("SLOT_ALREADY_RESERVED");
-          }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-          transaction.set(slotRef, {
-            name: nameInp.value.trim(),
-            status: "taken"
-          }, { merge: true });
-        });
+        const overlayDivDate = document.getElementById("overlayDate");
+        const overlayDivRole = document.getElementById("overlayRole");
+        const nameInp = document.getElementById("nameInp");
+        const selectedRole = document.getElementById("selectedRole");
+        const selectedDate = document.getElementById("selectedDate");
+        const selectedSlot = document.getElementById("selectedSlot");
+        const statusMessage = document.getElementById("statusMessage");
+        const submitBtn = document.getElementById("submitBtn");
 
-        statusMessage.textContent = `Submitted successfully to slots/${slotId}`;
-        statusMessage.className = "mt-4 text-center text-xs text-green-300 tracking-wide";
+        let userRole = "";
+        let dutyDate = "";
+        let dutySlot = "";
 
-        nameInp.value = "";
-        userRole = "";
-        dutyDate = "";
-        dutySlot = "";
-
-        selectedRole.textContent = "Not selected";
-        selectedDate.textContent = "Not selected";
-        selectedSlot.textContent = "Not selected";
-      } catch (error) {
-        console.error(error);
-
-        if (error.message === "SLOT_ALREADY_RESERVED") {
-          statusMessage.textContent = "This slot has already been reserved.";
-          statusMessage.className = "mt-4 text-center text-xs text-yellow-300 tracking-wide";
-        } else {
-          statusMessage.textContent = "Submission failed. Check your Firebase configuration and Firestore rules.";
-          statusMessage.className = "mt-4 text-center text-xs text-red-300 tracking-wide";
+        function toggleMenu() {
+            const menu = document.getElementById("mobileMenu");
+            menu.classList.toggle("hidden");
+            menu.classList.toggle("flex");
         }
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Duty Schedule";
-      }
-    }
-  </script>
+
+        function hasName() {
+            if (!nameInp.value.trim()) {
+                alert("Please enter your name first.");
+                nameInp.focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        function callOverlayDate(show) {
+            if (show && !hasName()) return;
+            overlayDivDate.style.display = show ? "block" : "none";
+        }
+
+        function callOverlayRole(show) {
+            if (show && !hasName()) return;
+            overlayDivRole.style.display = show ? "block" : "none";
+        }
+
+        function setRole(role) {
+            userRole = role;
+            selectedRole.textContent = role;
+            callOverlayRole(false);
+        }
+
+        function getDateButtonId(date) {
+            return date
+                .replace(/,\s*\d{4}$/, "")
+                .replace(/\s+/g, "_");
+        }
+
+        function setDate(date) {
+            dutyDate = date;
+            selectedDate.textContent = date;
+
+            document.querySelectorAll("#dates button").forEach((button) => {
+                button.style.border = "";
+            });
+
+            const selectedButton = document.getElementById(getDateButtonId(date));
+
+            if (selectedButton) {
+                selectedButton.style.border = "1px solid #ffcd00";
+            }
+        }
+
+        function setSlot(slot) {
+            dutySlot = slot;
+            selectedSlot.textContent = slot;
+            callOverlayDate(false);
+        }
+
+        function getSlotDocumentId() {
+            const dateWithoutYear = dutyDate.replace(/,\s*\d{4}$/, "");
+            const slot = dutySlot.startsWith("AM") ? "AM" : "PM";
+            const role = userRole.replace(/\s+/g, "-").toUpperCase();
+
+            return `${dateWithoutYear}-${slot}-${role}`;
+        }
+
+        async function submitDutySchedule() {
+            if (!nameInp.value.trim() || !userRole || !dutyDate || !dutySlot) {
+                statusMessage.textContent = "Please enter your name and select a role, date, and slot.";
+                statusMessage.className = "mt-4 text-center text-xs tracking-wide text-amber-400";
+                return;
+            }
+
+            const slotId = getSlotDocumentId();
+            const slotRef = db.collection("slots").doc(slotId);
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+
+            try {
+                await db.runTransaction(async (transaction) => {
+                    const slotSnapshot = await transaction.get(slotRef);
+
+                    if (slotSnapshot.exists && slotSnapshot.data().status === "taken") {
+                        throw new Error("SLOT_ALREADY_RESERVED");
+                    }
+
+                    transaction.set(slotRef, {
+                        name: nameInp.value.trim(),
+                        status: "taken"
+                    }, { merge: true });
+                });
+
+                statusMessage.textContent = `Submitted successfully to slots/${slotId}`;
+                statusMessage.className = "mt-4 text-center text-xs tracking-wide text-open";
+
+                nameInp.value = "";
+                userRole = "";
+                dutyDate = "";
+                dutySlot = "";
+
+                selectedRole.textContent = "Not selected";
+                selectedDate.textContent = "Not selected";
+                selectedSlot.textContent = "Not selected";
+
+                document.querySelectorAll("#dates button").forEach((button) => {
+                    button.style.border = "";
+                });
+            } catch (error) {
+                console.error(error);
+
+                if (error.message === "SLOT_ALREADY_RESERVED") {
+                    statusMessage.textContent = "This slot has already been reserved.";
+                    statusMessage.className = "mt-4 text-center text-xs tracking-wide text-amber-400";
+                } else {
+                    statusMessage.textContent = "Submission failed. Check your Firebase configuration and Firestore rules.";
+                    statusMessage.className = "mt-4 text-center text-xs tracking-wide text-live";
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Duty Schedule";
+            }
+        }
+    </script>
 </body>
 </html>
