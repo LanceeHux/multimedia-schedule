@@ -174,6 +174,7 @@
 
             <div class="flex w-full flex-col items-center justify-center font-mono">
                 <div class="mb-6 w-full">
+                  <p id="statusMessage" class="mt-4 text-center text-xs tracking-wide"></p>
                     <label class="mb-2 block text-[0.68rem] uppercase tracking-[0.12em] text-amber">
                         Your Name
                     </label>
@@ -204,15 +205,15 @@
                     <button
                         type="button"
                         class="flex-1 rounded-lg border border-hairline bg-panel-raised px-4 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-amber shadow-sm transition duration-300 hover:border-gold"
-                        onclick="callOverlayRole(true)">
-                        Select Role
+                        onclick="callOverlayDate(true)">
+                        Select Date &amp; Slot
                     </button>
 
                     <button
                         type="button"
                         class="flex-1 rounded-lg border border-hairline bg-panel-raised px-4 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-amber shadow-sm transition duration-300 hover:border-gold"
-                        onclick="callOverlayDate(true)">
-                        Select Date &amp; Slot
+                        onclick="callOverlayRole(true)">
+                        Select Role
                     </button>
                 </div>
 
@@ -227,13 +228,30 @@
                     id="submitBtn"
                     type="button"
                     onclick="window.location.href = 'main'"
-                    class="[margin-top:5px] w-full rounded-lg bg-transparent px-6 py-4 text-xs text-white font-bold uppercase tracking-[0.12em] text-[#1a1400] shadow-lg transition duration-300 hover:bg-[#e6b800] active:scale-[0.99] disabled:opacity-50 [border:1px_solid_#fff]">
-                    Check Database
+                    class="[margin-top:5px] w-full hover:text-black rounded-lg bg-transparent px-6 py-4 text-xs text-white font-bold uppercase tracking-[0.12em] text-[#1a1400] shadow-lg transition duration-300 hover:bg-[#e6b800] active:scale-[0.99] disabled:opacity-50 [border:1px_solid_#fff]">
+                    Check Available Slots
                 </button>
+            </div>
+            
+            <!-- Fullscreen Overlay with Background Blur -->
+            <div id="overlayReminderBlur" class="fixed inset-0 z-50 flex items-center justify-center bg-yellow-950/40 backdrop-blur-md">
+                <div id="overlayReminder" class="absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-xl border border-hairline bg-panel p-6 font-mono text-paper shadow-2xl backdrop-blur-2xl">
+                <div class="mb-5 flex items-center justify-between border-b border-hairline pb-4">
+                    <h3 class="text-xl font-bold uppercase tracking-[0.15em] text-gold">Reminder Before Input</h3>
+                    <button
+                        type="button"
+                        aria-label="Close date selection"
+                        class="flex h-7 w-7 items-center justify-center rounded border border-hairline bg-panel-raised text-lg text-paper/70 transition hover:bg-gold hover:text-black"
+                        onclick="reminder(false)">
+                        &times;
+                    </button>
+                </div>
 
-                <p id="statusMessage" class="mt-4 text-center text-xs tracking-wide"></p>
+                <p>Check for the available slots to see the latest schedule update.</p>
+            </div>
             </div>
 
+            
             <div id="overlayDate" class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-xl border border-hairline bg-panel p-6 font-mono text-paper shadow-2xl backdrop-blur-2xl">
                 <div class="mb-5 flex items-center justify-between border-b border-hairline pb-4">
                     <h3 class="text-xs font-bold uppercase tracking-[0.15em] text-gold">Select Date and Slot</h3>
@@ -436,6 +454,9 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Submit Duty Schedule";
             }
+        }
+        function reminder(func) {
+          document.getElementById("overlayReminderBlur").className = "hidden";
         }
     </script>
 </body>
