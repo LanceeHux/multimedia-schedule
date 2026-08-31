@@ -16,6 +16,17 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Define your allowed referrer URL (change this to your source page URL)
+        const allowedReferrer = "https://trecemulti.vercel.app/main"; // or window.location.origin
+        
+        // Check if the referrer starts with or matches your allowed page
+        // Note: document.referrer can be empty if the user types the URL directly or uses a bookmark
+        if (!document.referrer.startsWith("https://trecemulti.vercel.app")) {
+            // Redirect them back to home or your main schedule page if they bypass it
+            window.location.replace("https://trecemulti.vercel.app/main");
+        }
+    </script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
