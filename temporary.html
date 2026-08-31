@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COG Trece - Multimedia Ministry Schedule</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --stage: #121214;
+            --panel: #1b1b1e;
+            --panel-raised: #232327;
+            --hairline: #2f2f34;
+            --gold: #ffcd00;
+            --gold-dim: #7a6100;
+            --amber: #f59e0b;
+            --paper: #f6f4ee;
+            --ink: #17171a;
+            --ink-soft: #8a8a93;
+            --open: #4ade80;
+            --open-bg: #16351f;
+            --live: #ff3b30;
+            --danger: #ef4444;
+            --danger-bg: #3f1616;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--stage); }
+
+        body {
+            font-family: var(--font-body);
+            background:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,205,0,0.06), transparent 60%),
+                radial-gradient(circle at 85% 0%, #1c1c20 0%, var(--stage) 55%);
+            color: var(--paper);
+            margin: 0;
+            padding: 24px 16px 60px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: rise 0.5s ease-out;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- Header Navbar ---------- */
+        .header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .temp-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .temp-brand img {
+            display: block;
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .header p {
+            margin: 0;
+            color: #fff;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .header-buttons a {
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--ink-soft);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .header-buttons a:hover { color: #fff; }
+
+        .header-buttons a.active {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            background: rgba(255, 205, 0, 0.08);
+        }
+
+        /* ---------- Masthead ---------- */
+        .masthead {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        .masthead .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            color: var(--amber);
+            text-transform: uppercase;
+        }
+
+        .masthead h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3.5vw, 2.3rem);
+            letter-spacing: 0.01em;
+            margin: 4px 0 0;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .month-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            border: 1px solid rgba(255,205,0,0.4);
+            background: rgba(255,205,0,0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        /* ---------- Rundown Matrix Layout ---------- */
+        .rundown-panel {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .rundown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 800px;
+        }
+
+        .rundown-table th, .rundown-table td {
+            border: 1px solid var(--hairline);
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .rundown-table th {
+            background: var(--panel-raised);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .rundown-table th.date-header {
+            background: var(--gold);
+            color: #1a1400;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .rundown-table td.role-cell {
+            background: var(--panel-raised);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--gold);
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .slot-cell {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        /* Open slot interactive styling */
+        .slot-open {
+            color: var(--open);
+            background: var(--open-bg);
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .slot-open:hover {
+            background: #1e4629;
+            box-shadow: inset 0 0 0 1px var(--open);
+        }
+
+        .slot-taken {
+            color: var(--paper);
+            font-weight: 500;
+        }
+
+        /* Rehearsal info box */
+        .rehearsal-box {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--ink-soft);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .rehearsal-box span {
+            color: var(--gold);
+        }
+
+        /* ---------- Signup Overlay Modal ---------- */
+        #signupModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 18, 20, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            animation: rise 0.3s ease-out;
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: #fff;
+            margin: 0 0 6px;
+            text-transform: uppercase;
+        }
+
+        .modal-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gold);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--hairline);
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: var(--stage);
+            border: 1px solid var(--hairline);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--paper);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s ease;
+        }
+
+        .btn-submit {
+            background: var(--gold);
+            color: #1a1400;
+            border-color: var(--gold-dim);
+        }
+
+        .btn-submit:hover { background: #ffe135; }
+
+        .btn-cancel {
+            background: var(--panel-raised);
+            color: var(--ink-soft);
+            border-color: var(--hairline);
+        }
+
+        .btn-cancel:hover { color: #fff; border-color: var(--ink-soft); }
+
+        .status-msg {
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="https://trecemulti.vercel.app/images/bg-home.mp4" type="video/mp4">
+    </video>
+
+    <div id="signupModal">
+        <div class="modal-card">
+            <h3>Claim Duty Slot</h3>
+            <div id="modalSubtitle" class="modal-subtitle">Target: September 6 - AM - LED</div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="inputVolunteerName">Name:</label>
+                    <input type="text" id="inputVolunteerName" placeholder="Enter your full name" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputRoleSlot">Role Slot:</label>
+                    <input type="text" id="inputRoleSlot" readonly style="color: var(--ink-soft); background: #151518;">
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn btn-submit">Confirm Signup</button>
+                    <button type="button" id="btnCancelModal" class="modal-btn btn-cancel">Cancel</button>
+                </div>
+            </form>
+            <div id="modalStatus" class="status-msg"></div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <div class="temp-brand">
+                <img src="https://trecemulti.vercel.app/images/cog.png" alt="COG Logo">
+                <p>ARTS</p>
+            </div>
+            <div class="header-buttons">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#" class="active">Schedule</a>
+            </div>
+        </div>
+
+        <div class="masthead">
+            <div>
+                <div class="eyebrow">COG Trece &middot; Multimedia Ministry</div>
+                <h1>Sunday Service Rundown</h1>
+            </div>
+            <div>
+                <span class="month-badge">SEPTEMBER 2026</span>
+            </div>
+        </div>
+
+        <div class="rundown-panel">
+            <table class="rundown-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 180px;">Role / Ministry</th>
+                        <th colspan="2" class="date-header">SEPTEMBER 6</th>
+                        <th colspan="2" class="date-header">SEPTEMBER 13</th>
+                        <th colspan="2" class="date-header">SEPTEMBER 20</th>
+                        <th colspan="2" class="date-header">SEPTEMBER 27</th>
+                    </tr>
+                    <tr>
+                        <th>AM</th><th>PM</th>
+                        <th>AM</th><th>PM</th>
+                        <th>AM</th><th>PM</th>
+                        <th>AM</th><th>PM</th>
+                    </tr>
+                </thead>
+                <tbody id="publicMatrixBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="rehearsal-box">
+            <div>AM Rehearsal: <span>THURSDAY (5PM - 9PM)</span></div>
+            <div>PM Rehearsal: <span>SATURDAY (7AM - 12NN)</span></div>
+            <div style="width: 100%; border-top: 1px dashed var(--hairline); padding-top: 8px; margin-top: 4px;">Drytech: <span>SATURDAY (12NN - 1PM)</span></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+            authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+            projectId: "multimedia-cog-trece-db",
+            storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+            messagingSenderId: "590911223632",
+            appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+        };
+
+        const db = getFirestore(initializeApp(firebaseConfig));
+        const publicMatrixBody = document.getElementById("publicMatrixBody");
+        const signupModal = document.getElementById("signupModal");
+        const signupForm = document.getElementById("signupForm");
+        const inputVolunteerName = document.getElementById("inputVolunteerName");
+        const inputRoleSlot = document.getElementById("inputRoleSlot");
+        const modalSubtitle = document.getElementById("modalSubtitle");
+        const btnCancelModal = document.getElementById("btnCancelModal");
+        const modalStatus = document.getElementById("modalStatus");
+
+        const dates = ["September 6", "September 13", "September 20", "September 27"];
+        const shifts = ["AM", "PM"];
+        const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
+
+        let activeDocId = "";
+
+        // Real-time listener rendering the rundown table matrix
+        onSnapshot(collection(db, "slots"), (snapshot) => {
+            const databaseMap = {};
+            snapshot.forEach((docSnap) => {
+                databaseMap[docSnap.id] = docSnap.data().name || "";
+            });
+
+            publicMatrixBody.innerHTML = "";
+
+            roles.forEach(role => {
+                const tr = document.createElement("tr");
+                
+                const roleTd = document.createElement("td");
+                roleTd.className = "role-cell";
+                roleTd.textContent = role;
+                tr.appendChild(roleTd);
+
+                dates.forEach(date => {
+                    shifts.forEach(shift => {
+                        const docId = `${date}-${shift}-${role}`;
+                        const volunteerName = databaseMap[docId] || "";
+
+                        const td = document.createElement("td");
+                        td.className = "slot-cell";
+                        
+                        if (volunteerName !== "") {
+                            td.innerHTML = `<span class="slot-taken">${volunteerName}</span>`;
+                        } else {
+                            // Slot is open -> clickable to trigger signup overlay
+                            td.className += " slot-open";
+                            td.innerHTML = `Open`;
+                            td.addEventListener("click", () => {
+                                activeDocId = docId;
+                                modalSubtitle.textContent = `Target: ${date} [${shift} Shift]`;
+                                inputRoleSlot.value = `${role} (${date} - ${shift})`;
+                                inputVolunteerName.value = "";
+                                modalStatus.textContent = "";
+                                signupModal.style.display = "flex";
+                                inputVolunteerName.focus();
+                            });
+                        }
+
+                        tr.appendChild(td);
+                    });
+                });
+
+                publicMatrixBody.appendChild(tr);
+            });
+        });
+
+        // Close Modal Actions
+        btnCancelModal.addEventListener("click", () => {
+            signupModal.style.display = "none";
+        });
+
+        signupModal.addEventListener("click", (e) => {
+            if (e.target === signupModal) {
+                signupModal.style.display = "none";
+            }
+        });
+
+        // Handle Signup Submission
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = inputVolunteerName.value.trim();
+            if (!name) return;
+
+            const docRef = doc(db, "slots", activeDocId);
+
+            try {
+                modalStatus.style.color = "var(--open)";
+                modalStatus.textContent = "Saving to database...";
+
+                await setDoc(docRef, { 
+                    name: name, 
+                    status: "taken" 
+                }, { merge: true });
+
+                modalStatus.textContent = "Successfully signed up!";
+                setTimeout(() => {
+                    signupModal.style.display = "none";
+                }, 800);
+            } catch (error) {
+                console.error("Signup error:", error);
+                modalStatus.style.color = "var(--danger)";
+                modalStatus.textContent = "Permission denied or slot taken.";
+            }
+        });
+    </script>
+</body>
+</html>
