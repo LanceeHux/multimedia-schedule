@@ -3,7 +3,7 @@
 <head>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trecemulti.vercel.app/september">
-    <meta property="og:title" content="Arts Multimedia Ministry - COG Trece | Church of God Trece Martires City">
+    <meta property="og:title" content="Arts Multimedia Ministry - Duty Scheduling | Church of God Trece Martires City">
     <meta property="og:description" content="Arts Multimedia Ministry COG Trece (Church Of God Trece Martires City). Contains about the multimedia ministry, visual live schedules.">
     <meta property="og:image" content="https://trecemulti.vercel.app/images/finalSched.jpeg">
     <meta property="og:site_name" content="Arts Multimedia COG Trece">
@@ -15,17 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Define your allowed referrer URL (change this to your source page URL)
-        const allowedReferrer = "https://trecemulti.vercel.app/main"; // or window.location.origin
-        
-        // Check if the referrer starts with or matches your allowed page
-        // Note: document.referrer can be empty if the user types the URL directly or uses a bookmark
-        if (!document.referrer.startsWith("https://trecemulti.vercel.app")) {
-            // Redirect them back to home or your main schedule page if they bypass it
-            window.location.replace("https://trecemulti.vercel.app/main");
-        }
-    </script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -99,19 +89,6 @@
         }
 
         .live-dot { animation: pulse-dot 1.6s ease-out infinite; }
-
-        @keyframes glow-box {
-            0%, 100% {
-                box-shadow: 0 0 0 1px rgba(255,205,0,0.15),
-                    0 8px 24px -8px rgba(255,205,0,0.5);
-            }
-            50% {
-                box-shadow: 0 0 0 1px rgba(255,205,0,0.2),
-                    0 8px 30px -6px rgba(255,205,0,0.7);
-            }
-        }
-
-        .gold-glow-box { animation: glow-box 4s ease-in-out infinite; }
     </style>
 </head>
 
@@ -173,7 +150,38 @@
             </div>
         </div>
 
-        <div class="relative rounded-xl border border-hairline bg-panel p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+        <!-- Non-clickable Live Database Matrix Overview Section -->
+        <div class="mb-6 rounded-xl border  bg-panel p-5 shadow-xl backdrop-blur-xl overflow-x-auto">
+            <div class="mb-4 flex items-center justify-between">
+                <h3 class="font-mono text-xs uppercase tracking-[0.15em] text-gold">Quick Overview</h3>
+                <span class="font-mono text-[0.65rem] text-ink-soft uppercase tracking-wider">Live Database View</span>
+            </div>
+            <table class="w-full border-collapse min-w-[700px] text-left font-mono text-xs">
+                <thead>
+                    <tr class="border-b border-hairline text-[0.65rem] uppercase tracking-wider text-amber">
+                        <th class="p-2.5 bg-panel-raised">Role / Ministry</th>
+                        <th class="p-2.5 bg-panel-raised text-center" colspan="2">September 6</th>
+                        <th class="p-2.5 bg-panel-raised text-center" colspan="2">September 13</th>
+                        <th class="p-2.5 bg-panel-raised text-center" colspan="2">September 20</th>
+                        <th class="p-2.5 bg-panel-raised text-center" colspan="2">September 27</th>
+                    </tr>
+                    <tr class="border-b border-hairline text-[0.6rem] text-ink-soft">
+                        <th class="p-2 bg-panel-raised"></th>
+                        <th class="p-2 bg-panel-raised text-center">AM</th><th class="p-2 bg-panel-raised text-center">PM</th>
+                        <th class="p-2 bg-panel-raised text-center">AM</th><th class="p-2 bg-panel-raised text-center">PM</th>
+                        <th class="p-2 bg-panel-raised text-center">AM</th><th class="p-2 bg-panel-raised text-center">PM</th>
+                        <th class="p-2 bg-panel-raised text-center">AM</th><th class="p-2 bg-panel-raised text-center">PM</th>
+                    </tr>
+                </thead>
+                <tbody id="overviewMatrixBody">
+                    <tr>
+                        <td colspan="9" class="p-4 text-center text-ink-soft">Loading live schedule state...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="relative rounded-xl border border- bg-panel p-6 shadow-2xl backdrop-blur-xl sm:p-8">
             <div class="mb-8 text-center">
                 <h2 class="font-display text-xl uppercase tracking-[0.05em] text-paper sm:text-2xl">
                     Select Your Duty Slot
@@ -236,10 +244,9 @@
                     Submit Duty Schedule
                 </button>
                 <button
-                    id="submitBtn"
                     type="button"
                     onclick="window.location.href = 'main'"
-                    class="[margin-top:5px] w-full hover:text-black rounded-lg bg-transparent px-6 py-4 text-xs text-white font-bold uppercase tracking-[0.12em] text-[#1a1400] shadow-lg transition duration-300 hover:bg-[#e6b800] active:scale-[0.99] disabled:opacity-50 [border:1px_solid_#fff]">
+                    class="[margin-top:5px] w-full hover:text-black rounded-lg bg-transparent px-6 py-4 text-xs text-white font-bold uppercase tracking-[0.12em] text-[#1a1400] shadow-lg transition duration-300 hover:bg-[#e6b800] active:scale-[0.99] [border:1px_solid_#fff]">
                     Check Available Slots
                 </button>
             </div>
@@ -251,7 +258,7 @@
                     <h3 class="text-xl font-bold uppercase tracking-[0.15em] text-gold">Reminder Before Input</h3>
                     <button
                         type="button"
-                        aria-label="Close date selection"
+                        aria-label="Close reminder"
                         class="flex h-7 w-7 items-center justify-center rounded border border-hairline bg-panel-raised text-lg text-paper/70 transition hover:bg-gold hover:text-black"
                         onclick="reminder(false)">
                         &times;
@@ -261,7 +268,6 @@
                 <p>Check for the available slots to see the latest schedule update.</p>
             </div>
             </div>
-
             
             <div id="overlayDate" class="hidden absolute inset-0 z-30 m-auto h-fit w-[92%] max-w-md rounded-xl border border-hairline bg-panel p-6 font-mono text-paper shadow-2xl backdrop-blur-2xl">
                 <div class="mb-5 flex items-center justify-between border-b border-hairline pb-4">
@@ -337,10 +343,55 @@
         const selectedSlot = document.getElementById("selectedSlot");
         const statusMessage = document.getElementById("statusMessage");
         const submitBtn = document.getElementById("submitBtn");
+        const overviewMatrixBody = document.getElementById("overviewMatrixBody");
 
         let userRole = "";
         let dutyDate = "";
         let dutySlot = "";
+
+        const datesList = ["September 6", "September 13", "September 20", "September 27"];
+        const shiftsList = ["AM", "PM"];
+        const rolesList = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
+
+        // Real-time listener for the non-clickable overview table
+        db.collection("slots").onSnapshot((snapshot) => {
+            const databaseMap = {};
+            snapshot.forEach((docSnap) => {
+                databaseMap[docSnap.id] = docSnap.data().name || "";
+            });
+
+            overviewMatrixBody.innerHTML = "";
+
+            rolesList.forEach(role => {
+                const tr = document.createElement("tr");
+                tr.className = "border-b border-hairline/50 hover:bg-white/[0.02]";
+
+                const roleTd = document.createElement("td");
+                roleTd.className = "p-2.5 font-semibold text-gold bg-panel-raised/50";
+                roleTd.textContent = role;
+                tr.appendChild(roleTd);
+
+                datesList.forEach(date => {
+                    shiftsList.forEach(shift => {
+                        const docId = `${date}-${shift}-${role}`;
+                        const volunteerName = databaseMap[docId] || "";
+
+                        const td = document.createElement("td");
+                        td.className = "p-2.5 text-center text-[0.755rem]";
+
+                        if (volunteerName !== "") {
+                            td.innerHTML = `<span class="text-paper">${volunteerName}</span>`;
+                        } else {
+                            td.innerHTML = `<span class="text-open font-semibold">Open</span>`;
+                        }
+
+                        tr.appendChild(td);
+                    });
+                });
+
+                overviewMatrixBody.appendChild(tr);
+            });
+        });
 
         function toggleMenu() {
             const menu = document.getElementById("mobileMenu");
@@ -354,7 +405,6 @@
                 nameInp.focus();
                 return false;
             }
-
             return true;
         }
 
@@ -389,7 +439,6 @@
             });
 
             const selectedButton = document.getElementById(getDateButtonId(date));
-
             if (selectedButton) {
                 selectedButton.style.border = "1px solid #ffcd00";
             }
