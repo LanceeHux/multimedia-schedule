@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>COG Trece - Admin Control Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --stage: #121214;
+            --panel: #1b1b1e;
+            --panel-raised: #232327;
+            --hairline: #2f2f34;
+            --gold: #ffcd00;
+            --gold-dim: #7a6100;
+            --amber: #f59e0b;
+            --paper: #f6f4ee;
+            --ink: #17171a;
+            --ink-soft: #8a8a93;
+            --open: #4ade80;
+            --open-bg: #16351f;
+            --live: #ff3b30;
+            --danger: #ef4444;
+            --danger-bg: #3f1616;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--stage); }
+
+        body {
+            font-family: var(--font-body);
+            background:
+                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,205,0,0.06), transparent 60%),
+                radial-gradient(circle at 85% 0%, #1c1c20 0%, var(--stage) 55%);
+            color: var(--paper);
+            margin: 0;
+            padding: 24px 16px 60px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        /* ---------- Password Modal Overlay ---------- */
+        #authOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 18, 20, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 0 0 8px;
+            text-transform: uppercase;
+        }
+
+        .auth-card p {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--ink-soft);
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .auth-input {
+            width: 100%;
+            background: var(--stage);
+            border: 1px solid var(--hairline);
+            border-radius: 6px;
+            padding: 12px;
+            color: var(--paper);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: var(--gold);
+            color: #1a1400;
+            border: 1px solid var(--gold-dim);
+            padding: 12px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .auth-btn:hover { background: #ffe135; }
+
+        .auth-error {
+            color: var(--danger);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            margin-top: 10px;
+            min-height: 15px;
+        }
+
+        /* ---------- Main Application Content ---------- */
+        #mainApp {
+            display: none; /* Hidden until authenticated */
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: rise 0.5s ease-out;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- Header Navbar ---------- */
+        .header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .temp-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .temp-brand img {
+            display: block;
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .header p {
+            margin: 0;
+            color: #fff;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .header-buttons a {
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--ink-soft);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .header-buttons a:hover { color: #fff; }
+
+        .header-buttons a.active {
+            border: 1px solid var(--live);
+            color: var(--live);
+            background: rgba(255, 59, 48, 0.08);
+        }
+
+        /* ---------- Masthead ---------- */
+        .masthead {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 3px solid var(--live);
+            padding-bottom: 16px;
+            margin-bottom: 22px;
+        }
+
+        .masthead .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            color: var(--live);
+            text-transform: uppercase;
+        }
+
+        .masthead h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3.5vw, 2.3rem);
+            letter-spacing: 0.01em;
+            margin: 4px 0 0;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--live);
+            border: 1px solid rgba(255,59,48,0.4);
+            background: rgba(255,59,48,0.08);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .live-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--live);
+            box-shadow: 0 0 0 0 rgba(255,59,48,0.6);
+            animation: pulse 1.6s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.55); }
+            70% { box-shadow: 0 0 0 7px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
+
+        /* ---------- Admin Layout ---------- */
+        .admin-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .control-panel {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .control-panel h3 {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--hairline);
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            background: var(--stage);
+            border: 1px solid var(--hairline);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--paper);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .admin-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s ease;
+        }
+
+        .btn-save {
+            background: var(--gold);
+            color: #1a1400;
+            border-color: var(--gold-dim);
+        }
+
+        .btn-save:hover { background: #ffe135; }
+
+        .btn-delete {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-delete:hover { background: rgba(239, 68, 68, 0.2); }
+
+        /* ---------- Rundown Matrix Table Layout ---------- */
+        .rundown-panel {
+            background: var(--panel);
+            border: 1px solid var(--hairline);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .rundown-panel h3 {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-top: 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--hairline);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rundown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 800px;
+        }
+
+        .rundown-table th, .rundown-table td {
+            border: 1px solid var(--hairline);
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .rundown-table th {
+            background: var(--panel-raised);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .rundown-table th.date-header {
+            background: var(--gold);
+            color: #1a1400;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .rundown-table td.role-cell {
+            background: var(--panel-raised);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--gold);
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .slot-cell {
+            cursor: pointer;
+            transition: background 0.15s ease;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .slot-cell:hover {
+            background: rgba(255, 205, 0, 0.08);
+            color: var(--gold);
+        }
+
+        .slot-empty {
+            color: var(--ink-soft);
+            font-style: italic;
+            font-size: 0.7rem;
+        }
+
+        .slot-taken {
+            color: var(--paper);
+            font-weight: 500;
+        }
+
+        .status-msg {
+            margin-top: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-align: center;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="https://trecemulti.vercel.app/images/bg-home.mp4" type="video/mp4">
+    </video>
+
+    <div id="authOverlay">
+        <div class="auth-card">
+            <h2>Restricted Terminal</h2>
+            <p>Enter Administrator Password to Proceed</p>
+            <form id="authForm">
+                <input type="password" id="authPassword" class="auth-input" placeholder="••••••••" autocomplete="current-password" required>
+                <button type="submit" class="auth-btn">Authenticate</button>
+                <div id="authError" class="auth-error"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainApp">
+        <div class="header">
+            <div class="temp-brand">
+                <img src="https://trecemulti.vercel.app/images/cog.png" alt="COG Logo">
+                <p>ARTS // ADMIN</p>
+            </div>
+            <div class="header-buttons">
+                <a href="https://trecemulti.vercel.app/">Exit to Public</a>
+                <a href="#" class="active">Secure Console</a>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="masthead">
+                <div>
+                    <div class="eyebrow">Restricted Access &middot; Database Command Center</div>
+                    <h1>Slot Override Terminal</h1>
+                </div>
+                <div class="status">
+                    <span class="live-badge"><span class="dot"></span>ROOT ACCESS ACTIVE</span>
+                </div>
+            </div>
+
+            <div class="admin-layout">
+                <div class="control-panel">
+                    <h3>Record Modifier</h3>
+                    <form id="adminForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="selectDate">Target Date</label>
+                                <select id="selectDate" required>
+                                    <option value="September 6">September 6</option>
+                                    <option value="September 13">September 13</option>
+                                    <option value="September 20">September 20</option>
+                                    <option value="September 27">September 27</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="selectShift">Shift Time</label>
+                                <select id="selectShift" required>
+                                    <option value="AM">AM Shift</option>
+                                    <option value="PM">PM Shift</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="selectRole">Ministry Role</label>
+                                <select id="selectRole" required>
+                                    <option value="LED">LED</option>
+                                    <option value="PROMPTER">PROMPTER</option>
+                                    <option value="PREACHING-SUPPORT">PREACHING-SUPPORT</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputName">Volunteer Name</label>
+                                <input type="text" id="inputName" placeholder="Enter name" autocomplete="off" required>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="submit" class="admin-btn btn-save">Commit Update</button>
+                            <button type="button" id="btnClearSlot" class="admin-btn btn-delete">Clear Slot</button>
+                        </div>
+                    </form>
+                    <div id="statusMsg" class="status-msg"></div>
+                </div>
+
+                <div class="rundown-panel">
+                    <h3>
+                        <span>Sunday Service Rundown Matrix</span>
+                        <span style="font-size: 0.65rem; color: var(--ink-soft); font-family: var(--font-mono);">Click any slot cell to quick-edit</span>
+                    </h3>
+                    <table class="rundown-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="width: 180px;">Role / Ministry</th>
+                                <th colspan="2" class="date-header">SEPTEMBER 6</th>
+                                <th colspan="2" class="date-header">SEPTEMBER 13</th>
+                                <th colspan="2" class="date-header">SEPTEMBER 20</th>
+                                <th colspan="2" class="date-header">SEPTEMBER 27</th>
+                            </tr>
+                            <tr>
+                                <th>AM</th><th>PM</th>
+                                <th>AM</th><th>PM</th>
+                                <th>AM</th><th>PM</th>
+                                <th>AM</th><th>PM</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matrixBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+        // CHANGE THIS PASSWORD TO WHATEVER YOU PREFER:
+        const ADMIN_PASSWORD = "cogtrece2026";
+
+        const authForm = document.getElementById("authForm");
+        const authPassword = document.getElementById("authPassword");
+        const authError = document.getElementById("authError");
+        const authOverlay = document.getElementById("authOverlay");
+        const mainApp = document.getElementById("mainApp");
+
+        // Handle Password Gate Submission
+        authForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (authPassword.value === ADMIN_PASSWORD) {
+                authOverlay.style.display = "none";
+                mainApp.style.display = "block";
+                initFirebase(); // Spin up database listeners only after login
+            } else {
+                authError.textContent = "Incorrect password. Access denied.";
+                authPassword.value = "";
+            }
+        });
+
+        function initFirebase() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyACcvo2h4qLgkKdo7-ngWEf_BsDHcu9Uz4",
+                authDomain: "multimedia-cog-trece-db.firebaseapp.com",
+                projectId: "multimedia-cog-trece-db",
+                storageBucket: "multimedia-cog-trece-db.firebasestorage.app",
+                messagingSenderId: "590911223632",
+                appId: "1:590911223632:web:ca01a50270d9565c6ade55"
+            };
+
+            const db = getFirestore(initializeApp(firebaseConfig));
+            const matrixBody = document.getElementById("matrixBody");
+            const adminForm = document.getElementById("adminForm");
+            const statusMsg = document.getElementById("statusMsg");
+            const btnClearSlot = document.getElementById("btnClearSlot");
+
+            const dates = ["September 6", "September 13", "September 20", "September 27"];
+            const shifts = ["AM", "PM"];
+            const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
+
+            function showStatus(text, isError = false) {
+                statusMsg.style.color = isError ? "var(--danger)" : "var(--open)";
+                statusMsg.textContent = text;
+                setTimeout(() => { statusMsg.textContent = ""; }, 4000);
+            }
+
+            // Real-time listener rendering the rundown table matrix
+            onSnapshot(collection(db, "slots"), (snapshot) => {
+                const databaseMap = {};
+                snapshot.forEach((docSnap) => {
+                    databaseMap[docSnap.id] = docSnap.data().name || "";
+                });
+
+                matrixBody.innerHTML = "";
+
+                roles.forEach(role => {
+                    const tr = document.createElement("tr");
+                    
+                    const roleTd = document.createElement("td");
+                    roleTd.className = "role-cell";
+                    roleTd.textContent = role;
+                    tr.appendChild(roleTd);
+
+                    dates.forEach(date => {
+                        shifts.forEach(shift => {
+                            const docId = `${date}-${shift}-${role}`;
+                            const volunteerName = databaseMap[docId] || "";
+
+                            const td = document.createElement("td");
+                            td.className = "slot-cell";
+                            
+                            if (volunteerName !== "") {
+                                td.innerHTML = `<span class="slot-taken">${volunteerName}</span>`;
+                            } else {
+                                td.innerHTML = `<span class="slot-empty">Open</span>`;
+                            }
+
+                            td.addEventListener("click", () => {
+                                document.getElementById("selectDate").value = date;
+                                document.getElementById("selectShift").value = shift;
+                                document.getElementById("selectRole").value = role;
+                                document.getElementById("inputName").value = volunteerName;
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                showStatus(`Loaded slot: ${docId}`);
+                            });
+
+                            tr.appendChild(td);
+                        });
+                    });
+
+                    matrixBody.appendChild(tr);
+                });
+            });
+
+            // Form Submit: Modify / Upsert Data
+            adminForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const date = document.getElementById("selectDate").value;
+                const shift = document.getElementById("selectShift").value;
+                const role = document.getElementById("selectRole").value;
+                const name = document.getElementById("inputName").value.trim();
+
+                const docId = `${date}-${shift}-${role}`;
+                const docRef = doc(db, "slots", docId);
+
+                try {
+                    if (name === "") {
+                        showStatus("Error: Name cannot be empty.", true);
+                        return;
+                    }
+
+                    await setDoc(docRef, { 
+                        name: name, 
+                        status: "taken" 
+                    }, { merge: true });
+
+                    showStatus(`Slot ${docId} successfully updated.`);
+                    document.getElementById("inputName").value = "";
+                } catch (error) {
+                    console.error("Database operation error:", error);
+                    showStatus("Permission denied: Check console for rule conflicts.", true);
+                }
+            });
+
+            // Clear Slot Action Button
+            btnClearSlot.addEventListener("click", async () => {
+                const date = document.getElementById("selectDate").value;
+                const shift = document.getElementById("selectShift").value;
+                const role = document.getElementById("selectRole").value;
+                const docId = `${date}-${shift}-${role}`;
+                const docRef = doc(db, "slots", docId);
+
+                if (confirm(`Are you sure you want to delete slot: ${docId}?`)) {
+                    try {
+                        await deleteDoc(docRef);
+                        document.getElementById("inputName").value = "";
+                        showStatus(`Successfully cleared ${docId}.`);
+                    } catch (error) {
+                        console.error("Delete error:", error);
+                        showStatus("Failed to clear slot (Check delete rules).", true);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
