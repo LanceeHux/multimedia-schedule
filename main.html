@@ -10,7 +10,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stage: '#121214',
+                        panel: '#1b1b1e',
+                        'panel-raised': '#232327',
+                        hairline: '#2f2f34',
+                        gold: '#ffcd00',
+                        'gold-dim': '#7a6100',
+                        amber: '#f59e0b',
+                        paper: '#f6f4ee',
+                        'ink-soft': '#55555c',
+                        open: '#4ade80',
+                        'open-bg': '#16351f',
+                        live: '#ff3b30',
+                    },
+                    fontFamily: {
+                        display: ['"Archivo Black"', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Times New Roman"', 'Times', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         :root {
             --stage: #121214;
