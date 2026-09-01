@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-stage">
 <head>
     <title>COG Trece - Monthly Schedule</title>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
                         'gold-dim': '#7a6100',
                         amber: '#f59e0b',
                         paper: '#f6f4ee',
-                        'ink-soft': '#55555c',
+                        'ink-soft': '#8a8a93',
                         open: '#4ade80',
                         'open-bg': '#16351f',
                         live: '#ff3b30',
@@ -38,650 +38,83 @@
             }
         }
     </script>
-    <style>
-        :root {
-            --stage: #121214;
-            --panel: #1b1b1e;
-            --panel-raised: #232327;
-            --hairline: #2f2f34;
-            --gold: #ffcd00;
-            --gold-dim: #7a6100;
-            --amber: #f59e0b;
-            --paper: #f6f4ee;
-            --ink: #17171a;
-            --ink-soft: #8a8a93;
-            --open: #4ade80;
-            --open-bg: #16351f;
-            --live: #ff3b30;
-            --font-display: 'Archivo Black', sans-serif;
-            --font-mono: 'IBM Plex Mono', monospace;
-            --font-body: 'Inter', system-ui, sans-serif;
-        }
-
-        * { box-sizing: border-box; }
-
-        html { background: var(--stage); }
-
-        body {
-            font-family: var(--font-body);
-            background:
-                radial-gradient(ellipse 900px 500px at 12% -10%, rgba(255,205,0,0.06), transparent 60%),
-                radial-gradient(circle at 85% 0%, #1c1c20 0%, var(--stage) 55%);
-            color: var(--paper);
-            margin: 0;
-            padding: 24px 16px 60px;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* film-grain overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.05;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            z-index: 1;
-        }
-
-        .bg-video {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
-            z-index: 0;
-        }
-
-        .page {
-            max-width: 1080px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            animation: rise 0.5s ease-out;
-        }
-
-        @keyframes rise {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .page { animation: none; }
-        }
-
-        /* ---------- Header Navbar ---------- */
-        .header {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding-bottom: 20px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--hairline);
-        }
-
-        .temp-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .temp-brand img {
-            display: block;
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-        }
-
-        .header p {
-            margin: 0;
-            color: #fff;
-            font-family: "Times New Roman", Times, serif;
-            font-size: 1.6rem;
-            letter-spacing: 0.15em;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .menu-toggle span {
-            width: 26px;
-            height: 2px;
-            border-radius: 2px;
-            background: #fff;
-            transition: 0.3s;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 20px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        .header-buttons a {
-            padding: 6px 14px;
-            border-radius: 20px;
-            color: var(--ink-soft);
-            text-decoration: none;
-            transition: 0.2s ease;
-            cursor: pointer;
-        }
-
-        .header-buttons a:hover {
-            color: #fff;
-        }
-
-        .header-buttons a.active,
-        .header-buttons a[href="main"] {
-            border: 1px solid var(--hairline);
-            color: #fff;
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* ---------- Masthead ---------- */
-        .masthead {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            border-bottom: 3px solid var(--gold);
-            padding-bottom: 16px;
-            margin-bottom: 22px;
-        }
-
-        .masthead .eyebrow {
-            font-family: var(--font-mono);
-            font-size: 0.68rem;
-            letter-spacing: 0.15em;
-            color: var(--gold);
-            text-transform: uppercase;
-        }
-
-        .masthead h1 {
-            font-family: var(--font-display);
-            font-size: clamp(1.3rem, 3.5vw, 2.3rem);
-            letter-spacing: 0.01em;
-            margin: 4px 0 0;
-            text-transform: uppercase;
-            background: linear-gradient(115deg, #fff6cf 0%, var(--gold) 35%, #b8860b 55%, var(--gold) 75%, #fff6cf 100%);
-            background-size: 220% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: foil 7s ease-in-out infinite;
-        }
-
-        @keyframes foil {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .masthead h1 { animation: none; }
-        }
-
-        .masthead .status {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .masthead .month {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            background: var(--panel-raised);
-            border: 1px solid var(--hairline);
-            padding: 6px 10px;
-            border-radius: 3px;
-            color: #cfcfd4;
-            white-space: nowrap;
-        }
-
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--live);
-            border: 1px solid rgba(255,59,48,0.4);
-            background: rgba(255,59,48,0.08);
-            padding: 5px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-
-        .live-badge .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--live);
-            box-shadow: 0 0 0 0 rgba(255,59,48,0.6);
-            animation: pulse 1.6s ease-out infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.55); }
-            70% { box-shadow: 0 0 0 7px rgba(255,59,48,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .live-badge .dot { animation: none; }
-        }
-
-        /* ---------- Schedule sheet ---------- */
-        .sheet-wrap {
-            position: relative;
-            padding: 0 16px;
-        }
-
-        .sheet-wrap::before,
-        .sheet-wrap::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 16px;
-            background-image: radial-gradient(circle, var(--stage) 3px, transparent 3.5px);
-            background-size: 16px 20px;
-            background-position: center;
-            z-index: 3;
-        }
-
-        .sheet-wrap::before { left: 0; }
-        .sheet-wrap::after { right: 0; }
-
-        .sheet {
-            background: var(--panel);
-            border: 1px solid var(--hairline);
-            border-radius: 10px;
-            padding: 6px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        tbody tr { transition: background 0.15s ease; }
-        tbody tr:hover td:not(.role-header) { background: rgba(255,205,0,0.05); }
-
-        table { width: 100%; border-collapse: collapse; min-width: 620px; }
-
-        th, td {
-            border: 1px solid var(--hairline);
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-
-        .date-header {
-            background: var(--gold);
-            color: #1a1400;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            padding: 8px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-        }
-
-        .shift-header {
-            background: var(--panel-raised);
-            color: var(--amber);
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            padding: 6px;
-            text-transform: uppercase;
-        }
-
-        .role-header {
-            background: var(--panel-raised);
-            color: var(--paper);
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 0.68rem;
-            letter-spacing: 0.05em;
-            text-align: left;
-            padding-left: 12px;
-            text-transform: uppercase;
-            border-left: 3px solid var(--gold);
-            white-space: nowrap;
-        }
-
-        tbody td { color: #e4e4e8; }
-        tbody tr:nth-child(even) td:not(.role-header) { background: rgba(255,255,255,0.02); }
-
-        .open-slot {
-            display: inline-block;
-            background-color: var(--open-bg);
-            color: var(--open);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.62rem;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.05em;
-            border: 1px solid rgba(74,222,128,0.35);
-        }
-
-        /* ---------- Rehearsal / call-time placard ---------- */
-        .rehearsals { margin-top: 20px; }
-
-        .temp-rehearsal {
-            display: flex;
-            flex-direction: row;
-            gap: 1px;
-            border-radius: 10px 10px 0 0;
-            overflow: hidden;
-            background: var(--hairline);
-            border: 1px solid var(--hairline);
-        }
-
-        .AM-slot, .PM-slot, .drytech {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 0;
-            padding: 12px 8px;
-            width: 100%;
-            background: var(--panel);
-            text-align: center;
-        }
-
-        .drytech {
-            color: var(--gold);
-            background: var(--panel);
-            border-radius: 0 0 10px 10px;
-            border: 1px solid var(--hairline);
-            border-top: none;
-        }
-
-        .AM-slot p, .PM-slot p, .drytech p {
-            font-weight: 700;
-            margin: 0;
-            font-family: var(--font-mono);
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-        }
-
-        .drytech p { color: var(--gold); opacity: 0.85; }
-
-        .AM-slot code, .PM-slot code, .drytech code {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--paper);
-            background: none;
-        }
-
-        .call-time { margin-top: 16px; }
-
-        .call-time h4 {
-            font-family: var(--font-mono);
-            font-size: 0.68rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-            margin: 0 0 8px;
-        }
-
-        .calltime-temp {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 12px;
-            background: linear-gradient(180deg, #ffdb33, var(--gold));
-            border-radius: 8px;
-            border: 1px solid var(--gold-dim);
-            box-shadow: 0 0 0 1px rgba(255,205,0,0.15), 0 8px 24px -8px rgba(255,205,0,0.5);
-            animation: glow 4s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 0 1px rgba(255,205,0,0.15), 0 8px 24px -8px rgba(255,205,0,0.5); }
-            50% { box-shadow: 0 0 0 1px rgba(255,205,0,0.2), 0 8px 30px -6px rgba(255,205,0,0.7); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .calltime-temp { animation: none; }
-        }
-
-        .calltime-temp div {
-            width: 100%;
-            justify-content: center;
-            display: flex;
-            border: 1px solid rgba(0,0,0,0.55);
-            border-radius: 5px;
-            background: rgba(255,255,255,0.18);
-        }
-
-        .calltime-temp div code {
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.02em;
-            padding: 6px;
-            color: #1a1400;
-        }
-
-        /* ---------- Responsive Breakpoints for Mobile (<= 560px) ---------- */
-        @media (max-width: 560px) {
-            body {
-                padding: 16px 12px 40px;
-            }
-
-            .header {
-                margin-bottom: 20px;
-                padding-bottom: 14px;
-            }
-
-            .header p {
-                font-size: 1.3rem;
-            }
-
-            .temp-brand img {
-                width: 30px;
-                height: 30px;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .header-buttons {
-                display: none;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                flex-direction: column;
-                gap: 6px;
-                background: var(--panel-raised);
-                border: 1px solid var(--hairline);
-                border-radius: 10px;
-                padding: 12px;
-                min-width: 150px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-                z-index: 100;
-            }
-
-            .header-buttons.show {
-                display: flex;
-            }
-
-            .header-buttons a {
-                padding: 8px 12px;
-                width: 100%;
-                text-align: left;
-            }
-
-            .masthead {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-                padding-bottom: 12px;
-                margin-bottom: 16px;
-            }
-
-            .masthead .status {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .sheet-wrap {
-                padding: 0 6px;
-            }
-
-            .sheet-wrap::before, 
-            .sheet-wrap::after { 
-                width: 8px; 
-                background-size: 8px 14px; 
-            }
-
-            .temp-rehearsal { 
-                flex-direction: column; 
-                border-radius: 10px 10px 0 0; 
-            }
-
-            .calltime-temp { 
-                flex-direction: column; 
-                gap: 8px; 
-            }
-
-            .calltime-temp div code {
-                font-size: 0.88rem;
-            }
-        }
-         .calltime-temp div code {
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.02em;
-            padding: 6px;
-            color: #1a1400;
-        }
-
-        .duty-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #121214;
-            background: var(--open);
-            padding: 10px 18px;
-            border-radius: 6px;
-            border: 1px solid rgba(74, 222, 128, 0.4);
-            box-shadow: 0 4px 16px rgba(74, 222, 128, 0.2);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .duty-btn:hover {
-            background: #6ee7b7;
-            box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
-            transform: translateY(-1px);
-        }
-    </style>
-    
 </head>
-<body>
+<body class="font-sans bg-[radial-gradient(ellipse_900px_500px_at_12%_-10%,rgba(255,205,0,0.06),transparent_60%),radial-gradient(circle_at_85%_0%,#1c1c20_0%,#121214_55%)] text-paper m-0 p-[24px_16px_60px] relative min-h-screen before:content-[''] before:fixed before:inset-0 before:pointer-events-none before:opacity-[0.05] before:mix-blend-overlay before:bg-[image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E&quot;)] before:z-[1] max-[560px]:p-[16px_12px_40px]">
 
-  <video autoplay muted loop playsinline class="bg-video">
+  <video autoplay muted loop playsinline class="fixed inset-0 w-full h-full object-cover opacity-30 z-0">
       <source src="https://trecemulti.vercel.app/images/bg-home.mp4" type="video/mp4">
   </video>
-<div class="header">
-          <div class="temp-brand">
-            <img src="https://trecemulti.vercel.app/images/cog.png" alt="COG Logo">
-            <p>ARTS</p>
-          </div>
 
-          <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          <div class="header-buttons" id="headerButtons">
-            <a href="https://trecemulti.vercel.app/">Home</a>
-            <a onclick="alert('Under Development')">About</a>
-            <a href="main" class="active">Schedule</a>
-          </div>
+  <div class="relative z-10 flex items-center justify-between w-full pb-[20px] mb-[24px] border-b border-hairline max-[560px]:mb-[20px] max-[560px]:pb-[14px]">
+      <div class="flex items-center gap-[12px]">
+        <img src="https://trecemulti.vercel.app/images/cog.png" alt="COG Logo" class="block w-[36px] h-[36px] object-contain max-[560px]:w-[30px] max-[560px]:h-[30px]">
+        <p class="m-0 text-white font-serif text-[1.6rem] tracking-[0.15em] max-[560px]:text-[1.3rem]">ARTS</p>
       </div>
-  <div class="page">
 
-      <div class="masthead">
+      <div class="hidden flex-col gap-[5px] cursor-pointer p-[4px] max-[560px]:flex" id="menuToggle" onclick="toggleMenu()">
+        <span class="w-[26px] h-[2px] rounded-[2px] bg-white transition-[0.3s]"></span>
+        <span class="w-[26px] h-[2px] rounded-[2px] bg-white transition-[0.3s]"></span>
+        <span class="w-[26px] h-[2px] rounded-[2px] bg-white transition-[0.3s]"></span>
+      </div>
+
+      <div class="flex gap-[20px] font-mono text-[0.75rem] tracking-[0.15em] uppercase max-[560px]:hidden max-[560px]:absolute max-[560px]:top-[60px] max-[560px]:right-0 max-[560px]:flex-col max-[560px]:gap-[6px] max-[560px]:bg-panel-raised max-[560px]:border max-[560px]:border-hairline max-[560px]:rounded-[10px] max-[560px]:p-[12px] max-[560px]:min-w-[150px] max-[560px]:shadow-[0_10px_25px_rgba(0,0,0,0.5)] max-[560px]:z-[100]" id="headerButtons">
+        <a href="https://trecemulti.vercel.app/" class="py-[6px] px-[14px] rounded-[20px] text-ink-soft no-underline transition-[0.2s] ease hover:text-white max-[560px]:py-[8px] max-[560px]:px-[12px] max-[560px]:w-full max-[560px]:text-left">Home</a>
+        <a onclick="alert('Under Development')" class="py-[6px] px-[14px] rounded-[20px] text-ink-soft no-underline transition-[0.2s] ease hover:text-white max-[560px]:py-[8px] max-[560px]:px-[12px] max-[560px]:w-full max-[560px]:text-left">About</a>
+        <a href="main" class="py-[6px] px-[14px] rounded-[20px] text-white bg-[rgba(255,255,255,0.06)] border border-hairline no-underline transition-[0.2s] ease hover:text-white max-[560px]:py-[8px] max-[560px]:px-[12px] max-[560px]:w-full max-[560px]:text-left">Schedule</a>
+      </div>
+  </div>
+
+  <div class="max-w-[1080px] mx-auto relative z-[2] animate-[rise_0.5s_ease-out] max-[560px]:animate-none">
+      <div class="flex items-baseline justify-between flex-wrap gap-[12px] border-b-[3px] border-gold pb-[16px] mb-[22px] max-[560px]:flex-col max-[560px]:items-start max-[560px]:gap-[8px] max-[560px]:pb-[12px] max-[560px]:mb-[16px]">
           <div>
-              <div class="eyebrow">COG Trece &middot; Multimedia Ministry</div>
-              <h1>Sunday Service Rundown</h1>
+              <div class="font-mono text-[0.68rem] tracking-[0.15em] text-gold uppercase">COG Trece &middot; Multimedia Ministry</div>
+              <h1 class="font-display text-[clamp(1.3rem,3.5vw,2.3rem)] tracking-[0.01em] m-[4px_0_0] uppercase bg-[linear-gradient(115deg,#fff6cf_0%,#ffcd00_35%,#b8860b_55%,#ffcd00_75%,#fff6cf_100%)] bg-[length:220%_100%] [-webkit-background-clip:text] background-clip-text text-transparent animate-[foil_7s_ease-in-out_infinite]">Sunday Service Rundown</h1>
           </div>
-          <div class="status">
-              <span class="live-badge"><span class="dot"></span>LIVE DATABASE</span>
-              <div class="month">SEPTEMBER 2026</div>
+          <div class="flex items-center flex-wrap gap-[8px] max-[560px]:w-full max-[560px]:justify-between">
+              <span class="inline-flex items-center gap-[6px] font-mono text-[0.62rem] font-semibold tracking-[0.1em] text-live border border-[rgba(255,59,48,0.4)] bg-[rgba(255,59,48,0.08)] py-[5px] px-[10px] rounded-[20px] whitespace-nowrap"><span class="w-[6px] h-[6px] rounded-full bg-live shadow-[0_0_0_0_rgba(255,59,48,0.6)] animate-[pulse_1.6s_ease-out_infinite]"></span>LIVE DATABASE</span>
+              <div class="font-mono text-[0.78rem] bg-panel-raised border border-hairline py-[6px] px-[10px] rounded-[3px] text-[#cfcfd4] whitespace-nowrap">SEPTEMBER 2026</div>
           </div>
       </div>
 
-      <div class="sheet-wrap">
-          <div class="sheet">
-              <table id="scheduleTable">
+      <div class="relative px-[16px] before:content-[''] before:absolute before:top-0 before:bottom-0 before:w-[16px] before:bg-[radial-gradient(circle,#121214_3px,transparent_3.5px)] before:bg-[length:16px_20px] before:bg-center before:z-[3] before:left-0 after:content-[''] after:absolute after:top-0 after:bottom-0 after:width-[16px] after:bg-[radial-gradient(circle,#121214_3px,transparent_3.5px)] after:bg-[length:16px_20px] after:bg-center after:z-[3] after:right-0 max-[560px]:px-[6px] max-[560px]:before:w-[8px] max-[560px]:before:bg-[length:8px_14px] max-[560px]:after:w-[8px] max-[560px]:after:bg-[length:8px_14px]">
+          <div class="bg-panel border border-hairline rounded-[10px] p-[6px] overflow-x-auto [-webkit-overflow-scrolling:touch]">
+              <table class="w-full border-collapse min-width-[620px]">
                   <thead>
-                      <tr id="dateRow"><th></th></tr>
-                      <tr id="shiftRow"><th></th></tr>
+                      <tr id="dateRow"><th class="border border-hairline p-[10px_8px] text-center text-[0.8rem]"></th></tr>
+                      <tr id="shiftRow"><th class="border border-hairline p-[10px_8px] text-center text-[0.8rem]"></th></tr>
                   </thead>
-                  <tbody id="gridBody"></tbody>
+                  <tbody id="gridBody" class="[&_tr]:transition-[background] [&_tr]:duration-[0.15s] [&_tr]:ease [&_tr:hover]:[&_td:not(.role-header)]:bg-[rgba(255,205,0,0.05)] [&_tr:nth-child(even)]:&_td:not(.role-header):bg-[rgba(255,255,255,0.02)] [&_td]:border [&_td]:border-hairline [&_td]:p-[10px_8px] [&_td]:text-center [&_td]:text-[0.8rem] [&_td]:text-[#e4e4e8]"></tbody>
               </table>
           </div>
       </div>
 
-      <div class="rehearsals">
-          <div class="temp-rehearsal">
-              <div class="AM-slot">
-                  <p>AM Rehearsal:</p> <code>THURSDAY (5PM &ndash; 9PM)</code>
+      <div class="mt-[20px]">
+          <div class="flex flex-row gap-[1px] rounded-[10px_10px_0_0] overflow-hidden bg-hairline border border-hairline max-[560px]:flex-col max-[560px]:rounded-[10px_10px_0_0]">
+              <div class="flex items-center justify-center flex-wrap gap-[6px] m-0 p-[12px_8px] w-full bg-panel text-center">
+                  <p class="font-bold m-0 font-mono text-[0.68rem] tracking-[0.08em] uppercase text-ink-soft">AM Rehearsal:</p> <code class="font-mono text-[0.75rem] text-paper bg-transparent">THURSDAY (5PM &ndash; 9PM)</code>
               </div>
-              <div class="PM-slot">
-                  <p>PM Rehearsal:</p> <code>SATURDAY (7AM &ndash; 12NN)</code>
+              <div class="flex items-center justify-center flex-wrap gap-[6px] m-0 p-[12px_8px] w-full bg-panel text-center">
+                  <p class="font-bold m-0 font-mono text-[0.68rem] tracking-[0.08em] uppercase text-ink-soft">PM Rehearsal:</p> <code class="font-mono text-[0.75rem] text-paper bg-transparent">SATURDAY (7AM &ndash; 12NN)</code>
               </div>
           </div>
-          <div class="drytech">
-              <p>Drytech:</p> <code>SATURDAY (12NN &ndash; 1PM)</code>
+          <div class="flex items-center justify-center flex-wrap gap-[6px] m-0 p-[12px_8px] w-full bg-panel text-center text-gold rounded-[0_0_10px_10px] border border-hairline border-t-0">
+              <p class="font-bold m-0 font-mono text-[0.68rem] tracking-[0.08em] uppercase text-gold opacity-[0.85]">Drytech:</p> <code class="font-mono text-[0.75rem] text-paper bg-transparent">SATURDAY (12NN &ndash; 1PM)</code>
           </div>
 
-          <div class="call-time">
-              <h4>Call Time</h4>
-              <div class="calltime-temp">
-                  <div><code>AM Slot: 6AM</code></div>
-                  <div><code>PM Slot: 1:30PM</code></div>
+          <div class="mt-[16px]">
+              <h4 class="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-ink-soft m-[0_0_8px]">Call Time</h4>
+              <div class="flex justify-between gap-[10px] p-[12px] bg-[linear-gradient(180deg,#ffdb33,#ffcd00)] rounded-[8px] border border-gold-dim shadow-[0_0_0_1px_rgba(255,205,0,0.15),0_8px_24px_-8px_rgba(255,205,0,0.5)] animate-[glow_4s_ease-in-out_infinite] max-[560px]:flex-col max-[560px]:gap-[8px]">
+                  <div class="w-full justify-center flex border border-[rgba(0,0,0,0.55)] rounded-[5px] bg-[rgba(255,255,255,0.18)]"><code class="font-mono font-bold text-[0.95rem] tracking-[0.02em] p-[6px] text-[#1a1400] max-[560px]:text-[0.88rem]">AM Slot: 6AM</code></div>
+                  <div class="w-full justify-center flex border border-[rgba(0,0,0,0.55)] rounded-[5px] bg-[rgba(255,255,255,0.18)]"><code class="font-mono font-bold text-[0.95rem] tracking-[0.02em] p-[6px] text-[#1a1400] max-[560px]:text-[0.88rem]">PM Slot: 1:30PM</code></div>
               </div>
           </div>
       </div>
   </div>
-    <footer class="relative z-20 mt-8 w-full w-full border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
-        COG Trece Multimedia Ministry &copy; 2026
-    </footer>
+
+  <footer class="relative z-20 mt-8 w-full border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
+      COG Trece Multimedia Ministry &copy; 2026
+  </footer>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
     import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
@@ -704,8 +137,8 @@
     const shiftRow = document.getElementById("shiftRow");
 
     dates.forEach(d => {
-        dateRow.innerHTML += `<th colspan="2" class="date-header">${d}</th>`;
-        shiftRow.innerHTML += `<th class="shift-header">AM</th><th class="shift-header">PM</th>`;
+        dateRow.innerHTML += `<th colspan="2" class="bg-gold text-[#1a1400] font-mono font-bold tracking-[0.03em] p-[8px] uppercase text-[0.75rem] border border-hairline">${d}</th>`;
+        shiftRow.innerHTML += `<th class="bg-panel-raised text-amber font-mono text-[0.65rem] tracking-[0.1em] p-[6px] uppercase border border-hairline">AM</th><th class="bg-panel-raised text-amber font-mono text-[0.65rem] tracking-[0.1em] p-[6px] uppercase border border-hairline">PM</th>`;
     });
 
     onSnapshot(collection(db, "slots"), (snapshot) => {
@@ -713,14 +146,14 @@
         gridBody.innerHTML = "";
 
         roles.forEach(role => {
-            let row = `<tr><td class="role-header">${role}</td>`;
+            let row = `<tr><td class="role-header bg-panel-raised text-paper font-mono font-bold text-[0.68rem] tracking-[0.05em] text-left pl-[12px] uppercase whitespace-nowrap border-l-[3px] border-l-gold border border-hairline">${role}</td>`;
             dates.forEach(date => {
                 const amData = snapshot.docs.find(d => d.id === `${date}-AM-${role}`)?.data()?.name;
                 const pmData = snapshot.docs.find(d => d.id === `${date}-PM-${role}`)?.data()?.name;
-                const amDisplay = amData ? amData : '<span class="open-slot">OPEN</span>';
-                const pmDisplay = pmData ? pmData : '<span class="open-slot">OPEN</span>';
+                const amDisplay = amData ? amData : '<span class="inline-block bg-open-bg text-open px-[8px] py-[3px] rounded-[4px] text-[0.62rem] font-bold font-mono tracking-[0.05em] border border-[rgba(74,222,128,0.35)]">OPEN</span>';
+                const pmDisplay = pmData ? pmData : '<span class="inline-block bg-open-bg text-open px-[8px] py-[3px] rounded-[4px] text-[0.62rem] font-bold font-mono tracking-[0.05em] border border-[rgba(74,222,128,0.35)]">OPEN</span>';
 
-                row += `<td>${amDisplay}</td><td>${pmDisplay}</td>`;
+                row += `<td class="border border-hairline p-[10px_8px] text-center text-[0.8rem] text-[#e4e4e8]">${amDisplay}</td><td class="border border-hairline p-[10px_8px] text-center text-[0.8rem] text-[#e4e4e8]">${pmDisplay}</td>`;
             });
             row += `</tr>`;
             gridBody.innerHTML += row;
@@ -728,9 +161,9 @@
     });
 
     window.toggleMenu = function() {
-        document.getElementById('headerButtons').classList.toggle('show');
+        document.getElementById('headerButtons').classList.toggle('max-[560px]:flex');
+        document.getElementById('headerButtons').classList.toggle('flex');
     }
-    
 </script>
 <script type="text/javascript" charset="utf-8">
   function hrefDate(func) {
