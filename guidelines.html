@@ -4,18 +4,15 @@
     <!-- Open Graph / Facebook (Social Media) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trecemulti.vercel.app/">
-    <meta property="og:title" content="Arts Multimedia Ministry - COG Trece | Guidelines And Templates">
-    <meta property="og:description" content="Arts Multimedia Ministry COG Trece (Church Of God Trece Martires City). Contains about the multimedia ministry, visual live schedules.">
-    <meta property="og:image" content="https://trecemulti.vercel.app/images/guidelines.jpeg">
+    <meta property="og:title" content="COG Trece - FAQs and Guidelines | Arts Multimedia Ministry">
+    <meta property="og:description" content="Prompter, ProPresenter 7 searchable multimedia knowledge base and operator guides for COG Trece Martires City.">
+    <meta property="og:image" content="https://trecemulti.vercel.app/images/guidelines2.jpeg">
     <meta property="og:site_name" content="Arts Multimedia COG Trece">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COG Trece - Guidelines & Templates | Arts Multimedia Ministry</title>
+    <title>COG Trece - FAQs and Guidelines | Arts Multimedia Ministry</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" type="image/png" href="images/cog.png">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -45,13 +42,17 @@
             }
         }
     </script>
+    <link rel="icon" type="image/png" href="images/cog.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style type="text/css" media="all">
       :root {
         --stage: #0c0c10;
-        --panel: rgba(22, 22, 29, 0.75);
-        --panel-raised: rgba(35, 35, 46, 0.9);
+        --panel: rgba(22, 22, 29, 0.78);
+        --panel-raised: rgba(35, 35, 46, 0.92);
         --hairline: rgba(255, 255, 255, 0.08);
-        --hairline-gold: rgba(255, 205, 0, 0.25);
+        --hairline-gold: rgba(255, 205, 0, 0.28);
         --gold: #ffcd00;
         --gold-dim: #7a6100;
         --cyan: #00e6b8;
@@ -69,6 +70,7 @@
 
       html {
         background: var(--stage);
+        scroll-behavior: smooth;
       }
 
       body {
@@ -122,7 +124,7 @@
         position: relative;
         z-index: 2;
         width: 100%;
-        max-width: 1080px;
+        max-width: 1120px;
         margin: 0 auto;
         animation: rise 0.5s ease-out;
       }
@@ -264,7 +266,7 @@
       }
 
       .container > span {
-        margin-bottom: 48px;
+        margin-bottom: 32px;
         color: var(--ink-soft);
         font-family: var(--font-mono);
         font-size: 0.9rem;
@@ -272,35 +274,105 @@
         text-transform: uppercase;
       }
 
-      /* Multimedia Dashboard Layout */
-      .content-grid {
+      /* Search & Filter Dock */
+      .search-dock {
+        width: 100%;
+        max-width: 700px;
+        margin-bottom: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .search-wrapper {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 18px 24px 18px 52px;
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        border-radius: 35px;
+        color: var(--paper);
+        font-family: var(--font-mono);
+        font-size: 0.88rem;
+        backdrop-filter: blur(24px);
+        outline: none;
+        transition: 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      }
+
+      .search-input:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 25px rgba(255, 205, 0, 0.3);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--ink-soft);
+        pointer-events: none;
+      }
+
+      /* Category Filter Pills */
+      .filter-pills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .pill {
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        color: var(--ink-soft);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .pill:hover, .pill.active {
+        background: rgba(255, 205, 0, 0.12);
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      /* Guides Grid Layout */
+      .guides-grid {
         display: grid;
-        grid-template-columns: 360px 1fr;
-        gap: 28px;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 22px;
         width: 100%;
         text-align: left;
-        align-items: start;
       }
 
-      @media (max-width: 900px) {
-        .content-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Glass Panel Cards with Tech Accents */
-      .panel-card {
+      .guide-card {
         background: var(--panel);
         border: 1px solid var(--hairline);
         border-radius: 16px;
-        padding: 28px;
+        padding: 26px;
         backdrop-filter: blur(24px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
         position: relative;
         overflow: hidden;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
       }
 
-      .panel-card::before {
+      .guide-card:hover {
+        border-color: rgba(255, 205, 0, 0.4);
+        transform: translateY(-3px);
+      }
+
+      .guide-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -308,52 +380,110 @@
         width: 100%;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        opacity: 0.6;
+        opacity: 0.5;
       }
 
-      .template-sidebar {
+      .card-header-flex {
         display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .download-box {
-        background: rgba(0, 0, 0, 0.25);
-        border: 1px solid var(--hairline-gold);
-        border-radius: 12px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .file-badge {
-        display: inline-flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .badge-tag {
+        display: inline-block;
         font-family: var(--font-mono);
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         color: var(--cyan);
         background: rgba(0, 230, 180, 0.1);
-        padding: 4px 10px;
-        border-radius: 20px;
-        width: fit-content;
-        border: 1px solid rgba(0, 230, 180, 0.2);
+        padding: 3px 9px;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 230, 180, 0.25);
+        text-transform: uppercase;
       }
 
-      .download-box h3 {
-        margin: 0;
+      .shortcut-key {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--gold);
+        background: rgba(255, 205, 0, 0.08);
+        padding: 3px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 205, 0, 0.2);
+      }
+
+      .guide-card h3 {
+        margin: 0 0 10px;
         font-family: var(--font-display);
-        font-size: 1.15rem;
+        font-size: 1.12rem;
         color: var(--paper);
         letter-spacing: 0.02em;
       }
 
-      .download-box p {
-        margin: 0;
+      .guide-card p, .guide-card li {
         color: var(--ink-soft);
-        font-size: 0.85rem;
-        line-height: 1.5;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        margin: 0 0 8px;
+      }
+
+      .guide-card ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+
+      .guide-card strong {
+        color: var(--paper);
+      }
+
+      /* Featured Prompter Card Styling adapted for this design layout */
+      .guide-card.prompter-featured {
+        grid-column: 1 / -1;
+        background: linear-gradient(135deg, rgba(22, 22, 29, 0.9) 0%, rgba(30, 30, 42, 0.95) 100%);
+        border: 1px solid rgba(255, 205, 0, 0.3);
+        padding: 32px;
+      }
+
+      .prompter-layout {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 32px;
+        align-items: start;
+      }
+
+      .prompter-left {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--hairline);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: #00ffcc;
+        background: rgba(0, 255, 204, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        width: fit-content;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .status-pill::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: #00ffcc;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #00ffcc;
       }
 
       .download-btn {
@@ -361,182 +491,141 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        width: 100%;
-        padding: 12px 20px;
-        border: 1px solid var(--hairline);
-        border-radius: 10px;
-        color: #121000;
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-decoration: none;
-        text-transform: uppercase;
         background: var(--gold);
-        transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 0 15px rgba(255, 205, 0, 0.25);
+        color: #000;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 12px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.2s ease;
+        box-shadow: 0 4px 20px rgba(255, 205, 0, 0.25);
       }
 
       .download-btn:hover {
-        background: #fff;
-        border-color: #fff;
-        box-shadow: 0 0 25px rgba(255, 205, 0, 0.5);
-        transform: translateY(-2px);
+        background: #ffe342;
+        transform: translateY(-1px);
       }
 
-      /* Quick Specs Widget */
-      .specs-widget {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid var(--hairline);
-        border-radius: 12px;
-        padding: 18px;
-      }
-
-      .specs-widget h4 {
-        margin: 0 0 12px;
+      .specs-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--ink-soft);
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
+        font-size: 0.72rem;
       }
 
       .spec-row {
         display: flex;
         justify-content: space-between;
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      }
-
-      .spec-row:last-child {
-        border-bottom: none;
-      }
-
-      .spec-label {
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--hairline);
         color: var(--ink-soft);
       }
 
-      .spec-value {
+      .spec-row span:last-child {
         color: var(--paper);
         font-weight: 600;
       }
 
-      /* Guidelines Content Area */
-      .guidelines-main h2 {
-        margin: 0 0 8px;
-        font-family: var(--font-display);
-        font-size: 1.4rem;
-        color: var(--paper);
-        letter-spacing: 0.03em;
-      }
-
-      .guidelines-subtitle {
-        color: var(--ink-soft);
-        font-size: 0.85rem;
-        margin: 0 0 24px;
-        font-family: var(--font-mono);
-        letter-spacing: 0.05em;
-      }
-
-      .guideline-section {
-        margin-bottom: 28px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--hairline);
-        border-radius: 12px;
-        padding: 20px;
-        transition: border-color 0.2s ease;
-      }
-
-      .guideline-section:hover {
-        border-color: rgba(255, 255, 255, 0.18);
-      }
-
-      .guideline-section:last-child {
-        margin-bottom: 0;
-      }
-
-      .section-header-tag {
+      .prompter-right {
         display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
+        flex-direction: column;
+        gap: 24px;
       }
 
-      .section-num {
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        background: rgba(255, 205, 0, 0.15);
-        color: var(--gold);
-        padding: 2px 6px;
-        border-radius: 4px;
-        border: 1px solid rgba(255, 205, 0, 0.3);
-      }
-
-      .guideline-section h4 {
-        margin: 0;
-        font-family: var(--font-mono);
-        font-size: 0.9rem;
-        color: #fff;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      .guideline-section p, .guideline-section li {
-        color: var(--ink-soft);
-        font-size: 0.88rem;
-        line-height: 1.6;
-        margin: 0 0 8px;
-      }
-
-      .guideline-section ul {
-        margin: 8px 0 0;
-        padding-left: 18px;
-      }
-
-      .guideline-section strong {
-        color: var(--paper);
-      }
-
-      /* Color Swatches Grid */
-      .color-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .color-swatch {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid var(--hairline);
-        border-radius: 8px;
-        padding: 10px;
+      .protocol-section {
         display: flex;
         flex-direction: column;
         gap: 6px;
       }
 
-      .swatch-box {
-        width: 100%;
-        height: 28px;
+      .protocol-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .protocol-num {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        background: rgba(255, 205, 0, 0.15);
+        color: var(--gold);
+        padding: 2px 7px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 205, 0, 0.3);
+        font-weight: 700;
+      }
+
+      .protocol-section h4 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        color: var(--paper);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .color-palette-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      .color-swatch-box {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--hairline);
+        border-radius: 8px;
+        padding: 8px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 85px;
+        flex: 1;
+      }
+
+      .swatch-preview {
+        height: 22px;
         border-radius: 4px;
         border: 1px solid rgba(255, 255, 255, 0.15);
       }
 
-      .swatch-info span {
+      .swatch-info span:first-child {
         display: block;
         font-family: var(--font-mono);
-        font-size: 0.7rem;
-      }
-
-      .swatch-name {
-        color: #fff;
+        font-size: 0.63rem;
+        color: var(--paper);
         font-weight: 600;
       }
 
-      .swatch-code {
+      .swatch-info span:last-child {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.58rem;
         color: var(--ink-soft);
+      }
+
+      .no-results {
+        display: none;
+        width: 100%;
+        padding: 50px;
+        color: var(--ink-soft);
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        text-align: center;
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        border-radius: 16px;
+      }
+
+      @media (max-width: 1024px) {
+        .prompter-layout {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 768px) {
@@ -592,146 +681,392 @@
       <div class="header-buttons" id="headerButtons">
         <a href="https://trecemulti.vercel.app/">Home</a>
         <a onclick="alert('Under Development')">About</a>
-        <a href="guidelines" class="active">Guidelines</a>
         <a href="main">Schedule</a>
       </div>
     </div>
 
     <div class="page">
       <div class="container">
-        <p id="front-title">Guidelines & Templates</p>
-        <span>Church of God &middot; Trece Martires</span>
+        <p id="front-title">FAQs &middot; Guidelines</p>
+        <span>Church Of God &middot; Trece Martires</span>
 
-        <div class="content-grid">
-          
-          <!-- Left Column: Download & Meta Widget -->
-          <div class="template-sidebar">
-            <div class="panel-card download-box">
-              <div class="file-badge">
-                <span>● READY FOR PRODUCTION</span>
-              </div>
-              <h3>Prompter PowerPoint</h3>
-              <p>Standardized widescreen deck engineered for Sunday lyric projection, sermon notes, and multimedia worship visuals.</p>
-              <a href="templates/COG-TRECE-MULTI-PROMPTER-TEMPLATE2026.pptx" download class="download-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download .PPTX
-              </a>
-            </div>
+        <!-- Search Dock & Filters -->
+        <div class="search-dock">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search Pro7 guides, shortcuts, colors, bundles..." onkeyup="filterGuides()">
+          </div>
 
-            <div class="specs-widget">
-              <h4>Asset Technical Specs</h4>
-              <div class="spec-row">
-                <span class="spec-label">Aspect Ratio</span>
-                <span class="spec-value">16:9 Widescreen</span>
+          <div class="filter-pills">
+            <button class="pill active" onclick="filterCategory('all', this)">All Guides</button>
+            <button class="pill" onclick="filterCategory('visuals', this)">Visuals & Backgrounds</button>
+            <button class="pill" onclick="filterCategory('editor', this)">Slide Editor & Typography</button>
+            <button class="pill" onclick="filterCategory('workflow', this)">Import & Library</button>
+            <button class="pill" onclick="filterCategory('compliance', this)">Credits & Compliance</button>
+          </div>
+        </div>
+
+        <!-- Guides Container -->
+        <div class="guides-grid" id="guidesGrid">
+
+          <!-- Featured Prompter Card -->
+          <div class="guide-card prompter-featured" data-category="visuals" data-keywords="prompter powerpoint visual standards typography scale color system live service execution deck ppt">
+            <div class="prompter-layout">
+              <!-- Left Column: Action & Specs -->
+              <div class="prompter-left">
+                <div class="status-pill">Ready for Production</div>
+                <div>
+                  <h3 style="font-size: 1.25rem; margin-bottom: 6px;">Prompter PowerPoint</h3>
+                  <p style="margin: 0; font-size: 0.82rem;">Standardized widescreen deck engineered for Sunday lyric projection, sermon notes, and multimedia worship visuals.</p>
+                </div>
+                <a href="#" class="download-btn" onclick="alert('Downloading Prompter PowerPoint deck...'); return false;">
+                  ↓ Download .PPTX
+                </a>
+
+                <div>
+                  <span style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 8px;">Asset Technical Specs</span>
+                  <div class="specs-list">
+                    <div class="spec-row">
+                      <span>Aspect Ratio</span>
+                      <span>16:9 Widescreen</span>
+                    </div>
+                    <div class="spec-row">
+                      <span>File Type</span>
+                      <span>Microsoft PowerPoint</span>
+                    </div>
+                    <div class="spec-row">
+                      <span>Target Engine</span>
+                      <span>PPT</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="spec-row">
-                <span class="spec-label">File Type</span>
-                <span class="spec-value">Microsoft PowerPoint</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-label">Target Engine</span>
-                <span class="spec-value">PPT</span>
+
+              <!-- Right Column: Visual Standards & Protocol -->
+              <div class="prompter-right">
+                <div style="border-bottom: 1px solid var(--hairline); padding-bottom: 12px;">
+                  <h3 style="font-size: 1.2rem; margin: 0 0 4px; color: var(--paper);">Visual Standards</h3>
+                  <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em;">Operational Protocol for Multimedia Crew</span>
+                </div>
+
+                <!-- Protocol 01 -->
+                <div class="protocol-section">
+                  <div class="protocol-header">
+                    <span class="protocol-num">01</span>
+                    <h4>Typography & Scale</h4>
+                  </div>
+                  <p>Legibility from the back row of the sanctuary is paramount. Never crowd slides with excess characters.</p>
+                  <p><strong>Headings / Song Titles:</strong> 48pt – 54pt (Bold weights required).</p>
+                  <p><strong>Body / Lyrics / Verses:</strong> 60pt – 72pt. Limit enough lines to avoid exceeding screen width.</p>
+                  <p><strong>Fonts:</strong> Bebas Neue for overall display.</p>
+                  <p><strong>Cue Styling:</strong> Red for instrumentals, Light Green for Highlights and Repetitions.</p>
+                </div>
+
+                <!-- Protocol 02 -->
+                <div class="protocol-section">
+                  <div class="protocol-header">
+                    <span class="protocol-num">02</span>
+                    <h4>Approved Color System</h4>
+                  </div>
+                  <p>Maintain high contrast colors for consistent usage of prompter palettes.</p>
+                  <div class="color-palette-grid">
+                    <div class="color-swatch-box">
+                      <div class="swatch-preview" style="background: #0c0c10;"></div>
+                      <div class="swatch-info">
+                        <span>Background</span>
+                        <span>#0C0C10</span>
+                      </div>
+                    </div>
+                    <div class="color-swatch-box">
+                      <div class="swatch-preview" style="background: #ffffff;"></div>
+                      <div class="swatch-info">
+                        <span>Lyrics</span>
+                        <span>#FFFFFF</span>
+                      </div>
+                    </div>
+                    <div class="color-swatch-box">
+                      <div class="swatch-preview" style="background: #ffcd00;"></div>
+                      <div class="swatch-info">
+                        <span>Structures</span>
+                        <span>#FFCD00</span>
+                      </div>
+                    </div>
+                    <div class="color-swatch-box">
+                      <div class="swatch-preview" style="background: #fb2943;"></div>
+                      <div class="swatch-info">
+                        <span>Instrumental</span>
+                        <span>#FB2943</span>
+                      </div>
+                    </div>
+                    <div class="color-swatch-box">
+                      <div class="swatch-preview" style="background: #ccffcc;"></div>
+                      <div class="swatch-info">
+                        <span>Repetition</span>
+                        <span>#CCFFCC</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Protocol 03 -->
+                <div class="protocol-section">
+                  <div class="protocol-header">
+                    <span class="protocol-num">03</span>
+                    <h4>Live Service Execution</h4>
+                  </div>
+                  <p><strong>Contrast Rule:</strong> Ensure crisp white or gold text over dark backgrounds. Avoid mid-tone gray-on-gray palettes.</p>
+                  <p><strong>Visual Margins:</strong> Keep text well clear of display borders. Maintain a safe padding zone around all slide elements.</p>
+                  <p><strong>Background Control:</strong> Use clean, distraction-free gradients or approved motion loops that support rather than obscure the text content.</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Right Column: Guidelines Panel -->
-          <div class="panel-card guidelines-main">
-            <h2>Visual Standards</h2>
-            <div class="guidelines-subtitle">OPERATIONAL PROTOCOL FOR MULTIMEDIA CREW</div>
-
-            <div class="guideline-section">
-              <div class="section-header-tag">
-                <span class="section-num">01</span>
-                <h4>Typography & Scale</h4>
-              </div>
-              <p>Legibility from the back row of the sanctuary is paramount. Never crowd slides with excess characters.</p>
-              <ul>
-                <li><strong>Headings / Song Titles:</strong> 48pt – 54pt (Bold weights required).</li>
-                <li><strong>Body / Lyrics / Verses:</strong> 60pt – 72pt. Limit enough lines to avoid exceeding the screen width.</li>
-                <li><strong>Fonts:</strong> <span class="underline">Bebas Neue</span> for overall.</li>
-                <li><strong>Cue Styling:</strong> Red for instrumentals, Light Green for Highlights and Repetitions.</li>
-              </ul>
+          <!-- 1. How to change bg color -->
+          <div class="guide-card" data-category="visuals" data-keywords="how to change bg color background color slide template inspector fill pro7 propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Visuals</span>
+              <span class="shortcut-key">Inspector Panel</span>
             </div>
+            <h3>How to Change Background Color</h3>
+            <p>Modify the background color of slides or presentation templates directly inside ProPresenter 7:</p>
+            <ul>
+              <li>Select the target slide or presentation cue in your arrangement tray.</li>
+              <li>Open the <strong>Inspector Panel</strong> on the right side of the main workspace.</li>
+              <li>Go to the <strong>Slide Properties</strong> tab and click on the <strong>Fill</strong> color block.</li>
+              <li>Choose a solid color fill, radial gradient, or clear backdrop value to apply your custom stage tint.</li>
+            </ul>
+          </div>
 
-            <div class="guideline-section">
-              <div class="section-header-tag">
-                <span class="section-num">02</span>
-                <h4>Approved Color System</h4>
-              </div>
-              <p>Maintain high contrast colors for consistent usage of prompter palettes.</p>
-              
-              <div class="color-grid">
-                <div class="color-swatch">
-                  <div class="swatch-box" style="background: #0c0c10;"></div>
-                  <div class="swatch-info">
-                    <span class="swatch-name">Background [constant]</span>
-                    <span class="swatch-code">#0C0C10</span>
-                  </div>
-                </div>
-
-                <div class="color-swatch">
-                  <div class="swatch-box" style="background: #FFF;"></div>
-                  <div class="swatch-info">
-                    <span class="swatch-name">Lyrics</span>
-                    <span class="swatch-code">#FFF</span>
-                  </div>
-                </div>
-
-                <div class="color-swatch">
-                  <div class="swatch-box" style="background: #ffcd00;"></div>
-                  <div class="swatch-info">
-                    <span class="swatch-name">Song Structures</span>
-                    <span class="swatch-code">#FFCD00</span>
-                  </div>
-                </div>
-
-                <div class="color-swatch">
-                  <div class="swatch-box" style="background: #fb2943;"></div>
-                  <div class="swatch-info">
-                    <span class="swatch-name">Instrumental Cues</span>
-                    <span class="swatch-code">#FB2943</span>
-                  </div>
-                </div>
-
-                <div class="color-swatch">
-                  <div class="swatch-box" style="background: #CCFFCC;"></div>
-                  <div class="swatch-info">
-                    <span class="swatch-name">Repetition Cues</span>
-                    <span class="swatch-code">#CCFFCC</span>
-                  </div>
-                </div>
-              </div>
+          <!-- 2. How to import a song using the clipboard -->
+          <div class="guide-card" data-category="workflow" data-keywords="how to import a song using the clipboard lyrics quick add pro7 propresenter file">
+            <div class="card-header-flex">
+              <span class="badge-tag">Workflow</span>
+              <span class="shortcut-key">File &gt; Import</span>
             </div>
+            <h3>How to Import a Song via Clipboard</h3>
+            <p>Quickly pull in lyrics copied from external text sources, ChordPro sheets, or web browsers:</p>
+            <ul>
+              <li>Copy your formatted song lyrics (with verses and choruses labeled clearly) to your system clipboard.</li>
+              <li>In Pro7, navigate to top menu <strong>File &gt; Import &gt; Song from Clipboard</strong>.</li>
+              <li>Review stanza breaks and group tagging in the quick-import preview modal.</li>
+              <li>Assign the correct CCLI song number, select your library folder, and confirm import.</li>
+            </ul>
+          </div>
 
-            <div class="guideline-section">
-              <div class="section-header-tag">
-                <span class="section-num">03</span>
-                <h4>Live Service Execution</h4>
-              </div>
-              <ul>
-                <li><strong>Contrast Rule:</strong> Ensure crisp white or gold text over dark backgrounds. Avoid mid-tone gray-on-gray palettes.</li>
-                <li><strong>Visual Margins:</strong> Keep text well clear of display borders. Maintain a safe padding zone around all slide elements.</li>
-                <li><strong>Background Control:</strong> Use clean, distraction-free gradients or approved motion loops that support rather than obscure the text content.</li>
-              </ul>
+          <!-- 3. How to install/import a Pro7 bundle -->
+          <div class="guide-card" data-category="workflow" data-keywords="how to install import a pro7 bundle package file probundle propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Workflow</span>
+              <span class="shortcut-key">.proBundle</span>
             </div>
+            <h3>How to Import a Pro7 Bundle</h3>
+            <p>Restore or unpack complete service packages containing media, templates, and libraries:</p>
+            <ul>
+              <li>Double-click the <code>.proBundle</code> file directly, or open Pro7 and go to <strong>File &gt; Import &gt; Bundle</strong>.</li>
+              <li>Select your bundle package archive from your local directory.</li>
+              <li>Choose your active library destination folder for the unpacked presentation documents.</li>
+              <li>Verify that all embedded video loops and audio stems link correctly in your repository.</li>
+            </ul>
+          </div>
 
+          <!-- 4. How to properly install/import a background/media -->
+          <div class="guide-card" data-category="visuals" data-keywords="how to properly install import background media visuals loops bin propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Visuals</span>
+              <span class="shortcut-key">Media Bin</span>
+            </div>
+            <h3>How to Import Background & Media</h3>
+            <p>Ensure smooth video loop playback during live services without broken links or stuttering frames:</p>
+            <ul>
+              <li>Store all source loop files in a dedicated local media repository folder before linking.</li>
+              <li>Drag and drop your video files directly into the <strong>Pro7 Media Bin</strong> tray.</li>
+              <li>Right-click the media item, open properties, and ensure playback behavior is set to <strong>Loop</strong>.</li>
+              <li>Avoid playing media directly off removable USB thumb drives during active worship services.</li>
+            </ul>
+          </div>
+
+          <!-- 5. How to bundle in pro7 -->
+          <div class="guide-card" data-category="workflow" data-keywords="how to bundle in pro7 export package backup project presentation">
+            <div class="card-header-flex">
+              <span class="badge-tag">Workflow</span>
+              <span class="shortcut-key">Right-Click &gt; Export</span>
+            </div>
+            <h3>How to Bundle in Pro7</h3>
+            <p>Export a presentation package along with all integrated media, audio, and custom templates:</p>
+            <ul>
+              <li>Right-click your active service playlist or individual presentation file in the library.</li>
+              <li>Select <strong>Export &gt; Bundle...</strong> from the context menu.</li>
+              <li>Check the options to include media assets, audio tracks, and custom theme designs.</li>
+              <li>Save the package archive to your local backup drive or cloud sync folder.</li>
+            </ul>
+          </div>
+
+          <!-- 6. How to create a new presentation -->
+          <div class="guide-card" data-category="workflow" data-keywords="how to create a new presentation project file library propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Workflow</span>
+              <span class="shortcut-key">Ctrl / Cmd + N</span>
+            </div>
+            <h3>How to Create a New Presentation</h3>
+            <p>Start a clean project deck from scratch for custom announcements or sermon slides:</p>
+            <ul>
+              <li>Click the <strong>+ (New Presentation)</strong> icon in the library toolbar or press <code>Cmd/Ctrl + N</code>.</li>
+              <li>Name your presentation file clearly (e.g., <em>Sunday Worship - Date</em>).</li>
+              <li>Confirm your target aspect ratio (Standard 16:9 widescreen) and select the active library folder.</li>
+              <li>Click <strong>New Presentation</strong> to open the empty slide editing grid.</li>
+            </ul>
+          </div>
+
+          <!-- 7. How to create credits -->
+          <div class="guide-card" data-category="compliance" data-keywords="how to create credits guidelines cogw not cogw ccli copyright compliance">
+            <div class="card-header-flex">
+              <span class="badge-tag">Compliance</span>
+              <span class="shortcut-key">Final Slide</span>
+            </div>
+            <h3>How to Create Credits</h3>
+            <p>Properly attribute media and song copyright data according to ministry standards:</p>
+            <ul>
+              <li><strong>COGW (COG Worship / Licensed Content):</strong> Include the year of publication, along with the title of the song.</li>
+              <li><strong>Non-COGW / External Sources:</strong> Clearly credit the song title along with the band/church name only. Exclude the year of publication.</li>
+            </ul>
+          </div>
+
+          <!-- 8. How to create transitions -->
+          <div class="guide-card" data-category="editor" data-keywords="how to create transitions animations dissolve fade slide propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Editor</span>
+              <span class="shortcut-key">Transition Inspector</span>
+            </div>
+            <h3>How to Create Transitions</h3>
+            <p>Add smooth visual motion between slides or background media cues:</p>
+            <ul>
+              <li>Open the <strong>Cue Properties</strong> or presentation build settings menu.</li>
+              <li>Select your preferred slide transition effect (e.g., Dissolve, Push, or Cut).</li>
+              <li>Adjust the transition duration slider (recommended: 0.5s to 1.0s for smooth worship flow).</li>
+              <li>Apply the transition globally to your song arrangement or individually to specific title slides.</li>
+            </ul>
+          </div>
+
+          <!-- 9. How to build with transitions -->
+          <div class="guide-card" data-category="editor" data-keywords="how to build with transitions component animations sequence editor">
+            <div class="card-header-flex">
+              <span class="badge-tag">Editor</span>
+              <span class="shortcut-key">Build Order</span>
+            </div>
+            <h3>How to Build with Transitions</h3>
+            <p>Animate individual text elements and objects arriving on a single slide sequentially:</p>
+            <ul>
+              <li>Open your slide inside the ProPresenter <strong>Editor</strong> workspace.</li>
+              <li>Select the specific text box, scripture block, or graphic element you want to animate.</li>
+              <li>Configure its build-in transition properties (Fade In, Fly In) in the right-hand inspector.</li>
+              <li>Use the build order timeline to stagger multiple text lines so they trigger step-by-step during live presentation.</li>
+            </ul>
+          </div>
+
+          <!-- 10. How to media fill -->
+          <div class="guide-card" data-category="visuals" data-keywords="how to media fill scale fit crop video image background propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Visuals</span>
+              <span class="shortcut-key">Scaling Mode</span>
+            </div>
+            <h3>How to Media Fill</h3>
+            <p>Adjust how background loops and images fit across different screen display ratios without awkward letterboxing:</p>
+            <ul>
+              <li>Select the media fill property on your background cue or screen layer in Pro7.</li>
+              <li>Choose <strong>Fill</strong> to scale and crop the video to completely cover the screen without black borders.</li>
+              <li>Choose <strong>Fit</strong> if you need the entire image visible without any edge cropping.</li>
+              <li>Fine-tune alignment scaling parameters if your stage utilizes custom LED wall dimensions.</li>
+            </ul>
+          </div>
+
+          <!-- 11. How to change the spacing and the letter space -->
+          <div class="guide-card" data-category="editor" data-keywords="how to change the spacing and the letter space line height kerning tracking typography editor propresenter">
+            <div class="card-header-flex">
+              <span class="badge-tag">Editor</span>
+              <span class="shortcut-key">Typography Panel</span>
+            </div>
+            <h3>How to Change Spacing & Letter Space</h3>
+            <p>Refine line spacing and character kerning for optimal readability on sanctuary projection displays:</p>
+            <ul>
+              <li>Open your text box inside the ProPresenter <strong>Editor</strong> and highlight your text content.</li>
+              <li>Locate the typography metrics panel in the right-hand inspector menu.</li>
+              <li>Adjust <strong>Line Spacing</strong> to prevent overlapping lyric lines on multi-line projection slides.</li>
+              <li>Modify <strong>Letter Spacing (Tracking)</strong> to widen display headings or tighten bold display text cleanly.</li>
+            </ul>
           </div>
 
         </div>
 
+        <div id="noResults" class="no-results">
+          No matching guides found. Try searching for "background", "bundle", "credits", "spacing", or "transition".
+        </div>
+
       </div>
     </div>
-
-    <footer class="relative z-20 mt-8 w-full border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
-      COG Trece Multimedia Ministry &copy; 2026
-  </footer>
 
     <script src="js/variant.js"></script>
     <script>
       function toggleMenu() {
         document.getElementById('headerButtons').classList.toggle('show');
       }
+
+      function filterGuides() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase().trim();
+        const cards = document.getElementsByClassName('guide-card');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        // Reset category pills to All when typing
+        if (filter !== '') {
+          const pills = document.getElementsByClassName('pill');
+          for (let p of pills) p.classList.remove('active');
+          pills[0].classList.add('active');
+        }
+
+        for (let i = 0; i < cards.length; i++) {
+          const keywords = cards[i].getAttribute('data-keywords');
+          const title = cards[i].querySelector('h3').textContent.toLowerCase();
+          const content = cards[i].textContent.toLowerCase();
+
+          if (keywords.includes(filter) || title.includes(filter) || content.includes(filter)) {
+            cards[i].style.display = "block";
+            visibleCount++;
+          } else {
+            cards[i].style.display = "none";
+          }
+        }
+
+        noResults.style.display = (visibleCount === 0) ? "block" : "none";
+      }
+
+      function filterCategory(category, btn) {
+        document.getElementById('searchInput').value = '';
+
+        const pills = document.getElementsByClassName('pill');
+        for (let p of pills) p.classList.remove('active');
+        btn.classList.add('active');
+
+        const cards = document.getElementsByClassName('guide-card');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        for (let i = 0; i < cards.length; i++) {
+          const cardCat = cards[i].getAttribute('data-category');
+          if (category === 'all' || cardCat === category) {
+            cards[i].style.display = "block";
+            visibleCount++;
+          } else {
+            cards[i].style.display = "none";
+          }
+        }
+
+        noResults.style.display = (visibleCount === 0) ? "block" : "none";
+      }
     </script>
+    <footer class="relative z-20 mt-8 w-full border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
+      COG Trece Multimedia Ministry &copy; 2026
+  </footer>
   </body>
 </html>
