@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Open Graph / Facebook (Social Media) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trecemulti.vercel.app/">
+    <meta property="og:title" content="Arts Multimedia Ministry - COG Trece | Church of God Trece Martires City">
+    <meta property="og:description" content="Arts Multimedia Ministry COG Trece (Church Of God Trece Martires City). Contains about the multimedia ministry, visual live schedules.">
+    <meta property="og:image" content="https://trecemulti.vercel.app/images/cog.png">
+    <meta property="og:site_name" content="Arts Multimedia COG Trece">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COG Trece - Guidelines & Templates | Arts Multimedia Ministry</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="images/cog.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stage: '#121214',
+                        panel: '#1b1b1e',
+                        'panel-raised': '#232327',
+                        hairline: '#2f2f34',
+                        gold: '#ffcd00',
+                        'gold-dim': '#7a6100',
+                        amber: '#f59e0b',
+                        paper: '#f6f4ee',
+                        'ink-soft': '#8a8a93',
+                        open: '#4ade80',
+                        'open-bg': '#16351f',
+                        live: '#ff3b30',
+                    },
+                    fontFamily: {
+                        display: ['"Archivo Black"', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Times New Roman"', 'Times', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/css" media="all">
+      :root {
+        --stage: #0c0c10;
+        --panel: rgba(22, 22, 29, 0.75);
+        --panel-raised: rgba(35, 35, 46, 0.9);
+        --hairline: rgba(255, 255, 255, 0.08);
+        --hairline-gold: rgba(255, 205, 0, 0.25);
+        --gold: #ffcd00;
+        --gold-dim: #7a6100;
+        --cyan: #00e6b8;
+        --blue: #008cff;
+        --paper: #fcfbf9;
+        --ink-soft: #9e9ea7;
+        --font-display: 'Archivo Black', sans-serif;
+        --font-mono: 'IBM Plex Mono', monospace;
+        --font-body: Inter, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--stage);
+      }
+
+      body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px 20px 60px;
+        overflow-x: hidden;
+        color: var(--paper);
+        font-family: var(--font-body);
+        background:
+          radial-gradient(circle at 10% 10%, rgba(0, 140, 255, 0.18), transparent 40%),
+          radial-gradient(circle at 90% 90%, rgba(0, 230, 180, 0.15), transparent 40%),
+          #0c0c10;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 50% 30%, rgba(255, 205, 0, 0.06), transparent 60%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.035;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .bg-video {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.25;
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        animation: rise 0.5s ease-out;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-bottom: 24px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .temp {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .temp img {
+        display: block;
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 8px rgba(255, 205, 0, 0.3));
+      }
+
+      .header p {
+        margin: 0;
+        color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.15em;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        width: 28px;
+        height: 3px;
+        border-radius: 3px;
+        background: #fff;
+      }
+
+      .header-buttons {
+        display: flex;
+        gap: 24px;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .header-buttons a {
+        padding: 6px 14px;
+        border-radius: 20px;
+        color: var(--ink-soft);
+        text-decoration: none;
+        transition: 0.2s ease;
+      }
+
+      .header-buttons a:hover {
+        color: #fff;
+      }
+
+      .header-buttons a.active,
+      .header-buttons a[href="index.html"] {
+        border: 1px solid var(--hairline);
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0 60px;
+        color: #fff;
+        text-align: center;
+      }
+
+      #front-title {
+        position: relative;
+        width: 100%;
+        margin: 0 0 10px;
+        color: transparent;
+        font-family: "Times New Roman", Times, serif;
+        font-size: clamp(2.2rem, 6vw, 4.5rem);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background: linear-gradient(
+          115deg,
+          #fff6cf 0%,
+          var(--gold) 35%,
+          #b8860b 55%,
+          var(--gold) 75%,
+          #fff6cf 100%
+        );
+        background-size: 220% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        filter: drop-shadow(0 0 5px rgba(255, 205, 0, 0.45));
+        animation: titleGlow 3.5s ease-in-out infinite;
+      }
+
+      @keyframes titleGlow {
+        0%, 100% {
+          background-position: 0% 50%;
+          filter:
+            drop-shadow(0 0 4px rgba(255, 205, 0, 0.35))
+            drop-shadow(0 0 12px rgba(255, 178, 0, 0.18));
+        }
+        50% {
+          background-position: 100% 50%;
+          filter:
+            drop-shadow(0 0 8px rgba(255, 225, 90, 0.75))
+            drop-shadow(0 0 24px rgba(255, 174, 0, 0.42));
+        }
+      }
+
+      .container > span {
+        margin-bottom: 48px;
+        color: var(--ink-soft);
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      /* Multimedia Dashboard Layout */
+      .content-grid {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 28px;
+        width: 100%;
+        text-align: left;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Glass Panel Cards with Tech Accents */
+      .panel-card {
+        background: var(--panel);
+        border: 1px solid var(--hairline);
+        border-radius: 16px;
+        padding: 28px;
+        backdrop-filter: blur(24px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        opacity: 0.6;
+      }
+
+      .template-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .download-box {
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid var(--hairline-gold);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .file-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--cyan);
+        background: rgba(0, 230, 180, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        width: fit-content;
+        border: 1px solid rgba(0, 230, 180, 0.2);
+      }
+
+      .download-box h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        color: var(--paper);
+        letter-spacing: 0.02em;
+      }
+
+      .download-box p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      .download-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 20px;
+        border: 1px solid var(--hairline);
+        border-radius: 10px;
+        color: #121000;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        text-transform: uppercase;
+        background: var(--gold);
+        transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 0 15px rgba(255, 205, 0, 0.25);
+      }
+
+      .download-btn:hover {
+        background: #fff;
+        border-color: #fff;
+        box-shadow: 0 0 25px rgba(255, 205, 0, 0.5);
+        transform: translateY(-2px);
+      }
+
+      /* Quick Specs Widget */
+      .specs-widget {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        padding: 18px;
+      }
+
+      .specs-widget h4 {
+        margin: 0 0 12px;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--ink-soft);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .spec-row {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .spec-row:last-child {
+        border-bottom: none;
+      }
+
+      .spec-label {
+        color: var(--ink-soft);
+      }
+
+      .spec-value {
+        color: var(--paper);
+        font-weight: 600;
+      }
+
+      /* Guidelines Content Area */
+      .guidelines-main h2 {
+        margin: 0 0 8px;
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        color: var(--paper);
+        letter-spacing: 0.03em;
+      }
+
+      .guidelines-subtitle {
+        color: var(--ink-soft);
+        font-size: 0.85rem;
+        margin: 0 0 24px;
+        font-family: var(--font-mono);
+        letter-spacing: 0.05em;
+      }
+
+      .guideline-section {
+        margin-bottom: 28px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
+        padding: 20px;
+        transition: border-color 0.2s ease;
+      }
+
+      .guideline-section:hover {
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+
+      .guideline-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-header-tag {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .section-num {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        background: rgba(255, 205, 0, 0.15);
+        color: var(--gold);
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 205, 0, 0.3);
+      }
+
+      .guideline-section h4 {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .guideline-section p, .guideline-section li {
+        color: var(--ink-soft);
+        font-size: 0.88rem;
+        line-height: 1.6;
+        margin: 0 0 8px;
+      }
+
+      .guideline-section ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+
+      .guideline-section strong {
+        color: var(--paper);
+      }
+
+      /* Color Swatches Grid */
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .color-swatch {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--hairline);
+        border-radius: 8px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .swatch-box {
+        width: 100%;
+        height: 28px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .swatch-info span {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+      }
+
+      .swatch-name {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .swatch-code {
+        color: var(--ink-soft);
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .header-buttons {
+          position: absolute;
+          top: 70px;
+          right: 20px;
+          display: none;
+          flex-direction: column;
+          gap: 10px;
+          padding: 16px;
+          border: 1px solid var(--hairline);
+          border-radius: 12px;
+          background: var(--panel-raised);
+          backdrop-filter: blur(12px);
+        }
+
+        .header-buttons.show {
+          display: flex;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #front-title,
+        .page {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="https://trecemulti.vercel.app/images/bg-home.mp4" type="video/mp4">
+    </video>
+
+    <div class="header">
+      <div class="temp">
+        <img src="https://trecemulti.vercel.app/images/cog.png" alt="COG Logo">
+        <p>ARTS</p>
+      </div>
+
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="header-buttons" id="headerButtons">
+        <a href="https://trecemulti.vercel.app/">Home</a>
+        <a onclick="alert('Under Development')">About</a>
+        <a href="guidelines">Guidelines</a>
+        <a href="main">Schedule</a>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="container">
+        <p id="front-title">Guidelines & Templates</p>
+        <span>Church of God &middot; Trece Martires</span>
+
+        <div class="content-grid">
+          
+          <!-- Left Column: Download & Meta Widget -->
+          <div class="template-sidebar">
+            <div class="panel-card download-box">
+              <div class="file-badge">
+                <span>● READY FOR PRODUCTION</span>
+              </div>
+              <h3>Prompter PowerPoint</h3>
+              <p>Standardized widescreen deck engineered for Sunday lyric projection, sermon notes, and multimedia worship visuals.</p>
+              <a href="templates/prompter.pptx" download class="download-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download .PPTX
+              </a>
+            </div>
+
+            <div class="specs-widget">
+              <h4>Asset Technical Specs</h4>
+              <div class="spec-row">
+                <span class="spec-label">Aspect Ratio</span>
+                <span class="spec-value">16:9 Widescreen</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">File Type</span>
+                <span class="spec-value">Microsoft PowerPoint</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Target Engine</span>
+                <span class="spec-value">PPT</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Guidelines Panel -->
+          <div class="panel-card guidelines-main">
+            <h2>Visual Standards</h2>
+            <div class="guidelines-subtitle">OPERATIONAL PROTOCOL FOR MULTIMEDIA CREW</div>
+
+            <div class="guideline-section">
+              <div class="section-header-tag">
+                <span class="section-num">01</span>
+                <h4>Typography & Scale</h4>
+              </div>
+              <p>Legibility from the back row of the sanctuary is paramount. Never crowd slides with excess characters.</p>
+              <ul>
+                <li><strong>Headings / Song Titles:</strong> 48pt – 54pt (Bold weights required).</li>
+                <li><strong>Body / Lyrics / Verses:</strong> 60pt – 72pt. Limit enough lines to avoid exceeding the screen width.</li>
+                <li><strong>Fonts:</strong> <span class="underline">Bebas Neue</span> for overall.</li>
+                <li><strong>Cue Styling:</strong> Red for instrumentals, Light Green for Highlights and Repetitions.</li>
+              </ul>
+            </div>
+
+            <div class="guideline-section">
+              <div class="section-header-tag">
+                <span class="section-num">02</span>
+                <h4>Approved Color System</h4>
+              </div>
+              <p>Maintain high contrast colors for consistent usage of prompter palettes.</p>
+              
+              <div class="color-grid">
+                <div class="color-swatch">
+                  <div class="swatch-box" style="background: #0c0c10;"></div>
+                  <div class="swatch-info">
+                    <span class="swatch-name">Background [constant]</span>
+                    <span class="swatch-code">#0C0C10</span>
+                  </div>
+                </div>
+
+                <div class="color-swatch">
+                  <div class="swatch-box" style="background: #FFF;"></div>
+                  <div class="swatch-info">
+                    <span class="swatch-name">Lyrics</span>
+                    <span class="swatch-code">#FFF</span>
+                  </div>
+                </div>
+
+                <div class="color-swatch">
+                  <div class="swatch-box" style="background: #ffcd00;"></div>
+                  <div class="swatch-info">
+                    <span class="swatch-name">Song Structures</span>
+                    <span class="swatch-code">#FFCD00</span>
+                  </div>
+                </div>
+
+                <div class="color-swatch">
+                  <div class="swatch-box" style="background: #fb2943;"></div>
+                  <div class="swatch-info">
+                    <span class="swatch-name">Instrumental Cues</span>
+                    <span class="swatch-code">#FB2943</span>
+                  </div>
+                </div>
+
+                <div class="color-swatch">
+                  <div class="swatch-box" style="background: #CCFFCC;"></div>
+                  <div class="swatch-info">
+                    <span class="swatch-name">Repetition Cues</span>
+                    <span class="swatch-code">#CCFFCC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guideline-section">
+              <div class="section-header-tag">
+                <span class="section-num">03</span>
+                <h4>Live Service Execution</h4>
+              </div>
+              <ul>
+                <li><strong>Contrast Rule:</strong> Ensure crisp white or gold text over dark backgrounds. Avoid mid-tone gray-on-gray palettes.</li>
+                <li><strong>Visual Margins:</strong> Keep text well clear of display borders. Maintain a safe padding zone around all slide elements.</li>
+                <li><strong>Background Control:</strong> Use clean, distraction-free gradients or approved motion loops that support rather than obscure the text content.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="relative z-20 mt-8 w-full border-t border-hairline py-4 text-center font-mono text-[0.68rem] text-ink-soft">
+      COG Trece Multimedia Ministry &copy; 2026
+  </footer>
+
+    <script src="js/variant.js"></script>
+    <script>
+      function toggleMenu() {
+        document.getElementById('headerButtons').classList.toggle('show');
+      }
+    </script>
+  </body>
+</html>
