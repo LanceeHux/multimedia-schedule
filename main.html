@@ -80,7 +80,7 @@
           </div>
           <div class="flex items-center flex-wrap gap-[8px] max-[560px]:w-full max-[560px]:justify-between">
               <span class="inline-flex items-center gap-[6px] font-mono text-[0.62rem] font-semibold tracking-[0.1em] text-live border border-[rgba(255,59,48,0.4)] bg-[rgba(255,59,48,0.08)] py-[5px] px-[10px] rounded-[20px] whitespace-nowrap"><span class="w-[6px] h-[6px] rounded-full bg-live shadow-[0_0_0_0_rgba(255,59,48,0.6)] animate-[pulse_1.6s_ease-out_infinite]"></span>LIVE DATABASE</span>
-              <div class="font-mono text-[0.78rem] bg-panel-raised border border-hairline py-[6px] px-[10px] rounded-[3px] text-[#cfcfd4] whitespace-nowrap">SEPTEMBER 2026</div>
+              <div class="font-mono text-[0.78rem] bg-panel-raised border border-hairline py-[6px] px-[10px] rounded-[3px] text-[#cfcfd4] whitespace-nowrap">OCTOBER 2026</div>
           </div>
       </div>
 
@@ -138,7 +138,7 @@
 
     const db = getFirestore(initializeApp(firebaseConfig));
 
-    const dates = ["September 6", "September 13", "September 20", "September 27"];
+    const dates = ["October 4", "October 11", "October 18", "October 25"];
     const roles = ["LED", "PROMPTER", "PREACHING-SUPPORT"];
 
     const dateRow = document.getElementById("dateRow");
@@ -176,7 +176,7 @@
 <script type="text/javascript" charset="utf-8">
   function hrefDate(func) {
       if (func) {
-        window.location.href = "september"; // MUST CHANGE EVERY MONTH
+        window.location.href = "october"; // MUST CHANGE EVERY MONTH
       } else {
         alert("There are no longer open slots.");
       }
